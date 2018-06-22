@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#adff2f</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#4d0bb1</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="green">#adff2f</color>
+    <color name="greenyelow">#228b22</color>
+    <color name="white">#9985b4</color>
+    <color name="greenlight">#98fb98</color>
+    <color name="yourlove">#7639c6</color>
+    <color name="fools">#7539a3</color>
+    <color name="puti">#ffffff</color>
+
+
+    <color name="colorPrimary2">#96DFE8</color>
+    <color name="colorPrimaryDark2">#FC7813</color>
+    <color name="colorAccent2">#FC531C</color>
+    <color name="colorText">#C0C0C0</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorPrimaryDarkLogin">#d7fc7813</color>
+    <color name="colorTextPrimary">#424242</color>
+    <color name="colorTextSecondary">#959497</color>
+    <color name="colorBanner">#ef9a9a</color><!--#772b2b2b-->
+    <color name="cardtransBannerColorMenu">#e0ef5350</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorOrange">#F9A11F</color>
+    <color name="colorRouteLine">#FF4081</color>
+    <color name="gradColorTop">#f1cca049</color>
+    <color name="gradColorMid">#ef6d1745</color>
+    <color name="gradColorBot">#edb0240e</color>
+    <color name="trans">#00b0240e</color>
+    <color name="colorInputBackground">#F7F8FC</color>
+    <color name="colorGoogle">#D54B3D</color>
+    <color name="colorFacebook">#4167B0</color>
+    <color name="colorYellow">#F5CD35</color>
+
+
+
+</resources>

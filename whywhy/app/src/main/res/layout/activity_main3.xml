@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="250dp"
+    android:layout_height="match_parent"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/drawerImgBackground"
+        android:src="@drawable/myheart"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/transparent"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/storeIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/example"
+        app:civ_border_color="@color/colorWhite"
+        app:civ_border_width="2dp"
+        app:civ_circle_background_color="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textStoreName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Android Based POS"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/storeIcon"
+        app:layout_constraintTop_toBottomOf="@+id/storeIcon" />
+
+    <View
+        android:id="@+id/topDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textStoreName"></View>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:id="@+id/bottomDivider"
+        android:background="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/text_signOut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"></View>
+
+    <TextView
+        android:id="@+id/text_signOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/colorWhite"
+        android:text="Sign Out"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/addCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/ic_add_circle_black_24dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/colorWhite"
+        android:text="Add Category"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountSettings" />
+
+    <TextView
+        android:id="@+id/stat_report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/ic_timeline_black_24dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/colorWhite"
+        android:text="Ratings"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCategory" />
+
+    <TextView
+        android:id="@+id/messages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/ic_chat_black_24dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/colorWhite"
+        android:text="Messages"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stat_report" />
+    <TextView
+        android:id="@+id/accountSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/colorWhite"
+        android:text="Account Settings"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topDivider" />
+
+
+</android.support.constraint.ConstraintLayout>

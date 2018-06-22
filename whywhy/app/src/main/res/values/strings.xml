@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Wander A Owner</string>
+    <string name="what">what</string>
+    <string name="contact_hint">Contact Number / Email Address</string>
+    <string name="field_store_address">Address</string>
+    <string name="field_Store_name">Store Name / Business Name</string>
+    <string name="btn_save_profile">Save Store Profile</string>
+    <string name="addItem">additem</string>
+
+
+</resources>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main4Activity"
+    android:background="@drawable/myheart">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/white"
+        android:contentDescription="@string/what" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="336dp"
+        android:layout_height="310dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView">
+
+        <ImageView
+            android:id="@+id/restaurantIcon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/ic_account_circle_black_24dp"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/what" />
+
+        <TextView
+            android:id="@+id/lblRestoLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="198dp"
+            android:text="location"
+            android:textColor="@color/yourlove"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblRestoName" />
+
+        <TextView
+            android:id="@+id/lblRestoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="170dp"
+            android:text="Restaurant Name"
+            android:textColor="@color/yourlove"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            />
+        <RelativeLayout
+            android:layout_width="307dp"
+            android:layout_height="62dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="17dp"
+            android:layout_marginStart="16dp"
+            >
+
+
+            <ImageView
+                android:id="@+id/chat"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_chat_black_24dp"
+                android:tint="@color/yourlove"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/what">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/ic_map"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="130dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_place_black_24dp"
+                android:tint="@color/yourlove"
+                app:layout_constraintStart_toEndOf="@+id/chat"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/what" />
+
+            <ImageView
+                android:id="@+id/signal"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/signalcp"
+                android:tint="@color/yourlove"
+                app:layout_constraintStart_toEndOf="@+id/chat"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/what" />
+
+
+            <ImageView
+                android:id="@+id/ic_raviews"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginTop="8sp"
+                android:layout_marginStart="70dp"
+                android:src="@drawable/ic_rate_review_black_24dp"
+                android:tint="@color/yourlove"
+                app:layout_constraintEnd_toStartOf="@+id/chat"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/what" />
+
+
+
+            <TextView
+                android:id="@+id/lblChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="message us"
+                android:layout_marginTop="45dp"
+                android:layout_marginStart="7dp"
+                android:textColor="@color/yourlove"
+                android:textSize="8sp"
+                app:layout_constraintEnd_toEndOf="@+id/chat"
+                app:layout_constraintStart_toStartOf="@+id/chat"
+                app:layout_constraintTop_toBottomOf="@+id/chat" />
+
+            <TextView
+                android:id="@+id/lblWriteReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="write review"
+                android:textColor="@color/yourlove"
+                android:textSize="8sp"
+                android:layout_marginTop="45dp"
+                android:layout_marginStart="67dp"
+                app:layout_constraintEnd_toEndOf="@+id/ic_raviews"
+                app:layout_constraintStart_toStartOf="@+id/ic_raviews"
+                app:layout_constraintTop_toBottomOf="@+id/ic_raviews" />
+
+            <TextView
+                android:id="@+id/lblLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="location"
+                android:textColor="@color/yourlove"
+                android:textSize="8sp"
+                android:layout_marginTop="45dp"
+                android:layout_marginStart="136dp"
+                app:layout_constraintEnd_toEndOf="@+id/ic_map"
+                app:layout_constraintStart_toStartOf="@+id/ic_map"
+                app:layout_constraintTop_toBottomOf="@+id/ic_map" />
+
+
+            <TextView
+                android:id="@+id/lbsignal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="signal"
+                android:textColor="@color/yourlove"
+                android:textSize="8sp"
+                android:layout_marginTop="45dp"
+                android:layout_marginStart="189dp"
+                app:layout_constraintEnd_toEndOf="@+id/signal"
+                app:layout_constraintStart_toStartOf="@+id/signal"
+                app:layout_constraintTop_toBottomOf="@+id/signal" />
+
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</android.support.constraint.ConstraintLayout>

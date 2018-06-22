@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Wander A User</string>
+    <string name="what">text</string>
+    <string name="button">Button</string>
+    <string name="hotel">Hotel</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="spots">Spots</string>
+    <string name="map">Map</string>
+    <string name="byahe">Byahe</string>
+
+</resources>
