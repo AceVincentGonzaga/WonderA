@@ -94,4 +94,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void saveProfile(String Id,String btype,String bname,String bAddress,
+                             String bContact,String bEmail){
+
+    }
 }
