@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "69154273022",
+    "firebase_url": "https://group5antique.firebaseio.com",
+    "project_id": "group5antique",
+    "storage_bucket": "group5antique.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69154273022:android:eed54dd3e136c2e3",
+        "android_client_info": {
+          "package_name": "com.example.user.ace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69154273022-l296af6qj8rjal7l434esa7k3ujmk9oc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.user.ace",
+            "certificate_hash": "8087815daf4aa786b0100c5839d3c06f28c42b63"
+          }
+        },
+        {
+          "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi8LYSl1KXRCsatbQtJ2kCQKZhdqKpRkw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69154273022:android:0a829332884acc97",
+        "android_client_info": {
+          "package_name": "com.example.user.wanderaowner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69154273022-jfojufamivako9u69jeimtrhjof289kr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.user.wanderaowner",
+            "certificate_hash": "7c459a08b1abaca944ad265fe7cba80b03505d2c"
+          }
+        },
+        {
+          "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi8LYSl1KXRCsatbQtJ2kCQKZhdqKpRkw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
