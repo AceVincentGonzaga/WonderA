@@ -27,7 +27,6 @@ import com.wandera.wanderaowner.mapModel.BusinessProfileModel;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
-
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
