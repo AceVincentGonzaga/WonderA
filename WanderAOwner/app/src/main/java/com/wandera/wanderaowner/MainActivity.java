@@ -18,6 +18,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.wandera.wanderaowner.mapModel.BusinessProfileModel;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "GoogleActivity";
@@ -60,8 +65,35 @@ public class MainActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-                Intent i = new Intent(MainActivity.this,OwernerRegistration.class);
-                startActivity(i);
+
+                FirebaseDatabase.getInstance().getReference().child("businessProfiles").orderByChild("userId").startAt(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            System.out.println(dataSnapshot.getValue().toString());
+                            for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                                BusinessProfileModel businessProfileModel = dataSnapshot1.getValue(BusinessProfileModel.class);
+                                if (businessProfileModel.getUserId().equals(mAuth.getUid())){
+                                    Intent i = new Intent(MainActivity.this,ManageBusiness.class);
+                                    startActivity(i);
+                                    finish();
+                                }else {
+
+                                    Intent i = new Intent(MainActivity.this,OwernerRegistration.class);
+                                    startActivity(i);
+                                }
+                            }
+                        }catch (NullPointerException e){
+                            Intent i = new Intent(MainActivity.this,OwernerRegistration.class);
+                            startActivity(i);
+                        }
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately

@@ -6,6 +6,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColor</item>
     </style>
+
+
+    <!--Create a custom textTheme-->
+    <style name="TitleText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/textHeader</item>
+    </style>
+
+
 
 </resources>
