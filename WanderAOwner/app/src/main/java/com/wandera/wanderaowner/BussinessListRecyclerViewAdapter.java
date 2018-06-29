@@ -1,10 +1,15 @@
 package com.wandera.wanderaowner;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wandera.wanderaowner.mapModel.BusinessProfileModel;
@@ -23,11 +28,14 @@ public class BussinessListRecyclerViewAdapter extends RecyclerView.Adapter<Bussi
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
     public TextView businessName;
-
+    public ConstraintLayout businessItemLayout;
+    public ImageView busIcon;
 
         public MyViewHolder(View view){
             super(view);
+            busIcon = (ImageView) view.findViewById(R.id.busIcon);
             businessName  = (TextView) view.findViewById(R.id.businessName);
+            businessItemLayout = (ConstraintLayout) view.findViewById(R.id.businessItemLayout);
 
         }
     }
@@ -47,7 +55,23 @@ public class BussinessListRecyclerViewAdapter extends RecyclerView.Adapter<Bussi
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.businessName.setText(businessProfileModelArraylist.get(position).getName());
+        final BusinessProfileModel item = businessProfileModelArraylist.get(position);
+        if (item.getName().equals("Add Business")){
+            holder.busIcon.setImageResource(R.drawable.ic_add_black_24dp);
+            holder.businessItemLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context,OwernerRegistration.class);
+                    context.startActivity(i);
+                    Activity activity = (Activity) context;
+                    activity.finish();
+
+                }
+            });
+            holder.businessItemLayout.setBackgroundResource(R.drawable.background_gradient_grey);
+        }
+        holder.businessName.setText(item.getName());
+
         //GlideApp.with(context).load(posterPrePath+moviesModel.getPoster_path()).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().into(holder.posterImage);
     }
 

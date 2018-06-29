@@ -16,6 +16,11 @@
         <item name="android:textSize">@dimen/textHeader</item>
     </style>
 
+    <style name="businessItemTitleText">
+        <item name="android:textSize">@dimen/itemTitle</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
 
 
 </resources>

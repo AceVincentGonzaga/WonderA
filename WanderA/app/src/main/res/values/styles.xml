@@ -12,5 +12,9 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/textHeader</item>
     </style>
+    <style name="itemText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/itemTextHeader</item>
+    </style>
 
 </resources>

@@ -26,11 +26,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:text="Business Name"
         android:textColor="@color/white"
-        android:theme="@style/TitleText"
+        android:theme="@style/itemText"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

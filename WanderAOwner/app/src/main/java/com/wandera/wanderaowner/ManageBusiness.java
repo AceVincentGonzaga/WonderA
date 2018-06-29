@@ -53,7 +53,10 @@ public class ManageBusiness extends AppCompatActivity {
                                 System.out.println(businessProfileMapModel.name);
                                 businessProfileModelArrayList.add(businessProfileModel);
                             }
-                        bussinessListRecyclerViewAdapter.notifyDataSetChanged();
+                            BusinessProfileModel businessProfileModelAddBusness = new BusinessProfileModel();
+                            businessProfileModelAddBusness.setName("Add Business");
+                            businessProfileModelArrayList.add(businessProfileModelAddBusness);
+                            bussinessListRecyclerViewAdapter.notifyDataSetChanged();
 
                     }
                     @Override
