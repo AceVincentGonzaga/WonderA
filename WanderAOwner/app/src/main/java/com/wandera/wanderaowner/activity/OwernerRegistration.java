@@ -103,8 +103,12 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
                     startActivity(i);
                 }
             });
-            inpt_email.setText(mAuth.getEmail());
-            input_contact.setText(mAuth.getPhoneNumber());
+            try {
+                inpt_email.setText(mAuth.getEmail());
+                input_contact.setText(mAuth.getPhoneNumber());
+            }catch (NullPointerException e){
+
+            }
 
             showLast();
             if (ContextCompat.checkSelfPermission(OwernerRegistration.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

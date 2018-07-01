@@ -5,6 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,12 +34,19 @@ public class LoginActivity extends AppCompatActivity {
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+    private TextView text1,text2,conntectingLabel;
+    private ImageView image1;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_login);
+        text1 = (TextView) findViewById(R.id.text1);
+        text2 = (TextView) findViewById(R.id.text2);
+        image1 = (ImageView) findViewById(R.id.image1);
+        conntectingLabel = (TextView) findViewById(R.id.connectingLabel);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -98,8 +108,12 @@ public class LoginActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
+
+
                 // ...
             }
+        }else {
+            updateUI(false);
         }
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -120,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
 //                            Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
 //                            updateUI(null);
+                            updateUI(false);
                         }
 
                         // ...
@@ -130,5 +145,15 @@ public class LoginActivity extends AppCompatActivity {
     private void saveProfile(String Id,String btype,String bname,String bAddress,
                              String bContact,String bEmail){
 
+    }
+
+    private void updateUI(boolean conntected){
+        if (conntected ==false){
+            image1.setVisibility(View.VISIBLE);
+            text1.setVisibility(View.VISIBLE);
+            text2.setVisibility(View.VISIBLE);
+            conntectingLabel.setVisibility(View.INVISIBLE);
+
+        }
     }
 }

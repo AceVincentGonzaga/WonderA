@@ -19,6 +19,7 @@
         android:text="Connecting . . "
         android:textColor="@color/white"
         android:theme="@style/TitleText"
+        android:id="@+id/connectingLabel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +27,7 @@
     <TextView
         android:visibility="gone"
         android:textColor="@color/white"
-        android:id="@+id/textView5"
+        android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login Failed"
@@ -42,22 +43,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/white"
+        android:id="@+id/text1"
         android:text="Please Check Internet Connection"
-        app:layout_constraintEnd_toEndOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintEnd_toEndOf="@+id/text2"
+        app:layout_constraintStart_toStartOf="@+id/text2"
+        app:layout_constraintTop_toBottomOf="@+id/text2" />
 
     <ImageView
+
         android:visibility="gone"
-        android:id="@+id/imageView"
+        android:id="@+id/image1"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/ic_perm_scan_wifi_black_24dp"
         android:tint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/textView5" />
+        app:layout_constraintBottom_toTopOf="@+id/text2"
+        app:layout_constraintEnd_toEndOf="@+id/text2"
+        app:layout_constraintStart_toStartOf="@+id/text2" />
 
 </android.support.constraint.ConstraintLayout>
