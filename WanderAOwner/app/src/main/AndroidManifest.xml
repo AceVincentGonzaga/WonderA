@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wandera.wanderaowner">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +20,9 @@
         </activity>
         <activity android:name=".OwernerRegistration" />
         <activity android:name=".mapModel.GetLocationActivity" />
-        <activity android:name=".ManageBusiness"></activity>
+        <activity android:name=".ManageBusiness" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".BusinessProfile"></activity>
     </application>
 
 </manifest>

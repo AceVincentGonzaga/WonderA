@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +41,7 @@ public class ManageBusiness extends AppCompatActivity {
         businessItemsRecyclerView.setLayoutManager(layoutManager);
         businessItemsRecyclerView.setAdapter(bussinessListRecyclerViewAdapter);
 
+
         databaseReference.child("businessProfiles").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -50,6 +52,7 @@ public class ManageBusiness extends AppCompatActivity {
                                 BusinessProfileMapModel businessProfileMapModel = dataSnapshot1.getValue(BusinessProfileMapModel.class);
                                 BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                                 businessProfileModel.setName(businessProfileMapModel.name);
+                                businessProfileModel.setKey(businessProfileMapModel.key);
                                 System.out.println(businessProfileMapModel.name);
                                 businessProfileModelArrayList.add(businessProfileModel);
                             }
@@ -69,6 +72,14 @@ public class ManageBusiness extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+        bussinessListRecyclerViewAdapter.setOnItemClickListener(new BussinessListRecyclerViewAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position, BusinessProfileModel businessProfileModelArraylist) {
+                Intent i = new Intent(ManageBusiness.this, BusinessProfile.class);
+                i.putExtra("key",businessProfileModelArraylist.getKey());
+                startActivity(i);
             }
         });
 

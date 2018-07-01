@@ -13,13 +13,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,9 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-                Intent i = new Intent(MainActivity.this,Browse.class);
-                startActivity(i);
-                finish();
+                saveUserProfile(FirebaseAuth.getInstance().getCurrentUser().getUid(),FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString());
+
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
@@ -96,5 +98,26 @@ public class MainActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    private void saveUserProfile(String userId,String userImage){
+
+        String userID= mAuth.getCurrentUser().getUid();
+        String userImagePath= mAuth.getCurrentUser().getPhotoUrl().toString();
+        UserProfileMapModel userProfileMapModel= new UserProfileMapModel(userID, userImagePath);
+        Map<String,Object> profileValue = userProfileMapModel.toMap();
+        Map<String,Object> childupdates = new HashMap<>();
+        childupdates.put(userId,profileValue);
+
+        FirebaseDatabase.getInstance().getReference().child("users").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Intent i = new Intent(MainActivity.this,Browse.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
     }
 }

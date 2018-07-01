@@ -71,6 +71,12 @@ public class BussinessListRecyclerViewAdapter extends RecyclerView.Adapter<Bussi
             holder.businessItemLayout.setBackgroundResource(R.drawable.background_gradient_grey);
         }
         holder.businessName.setText(item.getName());
+        holder.businessItemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemClickLitener.onItemClick(v,position,businessProfileModelArraylist.get(position));
+            }
+        });
 
         //GlideApp.with(context).load(posterPrePath+moviesModel.getPoster_path()).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().into(holder.posterImage);
     }
@@ -79,8 +85,9 @@ public class BussinessListRecyclerViewAdapter extends RecyclerView.Adapter<Bussi
     public int getItemCount() {
         return businessProfileModelArraylist.size();
     }
-    public interface OnItemClickLitener {
 
+    public interface OnItemClickLitener {
+        void onItemClick(View view, int position,BusinessProfileModel businessProfileModelArraylist);
 
     }
 

@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:layout_margin="5dp"
+    android:id="@+id/itemContainer"
     android:background="@drawable/business_item_background_gradient_blvio">
 
     <ImageView
+        android:clickable="false"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
@@ -22,6 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:clickable="false"
         android:id="@+id/businessItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

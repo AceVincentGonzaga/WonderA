@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner;
+package com.wandera.wandera;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -10,10 +10,13 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class Utils {
-    public static void callToast(Context context,String mes){
+    public static String businessProfiel = "businessProfiles";
+    public static String chats = "chats";
+    public static String chatUserList="chatUserList";
+    public static void callToast(Context context, String mes){
         Toast.makeText(context,mes,Toast.LENGTH_SHORT).show();
     }
-    public static String businessProfiles= "businessProfiles";
+
 
     public static String getDateToStrig(){
         Calendar c = Calendar.getInstance();
