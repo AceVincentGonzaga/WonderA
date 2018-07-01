@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner;
+package com.wandera.wanderaowner.activity;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -28,7 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.wandera.wanderaowner.mapModel.GetLocationActivity;
+import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 
 import java.util.ArrayList;

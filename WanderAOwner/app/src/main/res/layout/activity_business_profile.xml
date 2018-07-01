@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="#fff"
     android:layout_height="match_parent"
-    tools:context=".BusinessProfile">
+    tools:context=".activity.BusinessProfile">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

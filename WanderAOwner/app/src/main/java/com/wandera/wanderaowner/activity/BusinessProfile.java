@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner;
+package com.wandera.wanderaowner.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -13,6 +13,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;

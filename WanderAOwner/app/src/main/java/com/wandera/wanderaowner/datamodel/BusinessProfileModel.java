@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner.mapModel;
+package com.wandera.wanderaowner.datamodel;
 
 public class BusinessProfileModel {
     private String userId;

@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner;
+package com.wandera.wanderaowner.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -22,9 +22,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.wandera.wanderaowner.mapModel.BusinessProfileModel;
+import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
     // [START declare_auth]
@@ -73,17 +74,17 @@ public class MainActivity extends AppCompatActivity {
                             for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                                 BusinessProfileModel businessProfileModel = dataSnapshot1.getValue(BusinessProfileModel.class);
                                 if (businessProfileModel.getUserId().equals(mAuth.getUid())){
-                                    Intent i = new Intent(MainActivity.this,ManageBusiness.class);
+                                    Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
                                     startActivity(i);
                                     finish();
                                 }else {
 
-                                    Intent i = new Intent(MainActivity.this,OwernerRegistration.class);
+                                    Intent i = new Intent(LoginActivity.this,OwernerRegistration.class);
                                     startActivity(i);
                                 }
                             }
                         }catch (NullPointerException e){
-                            Intent i = new Intent(MainActivity.this,OwernerRegistration.class);
+                            Intent i = new Intent(LoginActivity.this,OwernerRegistration.class);
                             startActivity(i);
                         }
 

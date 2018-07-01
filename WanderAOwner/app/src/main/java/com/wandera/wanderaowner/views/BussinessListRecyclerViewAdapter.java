@@ -1,7 +1,6 @@
-package com.wandera.wanderaowner;
+package com.wandera.wanderaowner.views;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
@@ -12,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wandera.wanderaowner.mapModel.BusinessProfileModel;
+import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.activity.OwernerRegistration;
+import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
 
 import java.util.ArrayList;
 

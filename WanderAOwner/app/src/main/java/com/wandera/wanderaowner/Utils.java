@@ -15,6 +15,10 @@ public class Utils {
     }
     public static String businessProfiles= "businessProfiles";
 
+    public static void print(String message,String premessage){
+        System.out.println(premessage +" :"+message);
+    }
+
     public static String getDateToStrig(){
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => "+c.getTime());

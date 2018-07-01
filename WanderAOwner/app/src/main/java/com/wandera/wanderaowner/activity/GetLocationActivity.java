@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner.mapModel;
+package com.wandera.wanderaowner.activity;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -9,9 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.wandera.wanderaowner.R;
-
-import io.nlopez.smartlocation.OnActivityUpdatedListener;
-import io.nlopez.smartlocation.SmartLocation;
 
 public class GetLocationActivity extends AppCompatActivity {
     Context context;

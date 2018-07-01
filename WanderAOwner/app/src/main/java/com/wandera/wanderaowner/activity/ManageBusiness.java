@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner;
+package com.wandera.wanderaowner.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +15,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
-import com.wandera.wanderaowner.mapModel.BusinessProfileModel;
+import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
+import com.wandera.wanderaowner.views.BussinessListRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
