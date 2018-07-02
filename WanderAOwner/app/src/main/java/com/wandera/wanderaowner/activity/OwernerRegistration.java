@@ -52,7 +52,7 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
         TextInputEditText inpt_name,inpt_address,input_contact, inpt_email;
         TextView saveProfile,selectBType;
         Context context;
-        FirebaseUser mAuth;
+        FirebaseAuth mAuth;
         private LocationGooglePlayServicesProvider provider;
         DatabaseReference databaseReference;
         String businessType;
@@ -79,7 +79,7 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
             categories.add("Accomodation");
             categories.add("Pasalubong Center");
             categories.add("Education");
-            mAuth = FirebaseAuth.getInstance().getCurrentUser();
+            mAuth = FirebaseAuth.getInstance();
             saveProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -104,8 +104,8 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
                 }
             });
             try {
-                inpt_email.setText(mAuth.getEmail());
-                input_contact.setText(mAuth.getPhoneNumber());
+                inpt_email.setText(mAuth.getCurrentUser().getEmail());
+                input_contact.setText(mAuth.getCurrentUser().getPhoneNumber());
             }catch (NullPointerException e){
 
             }

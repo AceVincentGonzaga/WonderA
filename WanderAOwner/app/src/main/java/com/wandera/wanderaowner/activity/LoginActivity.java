@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
 
 public class LoginActivity extends AppCompatActivity {
@@ -68,32 +69,33 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
+                mAuth = FirebaseAuth.getInstance();
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-
-                FirebaseDatabase.getInstance().getReference().child("businessProfiles").orderByChild("userId").startAt(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+         /*       FirebaseDatabase.getInstance().getReference().child("businessProfiles").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
                             System.out.println(dataSnapshot.getValue().toString());
                             for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                                 BusinessProfileModel businessProfileModel = dataSnapshot1.getValue(BusinessProfileModel.class);
-                                if (businessProfileModel.getUserId().equals(mAuth.getUid())){
+                                if (businessProfileModel.getUserId().toString().equals(mAuth.getUid().toString())){
                                     Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
                                     startActivity(i);
                                     finish();
-                                }else {
-
+                                }else if(!businessProfileModel.getUserId().toString().equals(mAuth.getUid().toString())){
                                     Intent i = new Intent(LoginActivity.this,OwernerRegistration.class);
                                     startActivity(i);
                                 }
                             }
                         }catch (NullPointerException e){
+                            System.out.println(e);
                             Intent i = new Intent(LoginActivity.this,OwernerRegistration.class);
                             startActivity(i);
                         }
@@ -103,7 +105,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });
+                });*/
+                Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
+                startActivity(i);
+                finish();
 
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately

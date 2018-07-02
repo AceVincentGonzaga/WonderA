@@ -43,14 +43,22 @@ public class ManageBusiness extends AppCompatActivity {
         businessItemsRecyclerView.setLayoutManager(layoutManager);
         businessItemsRecyclerView.setAdapter(bussinessListRecyclerViewAdapter);
 
+        BusinessProfileModel businessProfileModelAddBusness = new BusinessProfileModel();
+        businessProfileModelAddBusness.setName("Add Business");
+        businessProfileModelArrayList.add(businessProfileModelAddBusness);
+        bussinessListRecyclerViewAdapter.notifyDataSetChanged();
+
 
         databaseReference.child("businessProfiles").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                FirebaseDatabase.getInstance().getReference().child("businessProfiles").orderByChild("userId").startAt(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                FirebaseDatabase.getInstance().getReference().child("businessProfiles").orderByChild("userId").startAt(mAuth.getUid().toString()).endAt(mAuth.getUid().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        businessProfileModelArrayList.clear();
                             for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+
                                 BusinessProfileMapModel businessProfileMapModel = dataSnapshot1.getValue(BusinessProfileMapModel.class);
                                 BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                                 businessProfileModel.setName(businessProfileMapModel.name);
@@ -76,6 +84,7 @@ public class ManageBusiness extends AppCompatActivity {
 
             }
         });
+
         bussinessListRecyclerViewAdapter.setOnItemClickListener(new BussinessListRecyclerViewAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position, BusinessProfileModel businessProfileModelArraylist) {

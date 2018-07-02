@@ -59,6 +59,7 @@ public class BussinessListRecyclerViewAdapter extends RecyclerView.Adapter<Bussi
         final BusinessProfileModel item = businessProfileModelArraylist.get(position);
         if (item.getName().equals("Add Business")){
             holder.busIcon.setImageResource(R.drawable.ic_add_black_24dp);
+            holder.businessName.setText(item.getName());
             holder.businessItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,8 +71,13 @@ public class BussinessListRecyclerViewAdapter extends RecyclerView.Adapter<Bussi
                 }
             });
             holder.businessItemLayout.setBackgroundResource(R.drawable.background_gradient_grey);
+        }else {
+            holder.busIcon.setImageResource(R.drawable.ic_restaurant_black_24dp);
+            holder.businessName.setText(item.getName());
+            holder.businessItemLayout.setBackgroundResource(R.drawable.business_item_background_gradient_blvio);
+
         }
-        holder.businessName.setText(item.getName());
+
         holder.businessItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -31,19 +31,27 @@ public class BusinessProfile extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         Bundle bundle=getIntent().getExtras();
         final String key = bundle.getString("key");
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child(Utils.businessProfiles).child(key).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
-                toolbar.setTitle(businessProfileMapModel.name);
-            }
+        try {
+            mDatabase.child(Utils.businessProfiles).child(key).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
+                    toolbar.setTitle(businessProfileMapModel.name);
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }catch (NullPointerException e){
+            Intent i = new Intent(BusinessProfile.this,OwernerRegistration.class);
+            startActivity(i);
+            finish();
+        }
+
 
 
         slidingRootNav = new SlidingRootNavBuilder(this)
