@@ -3,6 +3,8 @@ package com.wandera.wanderaowner.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +31,7 @@ public class ManageBusiness extends AppCompatActivity {
     ArrayList<BusinessProfileModel> businessProfileModelArrayList = new ArrayList<>();
     Context context;
     FirebaseAuth mAuth;
+    ConstraintLayout container;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,7 @@ public class ManageBusiness extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         context = ManageBusiness.this;
+        container= (ConstraintLayout)findViewById(R.id.container);
 
         bussinessListRecyclerViewAdapter = new BussinessListRecyclerViewAdapter(context,businessProfileModelArrayList);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
@@ -53,31 +57,47 @@ public class ManageBusiness extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                FirebaseDatabase.getInstance().getReference().child("businessProfiles").orderByChild("userId").startAt(mAuth.getUid().toString()).endAt(mAuth.getUid().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        businessProfileModelArrayList.clear();
-                            for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                // your code here
+                                FirebaseDatabase.getInstance().getReference().child("businessProfiles").orderByChild("userId").startAt(mAuth.getUid().toString()).endAt(mAuth.getUid().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        businessProfileModelArrayList.clear();
+                                        for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
 
-                                BusinessProfileMapModel businessProfileMapModel = dataSnapshot1.getValue(BusinessProfileMapModel.class);
-                                BusinessProfileModel businessProfileModel = new BusinessProfileModel();
-                                businessProfileModel.setName(businessProfileMapModel.name);
-                                businessProfileModel.setKey(businessProfileMapModel.key);
-                                System.out.println(businessProfileMapModel.name);
-                                businessProfileModelArrayList.add(businessProfileModel);
+                                            BusinessProfileMapModel businessProfileMapModel = dataSnapshot1.getValue(BusinessProfileMapModel.class);
+                                            BusinessProfileModel businessProfileModel = new BusinessProfileModel();
+                                            businessProfileModel.setName(businessProfileMapModel.name);
+                                            businessProfileModel.setKey(businessProfileMapModel.key);
+                                            System.out.println(businessProfileMapModel.name);
+                                            businessProfileModelArrayList.add(businessProfileModel);
+                                        }
+                                        BusinessProfileModel businessProfileModelAddBusness = new BusinessProfileModel();
+                                        businessProfileModelAddBusness.setName("Add Business");
+                                        businessProfileModelArrayList.add(businessProfileModelAddBusness);
+                                        bussinessListRecyclerViewAdapter.notifyDataSetChanged();
+
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                try {
+
+                                }catch (NullPointerException e){
+                                    Snackbar.make(container,e.toString(),Snackbar.LENGTH_SHORT).show();
+                                }
                             }
-                            BusinessProfileModel businessProfileModelAddBusness = new BusinessProfileModel();
-                            businessProfileModelAddBusness.setName("Add Business");
-                            businessProfileModelArrayList.add(businessProfileModelAddBusness);
-                            bussinessListRecyclerViewAdapter.notifyDataSetChanged();
 
+                        },
+                        5000
+                );
                     }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

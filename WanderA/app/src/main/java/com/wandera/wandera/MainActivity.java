@@ -2,6 +2,8 @@ package com.wandera.wandera;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +30,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
+    private ConstraintLayout constraintLayout;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        constraintLayout  = (ConstraintLayout) findViewById(R.id.container);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -66,7 +69,25 @@ public class MainActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-                saveUserProfile(FirebaseAuth.getInstance().getCurrentUser().getUid(),FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString());
+
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                // your code here
+                              try {
+                                  saveUserProfile(FirebaseAuth.getInstance().getCurrentUser()
+                                          .getUid(),FirebaseAuth.getInstance().getCurrentUser()
+                                          .getPhotoUrl().toString());
+                              }catch (NullPointerException e){
+                                  Snackbar.make(constraintLayout,e.toString(),Snackbar.LENGTH_SHORT).show();
+                              }
+                            }
+
+                        },
+                        5000
+                );
+
 
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -104,7 +125,10 @@ public class MainActivity extends AppCompatActivity {
 
         String userID= mAuth.getCurrentUser().getUid();
         String userImagePath= mAuth.getCurrentUser().getPhotoUrl().toString();
-        UserProfileMapModel userProfileMapModel= new UserProfileMapModel(userID, userImagePath);
+        UserProfileMapModel userProfileMapModel= new UserProfileMapModel(userID,
+                userImagePath,mAuth.getCurrentUser().getDisplayName(),
+                mAuth.getCurrentUser().getPhoneNumber(),
+                mAuth.getCurrentUser().getEmail());
         Map<String,Object> profileValue = userProfileMapModel.toMap();
         Map<String,Object> childupdates = new HashMap<>();
         childupdates.put(userId,profileValue);

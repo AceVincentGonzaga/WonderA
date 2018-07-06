@@ -23,7 +23,8 @@
         <activity android:name=".activity.ManageBusiness" />
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.BusinessProfile" />
-        <activity android:name=".activity.UserRegistration"></activity>
+        <activity android:name=".activity.UserRegistration" />
+        <activity android:name=".activity.InboxActivity"></activity>
     </application>
 
 </manifest>

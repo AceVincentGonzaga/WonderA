@@ -70,7 +70,7 @@ public class BusinessProfile extends AppCompatActivity {
         messages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=  new Intent(BusinessProfile.this, ChatActivity.class);
+                Intent i=  new Intent(BusinessProfile.this, InboxActivity.class);
                 i.putExtra("key", key);
                 startActivity(i);
             }

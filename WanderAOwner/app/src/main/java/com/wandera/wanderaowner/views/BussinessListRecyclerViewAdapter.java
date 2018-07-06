@@ -21,10 +21,10 @@ import java.util.ArrayList;
  * Created by Keji's Lab on 19/01/2018.
  */
 
-public class BussinessListRecyclerViewAdapter extends RecyclerView.Adapter<BussinessListRecyclerViewAdapter.MyViewHolder> {
+public class BussinessListRecyclerViewAdapter
+        extends RecyclerView.Adapter<BussinessListRecyclerViewAdapter.MyViewHolder> {
     private ArrayList<BusinessProfileModel> businessProfileModelArraylist = new ArrayList<>();
     private Context context;
-    String posterPrePath = "https://image.tmdb.org/t/p/w500/";
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
