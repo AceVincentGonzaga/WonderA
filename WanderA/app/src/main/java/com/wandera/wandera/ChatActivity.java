@@ -102,7 +102,7 @@ public class ChatActivity extends AppCompatActivity {
         String date = Utils.getDateToStrig();
         String userName= mAuth.getCurrentUser().getDisplayName();
         String userImagePath= mAuth.getCurrentUser().getPhotoUrl().toString();
-        ChatMessageMapModel chatMessageMapModel= new ChatMessageMapModel(userID, userName, date, message, businessKey, userImagePath);
+        ChatMessageMapModel chatMessageMapModel= new ChatMessageMapModel(userID, userName, date, message, businessKey, userImagePath, userID);
         Map<String,Object> profileValue = chatMessageMapModel.toMap();
         final Map<String,Object> childupdates = new HashMap<>();
         childupdates.put(key,profileValue);
@@ -122,7 +122,6 @@ public class ChatActivity extends AppCompatActivity {
 
                     }
                 });
-
             }
         });
 
@@ -139,6 +138,8 @@ public class ChatActivity extends AppCompatActivity {
                     chatDataModel.setMessage(chatMessageMapModel.message);
                     chatDataModel.setUserId(chatMessageMapModel.userId);
                     chatDataModel.setTimeStamp(chatMessageMapModel.timeStamp);
+                    chatDataModel.setSenderId(chatMessageMapModel.senderId);
+                    chatDataModel.setBusinessId(chatMessageMapModel.businessId);
                     chatDataModels.add(chatDataModel);
                 }
                 chatListRecyclerViewAdapter.notifyDataSetChanged();
@@ -152,21 +153,4 @@ public class ChatActivity extends AppCompatActivity {
    }
 
 
-/*    private void saveProfile(String name,String address,String contact,String emaill){
-        String uid = mAuth.getUid();
-        String key = databaseReference.push().getKey();
-        BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,"null for now",key);
-        Map<String,Object> profileValue = businessProfileMapModel.toMap();
-        Map<String,Object> childupdates = new HashMap<>();
-        childupdates.put(key,profileValue);
-
-        databaseReference.child("businessProfiles").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Intent i = new Intent(context,ManageBusiness.class);
-                startActivity(i);
-                finish();
-            }
-        });
-    }*/
 }

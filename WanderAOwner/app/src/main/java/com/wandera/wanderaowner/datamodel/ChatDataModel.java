@@ -1,4 +1,4 @@
-package com.wandera.wandera;
+package com.wandera.wanderaowner.datamodel;
 
 public class ChatDataModel {
     private String userId;

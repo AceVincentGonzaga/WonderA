@@ -33,6 +33,9 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
     public TextView msg;
     public ImageView user_image;
     public TextView time;
+    public ImageView user_imageOther;
+    public TextView messageOther;
+    public TextView timeOther;
 
 
         public MyViewHolder(View view){
@@ -40,6 +43,9 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
             msg = (TextView) view.findViewById(R.id.message);
             user_image = (ImageView) view.findViewById(R.id.user_image);
             time = (TextView)view.findViewById(R.id.time);
+            user_imageOther = (ImageView)view.findViewById(R.id.user_imageOther);
+            messageOther= (TextView)view.findViewById(R.id.messageOther);
+            timeOther= (TextView)view.findViewById(R.id. timeOther);
         }
     }
 
@@ -58,21 +64,44 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.msg.setText(chatDataModels.get(position).getMessage());
-        holder.time.setText(chatDataModels.get(position).getTimeStamp());
+        ChatDataModel chatDataModel  = chatDataModels.get(position);
 
-        FirebaseDatabase.getInstance().getReference().child("users").child(chatDataModels.get(position).getUserId()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot){
-                UserProfileMapModel userProfileMapModel = dataSnapshot.getValue(UserProfileMapModel.class);
-                GlideApp.with(context).load(userProfileMapModel.userImage).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().into(holder.user_image);
-            }
+        if (chatDataModel.getSenderId().equals(chatDataModel.getUserId())){
+            holder.msg.setText(chatDataModels.get(position).getMessage());
+            holder.time.setText(chatDataModels.get(position).getTimeStamp());
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            FirebaseDatabase.getInstance().getReference().child("users").child(chatDataModels.get(position).getUserId()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+                    UserProfileMapModel userProfileMapModel = dataSnapshot.getValue(UserProfileMapModel.class);
+                    GlideApp.with(context).load(userProfileMapModel.userImage).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().into(holder.user_image);
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            holder.messageOther.setVisibility(View.GONE);
+            holder.timeOther.setVisibility(View.GONE);
+            holder.user_imageOther.setVisibility(View.GONE);
+            holder.msg.setVisibility(View.VISIBLE);
+            holder.time.setVisibility(View.VISIBLE);
+            holder.user_image.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            holder.messageOther.setText(chatDataModels.get(position).getMessage());
+            holder.timeOther.setText(chatDataModels.get(position).getTimeStamp());
+            holder.timeOther.setVisibility(View.VISIBLE);
+            holder.messageOther.setVisibility(View.VISIBLE);
+            holder.user_imageOther.setVisibility(View.VISIBLE);
+            holder.msg.setVisibility(View.GONE);
+            holder.time.setVisibility(View.GONE);
+            holder.user_image.setVisibility(View.GONE);
+        }
+
 
 
     }

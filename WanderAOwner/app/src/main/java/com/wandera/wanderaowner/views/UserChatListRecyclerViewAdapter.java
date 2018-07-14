@@ -46,6 +46,7 @@ public class UserChatListRecyclerViewAdapter
         public TextView userName;
         public CircleImageView userImage;
         public TextView preview;
+        public ConstraintLayout container;
 
 
         public MyViewHolder(View view){
@@ -53,6 +54,7 @@ public class UserChatListRecyclerViewAdapter
             userImage=(CircleImageView) view.findViewById(R.id.userImage);
             userName=(TextView) view.findViewById(R.id.userName);
             preview = (TextView) view.findViewById(R.id.preview);
+            container = (ConstraintLayout) view.findViewById(R.id.container);
 
         }
     }
@@ -72,7 +74,7 @@ public class UserChatListRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        UserListDataModel userListDataModel = userListDataModelArrayList.get(position);
+        final UserListDataModel userListDataModel = userListDataModelArrayList.get(position);
         holder.userName.setText(userListDataModel.getUserId());
         FirebaseDatabase.getInstance().getReference().child("users").child(userListDataModel.getUserId()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -100,6 +102,13 @@ public class UserChatListRecyclerViewAdapter
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemClickLitener.onItemClick(v,position,userListDataModel);
             }
         });
 

@@ -49,7 +49,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/input_chat"
-            android:hint="Inpute Text Here"
+            android:hint="Input Text Here"
             android:paddingLeft="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sendBtn"

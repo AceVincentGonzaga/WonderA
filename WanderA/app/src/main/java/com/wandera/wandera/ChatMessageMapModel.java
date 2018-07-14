@@ -16,6 +16,7 @@ public class ChatMessageMapModel {
     public String message;
     public String businessId;
     public String userImage;
+    public String senderId;
 
 
     public ChatMessageMapModel(){
@@ -26,13 +27,15 @@ public class ChatMessageMapModel {
                                String timeStamp,
                                String message,
                                String businessId,
-                               String userImage){
+                               String userImage,
+                               String senderId){
         this.userId=userId;
         this.userName=userName;
         this.timeStamp=timeStamp;
         this.message=message;
         this.businessId=businessId;
         this.userImage=userImage;
+        this.senderId=senderId;
     }
     @Exclude
     public Map<String,Object> toMap(){
@@ -42,6 +45,7 @@ public class ChatMessageMapModel {
         result.put("timeStamp", timeStamp);
         result.put("message", message);
         result.put("businessKey", businessId);
+        result.put("senderId", senderId);
 
         return result;
     }

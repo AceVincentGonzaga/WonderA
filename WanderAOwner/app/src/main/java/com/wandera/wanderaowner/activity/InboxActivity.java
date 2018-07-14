@@ -1,11 +1,13 @@
 package com.wandera.wanderaowner.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,6 +61,17 @@ String businessKey;
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        userChatListRecyclerViewAdapter.setOnItemClickListener(new UserChatListRecyclerViewAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position, UserListDataModel userListDataModel) {
+                Intent chatActivityIntent= new Intent(InboxActivity.this, ChatActivity.class);
+                chatActivityIntent.putExtra("BusinessKey", businessKey);
+                chatActivityIntent.putExtra("UserID",userListDataModel.getUserId());
+                startActivity(chatActivityIntent);
 
             }
         });
