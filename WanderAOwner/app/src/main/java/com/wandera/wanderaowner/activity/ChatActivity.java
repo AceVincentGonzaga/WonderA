@@ -42,6 +42,7 @@ public class ChatActivity extends AppCompatActivity {
     EditText inputMessage;
     ImageView sndBtn;
     String businessName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +106,8 @@ public class ChatActivity extends AppCompatActivity {
                     chatsDataModel.setMessage(chatMessageMapModel.message);
                     chatsDataModel.setTimeStamp(chatMessageMapModel.timeStamp);
                     chatsDataModel.setUserId(chatMessageMapModel.userId);
+                    chatsDataModel.setSenderId(chatMessageMapModel.senderId);
+                    chatsDataModel.setBusinessId(chatMessageMapModel.businessId);
                     chatsDataModelArrayList.add(chatsDataModel);
                 }
                 chatsRecyclerViewAdapter.notifyDataSetChanged();

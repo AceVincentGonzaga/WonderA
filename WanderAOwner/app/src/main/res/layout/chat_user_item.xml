@@ -40,11 +40,13 @@
         android:id="@+id/timeOther"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:maxWidth="150dp"
         android:text="TextViewhghghghghghg"
         android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/messageOther"
         app:layout_constraintStart_toStartOf="@+id/messageOther"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,7 +64,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/message"
+        android:id="@+id/msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -85,7 +87,7 @@
         android:maxWidth="150dp"
         android:text="TextViewhghghghghghg"
         android:textSize="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/message"
+        app:layout_constraintEnd_toEndOf="@+id/msg"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -70,7 +70,8 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
             holder.msg.setText(chatDataModels.get(position).getMessage());
             holder.time.setText(chatDataModels.get(position).getTimeStamp());
 
-            FirebaseDatabase.getInstance().getReference().child("users").child(chatDataModels.get(position).getUserId()).addValueEventListener(new ValueEventListener() {
+            FirebaseDatabase.getInstance().getReference().child("users").
+                    child(chatDataModels.get(position).getUserId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot){
                     UserProfileMapModel userProfileMapModel = dataSnapshot.getValue(UserProfileMapModel.class);

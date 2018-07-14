@@ -2,7 +2,6 @@ package com.wandera.wanderaowner.views;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +18,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.datamodel.ChatsDataModel;
-import com.wandera.wanderaowner.datamodel.UserListDataModel;
-import com.wandera.wanderaowner.mapModel.ChatMessageMapModel;
 import com.wandera.wanderaowner.mapModel.UserProfileMapModel;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Keji's Lab on 19/01/2018.
@@ -41,23 +36,25 @@ public class ChatsRecyclerViewAdapter
     private DatabaseReference mDatabase;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-       TextView message;
+
        TextView time;
-       ImageView image_view;
-       ImageView image_viewOther;
+       ImageView user_image;
+       ImageView user_imageOther;
        TextView messageOther;
        TextView timeOther;
+       TextView msg;
 
 
         public MyViewHolder(View view){
             super(view);
 
-            message=(TextView) view.findViewById(R.id.message);
+
              time= (TextView) view.findViewById(R.id.time);
-            image_view=(ImageView)view.findViewById(R.id.user_image);
-            image_viewOther=(ImageView)view.findViewById(R.id.user_imageOther);
+            user_image=(ImageView)view.findViewById(R.id.user_image);
+            user_imageOther=(ImageView)view.findViewById(R.id.user_imageOther);
             messageOther = (TextView) view.findViewById(R.id.messageOther);
             timeOther = (TextView)view.findViewById(R.id.timeOther);
+            msg= (TextView)view.findViewById(R.id.msg);
         }
     }
 
@@ -76,27 +73,41 @@ public class ChatsRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-       try {
-           holder.message.setText(chatsDataModelArrayList.get(position).getMessage());
+        ChatsDataModel chatsDataModel = chatsDataModelArrayList.get(position);
+
+        if (chatsDataModel.getSenderId().equals(chatsDataModel.getBusinessId())) {
+            holder.msg.setText(chatsDataModelArrayList.get(position).getMessage());
             holder.time.setText(chatsDataModelArrayList.get(position).getTimeStamp());
 
-
-       }catch (NullPointerException e){
-           System.out.print(e);
-       }
             mDatabase = FirebaseDatabase.getInstance().getReference();
-            mDatabase.child("users").child(chatsDataModelArrayList.get(position).getUserId()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    UserProfileMapModel userProfileMapModel= dataSnapshot.getValue(UserProfileMapModel.class);
-                    GlideApp.with(context).load(userProfileMapModel.userImage).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().into(holder.image_view);
-                }
+            holder.messageOther.setVisibility(View.GONE);
+            holder.timeOther.setVisibility(View.GONE);
+            holder.user_imageOther.setVisibility(View.GONE);
+            holder.msg.setVisibility(View.VISIBLE);
+            holder.time.setVisibility(View.VISIBLE);
+            holder.user_image.setVisibility(View.VISIBLE);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+        } else {
+            holder.messageOther.setText(chatsDataModelArrayList.get(position).getMessage());
+            holder.timeOther.setText(chatsDataModelArrayList.get(position).getTimeStamp());
+            holder.timeOther.setVisibility(View.VISIBLE);
+            holder.messageOther.setVisibility(View.VISIBLE);
+            holder.user_imageOther.setVisibility(View.VISIBLE);
+            holder.msg.setVisibility(View.GONE);
+            holder.time.setVisibility(View.GONE);
+            holder.user_image.setVisibility(View.GONE);
+        }
 
-                }
-            });
+
+//        try {
+//           holder.msg.setText(chatsDataModelArrayList.get(position).getMessage());
+//            holder.time.setText(chatsDataModelArrayList.get(position).getTimeStamp());
+//
+//
+//       }catch (NullPointerException e){
+//           System.out.print(e);
+//       }
+
 
 
     }
