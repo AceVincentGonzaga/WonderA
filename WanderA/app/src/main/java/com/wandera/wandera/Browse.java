@@ -1,13 +1,16 @@
 package com.wandera.wandera;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +31,7 @@ public class Browse extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private ArrayList<BusinessProfileModel> businessList = new ArrayList<>();
+    private TextView selectMunicipality;
     RecyclerView businessListRV;
     BussinessListRecyclerViewAdapter bussinessListRecyclerViewAdapter;
     @Override
@@ -37,6 +41,7 @@ public class Browse extends AppCompatActivity {
         context = this;
         databaseReference = FirebaseDatabase.getInstance().getReference();
         businessListRV = (RecyclerView) findViewById(R.id.businessListRV);
+        selectMunicipality = (TextView)findViewById(R.id.selectMunicipality);
         bussinessListRecyclerViewAdapter = new BussinessListRecyclerViewAdapter(Browse.this,businessList);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         businessListRV.setLayoutManager(layoutManager);
@@ -70,6 +75,27 @@ public class Browse extends AppCompatActivity {
 
         }
     });
+        selectMunicipality.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             selectMunicipalityDialog();
+
+    }
+});
+    }
+    private void selectMunicipalityDialog(){
+        final CharSequence[] items = {"Bugasong", "Laua-an", "Barbaza", "Tibiao", "Culasi", "Sebaste", "Pandan", "Libertad", "Caluya"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Municipality");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+                selectMunicipality.setText(items[item]);
+                dialog.dismiss();
+            }
+        });
+        builder.show();
 
     }
 
