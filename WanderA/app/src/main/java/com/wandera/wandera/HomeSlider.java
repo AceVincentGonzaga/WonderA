@@ -102,6 +102,9 @@ public class HomeSlider extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private void initUI(){
+
+    }
     private void selectMunicipalityDialog(){
         final CharSequence[] items = {"Bugasong", "Laua-an", "Barbaza", "Tibiao", "Culasi", "Sebaste", "Pandan", "Libertad", "Caluya"};
 

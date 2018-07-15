@@ -1,7 +1,6 @@
 package com.wandera.wandera;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        inputMessage = (EditText) findViewById(R.id.inptMessage);
+        inputMessage = (EditText) findViewById(R.id.selectMunicipality);
         sndBtn = (ImageView) findViewById(R.id.sendBtn);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         businessKey = getIntent().getExtras().getString("key");
