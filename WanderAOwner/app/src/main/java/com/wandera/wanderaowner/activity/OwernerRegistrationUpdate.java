@@ -46,6 +46,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
@@ -88,6 +92,8 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         ImageView addImage,imageToUpload;
         Context c;
         CircleImageView businessProfile;
+        StorageReference mStorageRef;
+        boolean imageSet = false;
 
     @Override
     protected void onStart() {
@@ -106,6 +112,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             saveProfile = (TextView) findViewById(R.id.saveProfile);
             selectBType = (TextView) findViewById(R.id.selectBType);
             businessProfile = (CircleImageView) findViewById(R.id.businessProfile);
+            mStorageRef = FirebaseStorage.getInstance().getReference();
             c = OwernerRegistrationUpdate.this;
             databaseReference = FirebaseDatabase.getInstance().getReference();
             categories.add("Restaurant");
@@ -121,12 +128,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                         Utils.callToast(context,"incomplete");
 
                     }else {
-                        Utils.callToast(context,"Success");
-                        saveProfile(inpt_name.getText().toString(),
-                                    inpt_address.getText().toString(),
-                                    input_contact.getText().toString(),
-                                    inpt_email.getText().toString()
-                                );
+                       uploadItemBanner(bannerUri);
                     }
                 }
             });
@@ -223,6 +225,10 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             if (businessType==null){
                 val = false;
             }
+            if (imageSet == false){
+                val =false;
+            }
+
             return val;
         }
         private void selectBType(String type){
@@ -230,10 +236,10 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             businessType = type;
         }
 
-        private void saveProfile(String name,String address,String contact,String emaill){
+        private void saveProfile(String name,String address,String contact,String emaill,String imageUrl){
             String uid = mAuth.getUid();
             String key = databaseReference.push().getKey();
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,"null for now",key);
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,key);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
             childupdates.put(key,profileValue);
@@ -486,6 +492,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         // floatClearImage.setVisibility(View.VISIBLE);
         // Picasso.with(CreatePostActivity.this).load(uri).resize(300,600).into(imageToUpload);
         bannerUri = uri;
+        imageSet = true;
         Glide.with(c).load(uri).into(imageView);
         imageView.setPadding(0,0,0,0);
 
@@ -502,7 +509,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            /*final InputStream file = storeBannerFile;
+            final InputStream file = storeBannerFile;
 
             final StorageReference ImagestoreRef = mStorageRef.child("blog/images"+ File.separator+ File.separator + getFileName(ImageStorageURI)
                     +storeBannerFile.toString()+File.separator+getFileName(ImageStorageURI));
@@ -512,7 +519,14 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     ImagestoreRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            uploadPost(caption.getText().toString(),uri.toString());
+//                            uploadPost(caption.getText().toString(),uri.toString());
+
+                            Utils.callToast(context,"Success");
+                            saveProfile(inpt_name.getText().toString(),
+                                    inpt_address.getText().toString(),
+                                    input_contact.getText().toString(),
+                                    inpt_email.getText().toString(),uri.toString()
+                            );
                         }
                     });
                 }
@@ -528,14 +542,13 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
 
                     try {
                         double progress = (100.0 * taskSnapshot.getBytesTransferred()/file.available());
-                        uploadProgress.setText("Uploading " +taskSnapshot.getBytesTransferred()+" of "+file.available()+" "+progress+" %");
+//                        uploadProgress.setText("Uploading " +taskSnapshot.getBytesTransferred()+" of "+file.available()+" "+progress+" %");
                     }catch (IOException e){
 
                     }
 
                 }
             });
-*/
         }
 
     }
