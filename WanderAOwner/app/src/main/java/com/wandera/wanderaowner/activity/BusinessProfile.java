@@ -23,18 +23,19 @@ public class BusinessProfile extends AppCompatActivity {
     SlidingRootNav slidingRootNav;
     Toolbar toolbar;
     DatabaseReference mDatabase;
-    TextView messages;
+    TextView messages,businessProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_profile);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         Bundle bundle=getIntent().getExtras();
-        final String key = bundle.getString("key");
+        final String businessKey = bundle.getString("key");
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         try {
-            mDatabase.child(Utils.businessProfiles).child(key).addValueEventListener(new ValueEventListener() {
+            mDatabase.child(Utils.businessProfiles).child(businessKey).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
@@ -57,7 +58,7 @@ public class BusinessProfile extends AppCompatActivity {
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withMenuOpened(false)
                 .withToolbarMenuToggle(toolbar)
-                .withDragDistance(300)
+                .withDragDistance(200)
                 .withContentClickableWhenMenuOpened(false)
                 .withSavedState(savedInstanceState)
                 .withRootViewScale(1f)
@@ -67,11 +68,21 @@ public class BusinessProfile extends AppCompatActivity {
                 .withContentClickableWhenMenuOpened(true)
                 .inject();
         messages = (TextView)findViewById(R.id.messages);
+        businessProfile = (TextView) findViewById(R.id.manageProfile);
+        businessProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(BusinessProfile.this,OwernerRegistrationUpdate.class);
+                i.putExtra("key", businessKey);
+                startActivity(i);
+            }
+        });
+
         messages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=  new Intent(BusinessProfile.this, InboxActivity.class);
-                i.putExtra("key", key);
+                i.putExtra("key", businessKey);
                 startActivity(i);
             }
         });

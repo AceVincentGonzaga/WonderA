@@ -70,11 +70,9 @@ public class BussinessListRecyclerViewAdapter
 
                 }
             });
-            holder.businessItemLayout.setBackgroundResource(R.drawable.background_gradient_grey);
         }else {
             holder.busIcon.setImageResource(R.drawable.ic_restaurant_black_24dp);
             holder.businessName.setText(item.getName());
-            holder.businessItemLayout.setBackgroundResource(R.drawable.business_item_background_gradient_blvio);
 
         }
 

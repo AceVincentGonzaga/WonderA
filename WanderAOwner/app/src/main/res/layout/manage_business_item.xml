@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:layout_margin="5dp"
-    android:background="@drawable/business_item_background_gradient_blvio">
+    >
 
     <ImageView
         android:clickable="false"
@@ -18,7 +18,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/ic_restaurant_black_24dp"
-        android:tint="@color/white"
+        android:tint="@color/lightGrey"
         app:layout_constraintBottom_toTopOf="@+id/businessName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +32,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:clickable="false"
+        android:fontFamily="@font/lato_thin"
         android:text="Business Name"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimaryDark"
         android:theme="@style/businessItemTitleText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
