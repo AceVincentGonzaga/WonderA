@@ -27,6 +27,13 @@
             android:name=".HomeSlider"
             android:label="@string/title_activity_home_slider"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Homepage"
+            android:label="@string/title_activity_homepage"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

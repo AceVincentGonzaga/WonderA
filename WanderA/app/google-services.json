@@ -25,10 +25,6 @@
         {
           "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
           "client_type": 3
-        },
-        {
-          "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -69,10 +65,6 @@
             "package_name": "com.example.user.wanderaowner",
             "certificate_hash": "7c459a08b1abaca944ad265fe7cba80b03505d2c"
           }
-        },
-        {
-          "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
-          "client_type": 3
         },
         {
           "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
@@ -119,8 +111,64 @@
           }
         },
         {
+          "client_id": "69154273022-b7345oquapghvg046rmue4okqs27gf2j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wandera.wandera",
+            "certificate_hash": "de13c87c254317515ece39025dbfbc59c2f6f1bd"
+          }
+        },
+        {
           "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
           "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi8LYSl1KXRCsatbQtJ2kCQKZhdqKpRkw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69154273022:android:f2f58093ffb3d82b",
+        "android_client_info": {
+          "package_name": "com.wandera.wanderaowner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69154273022-2uv2qf559n3r5qvba9ereaaoutj0rq9a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wandera.wanderaowner",
+            "certificate_hash": "7c459a08b1abaca944ad265fe7cba80b03505d2c"
+          }
+        },
+        {
+          "client_id": "69154273022-9rs5t47m7l6top5rc3ki2dm494nck2rr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wandera.wanderaowner",
+            "certificate_hash": "de13c87c254317515ece39025dbfbc59c2f6f1bd"
+          }
         },
         {
           "client_id": "69154273022-oetv9san31oikhq03georu32qvk3nf3m.apps.googleusercontent.com",

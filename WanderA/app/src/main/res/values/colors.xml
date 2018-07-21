@@ -8,4 +8,5 @@
     <color name="blueLight">#c3ddeb</color>
     <color name="white">#fff</color>
     <color name="lightGrey">#cacaca</color>
+    <color name="background">#2b2b2b</color>
 </resources>
