@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.activity.OwernerRegistration;
 import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
@@ -71,9 +73,8 @@ public class BussinessListRecyclerViewAdapter
                 }
             });
         }else {
-            holder.busIcon.setImageResource(R.drawable.ic_restaurant_black_24dp);
             holder.businessName.setText(item.getName());
-
+            GlideApp.with(context).load(item.getRestoProfileImagePath()).placeholder(R.drawable.ic_restaurant_black_24dp).into(holder.busIcon);
         }
 
         holder.businessItemLayout.setOnClickListener(new View.OnClickListener() {

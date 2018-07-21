@@ -72,7 +72,7 @@ public class ManageBusiness extends AppCompatActivity {
                                             BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                                             businessProfileModel.setName(businessProfileMapModel.name);
                                             businessProfileModel.setKey(businessProfileMapModel.key);
-                                            System.out.println(businessProfileMapModel.name);
+                                            businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
                                             businessProfileModelArrayList.add(businessProfileModel);
                                         }
                                         BusinessProfileModel businessProfileModelAddBusness = new BusinessProfileModel();

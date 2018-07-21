@@ -57,6 +57,7 @@ String businessKey;
                 }
                 Collections.reverse(userListDataModelArrayList);
                 userChatListRecyclerViewAdapter.notifyDataSetChanged();
+                inboxlist.scrollToPosition(userListDataModelArrayList.size());
             }
 
             @Override

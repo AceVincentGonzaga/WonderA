@@ -44,8 +44,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -84,6 +87,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         DatabaseReference databaseReference;
         String businessType;
         Uri bannerUri;
+        TextInputEditText inputName,inputAddress,inputContact,inptEmail;
         private static final int LOCATION_PERMISSION_ID = 1001;
         private static final int RC_SIGN_IN = 297;
         private static final int storagepermision_access_code = 548;
@@ -94,6 +98,8 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         CircleImageView businessProfile;
         StorageReference mStorageRef;
         boolean imageSet = false;
+        String businessKey;
+        ConstraintLayout loadingContainer;
 
     @Override
     protected void onStart() {
@@ -115,10 +121,12 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             mStorageRef = FirebaseStorage.getInstance().getReference();
             c = OwernerRegistrationUpdate.this;
             databaseReference = FirebaseDatabase.getInstance().getReference();
+            businessKey = getIntent().getExtras().getString("businessKey");
             categories.add("Restaurant");
             categories.add("Accomodation");
             categories.add("Pasalubong Center");
             categories.add("Education");
+            loadingContainer = (ConstraintLayout) findViewById(R.id.loadingContainer);
             getStoragePermission();
             mAuth = FirebaseAuth.getInstance();
             saveProfile.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +138,27 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     }else {
                        uploadItemBanner(bannerUri);
                     }
+                }
+            });
+
+            FirebaseDatabase.getInstance().getReference().child("businessProfiles")
+                    .child(businessKey).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
+                    inpt_name.setText(businessProfileMapModel.name);
+                    inpt_email.setText(businessProfileMapModel.email);
+                    inpt_address.setText(businessProfileMapModel.address);
+                    input_contact.setText(businessProfileMapModel.contact);
+                    selectBType.setText(businessProfileMapModel.businessType);
+                    businessType = businessProfileMapModel.businessType;
+                    Glide.with(c).load(businessProfileMapModel.restoProfileImagePath).into(businessProfile);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
             });
             businessProfile.setOnClickListener(new View.OnClickListener() {
@@ -238,11 +267,10 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
 
         private void saveProfile(String name,String address,String contact,String emaill,String imageUrl){
             String uid = mAuth.getUid();
-            String key = databaseReference.push().getKey();
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,key);
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,businessKey);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
-            childupdates.put(key,profileValue);
+            childupdates.put(businessKey,profileValue);
 
             databaseReference.child("businessProfiles").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -276,8 +304,13 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Glide.with(getApplicationContext()).pauseRequests();
+    }
 
-        private void startLocation() {
+    private void startLocation() {
 
             provider = new LocationGooglePlayServicesProvider();
             provider.setCheckLocationSettings(true);
@@ -502,6 +535,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
 
     public void uploadItemBanner(final Uri ImageStorageURI){
 //        setProgress(true);
+        loadingContainer.setVisibility(View.VISIBLE);
         if (ImageStorageURI!=null) {
             InputStream storeBannerFile = null;
             try {
@@ -522,6 +556,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
 //                            uploadPost(caption.getText().toString(),uri.toString());
 
                             Utils.callToast(context,"Success");
+                            loadingContainer.setVisibility(View.GONE);
                             saveProfile(inpt_name.getText().toString(),
                                     inpt_address.getText().toString(),
                                     input_contact.getText().toString(),
@@ -587,29 +622,6 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                 }
             }
         }
-    }
-
-    private void uploadPost(String caption,String imgUrl){
-
-       /* PostMapModel postMapModel =  new PostMapModel(caption,imgUrl,content.getText().toString());
-
-        FirebaseFirestore.getInstance().collection(PostDataModel.BLOG_POST_REF).add(postMapModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(c,"Success",Toast.LENGTH_SHORT).show();
-                System.out.println("success");
-                container.setVisibility(View.GONE);
-                imageToUpload.setImageDrawable(null);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println(e);
-            }
-        });*/
-
-
-
     }
 
 

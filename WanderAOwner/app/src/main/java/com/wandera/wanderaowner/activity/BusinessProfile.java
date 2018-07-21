@@ -6,24 +6,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class BusinessProfile extends AppCompatActivity {
     SlidingRootNav slidingRootNav;
     Toolbar toolbar;
     DatabaseReference mDatabase;
     TextView messages,businessProfile;
+    ImageView profileIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,27 +40,6 @@ public class BusinessProfile extends AppCompatActivity {
         final String businessKey = bundle.getString("key");
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        try {
-            mDatabase.child(Utils.businessProfiles).child(businessKey).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
-                    toolbar.setTitle(businessProfileMapModel.name);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }catch (NullPointerException e){
-            Intent i = new Intent(BusinessProfile.this,OwernerRegistration.class);
-            startActivity(i);
-            finish();
-        }
-
-
-
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withMenuOpened(false)
                 .withToolbarMenuToggle(toolbar)
@@ -69,11 +54,13 @@ public class BusinessProfile extends AppCompatActivity {
                 .inject();
         messages = (TextView)findViewById(R.id.messages);
         businessProfile = (TextView) findViewById(R.id.manageProfile);
+        profileIcon = (CircleImageView) findViewById(R.id.profileIcon);
+
         businessProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(BusinessProfile.this,OwernerRegistrationUpdate.class);
-                i.putExtra("key", businessKey);
+                i.putExtra("businessKey", businessKey);
                 startActivity(i);
             }
         });
@@ -86,5 +73,31 @@ public class BusinessProfile extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        try {
+            mDatabase.child(Utils.businessProfiles).child(businessKey).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
+                    toolbar.setTitle(businessProfileMapModel.name);
+                    GlideApp.with(BusinessProfile.this).load(businessProfileMapModel.restoProfileImagePath).into(profileIcon);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }catch (NullPointerException e){
+            Intent i = new Intent(BusinessProfile.this,OwernerRegistration.class);
+            startActivity(i);
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Glide.with(getApplicationContext()).pauseRequests();
     }
 }

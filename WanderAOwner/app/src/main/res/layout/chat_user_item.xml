@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_imageOther"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="@+id/messageOther"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_image"
         android:layout_width="30dp"
         android:layout_height="30dp"

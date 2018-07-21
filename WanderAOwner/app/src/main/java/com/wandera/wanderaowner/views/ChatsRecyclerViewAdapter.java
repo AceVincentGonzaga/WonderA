@@ -17,7 +17,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.activity.BusinessProfile;
 import com.wandera.wanderaowner.datamodel.ChatsDataModel;
+import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.UserProfileMapModel;
 
 import org.w3c.dom.Text;
@@ -76,6 +78,7 @@ public class ChatsRecyclerViewAdapter
         ChatsDataModel chatsDataModel = chatsDataModelArrayList.get(position);
 
         if (chatsDataModel.getSenderId().equals(chatsDataModel.getBusinessId())) {
+            //for business owner
             holder.msg.setText(chatsDataModelArrayList.get(position).getMessage());
             holder.time.setText(chatsDataModelArrayList.get(position).getTimeStamp());
 
@@ -86,8 +89,21 @@ public class ChatsRecyclerViewAdapter
             holder.msg.setVisibility(View.VISIBLE);
             holder.time.setVisibility(View.VISIBLE);
             holder.user_image.setVisibility(View.VISIBLE);
+            FirebaseDatabase.getInstance().getReference().child("businessProfiles").child(chatsDataModel.getBusinessId()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
+                    GlideApp.with(context).load(businessProfileMapModel.restoProfileImagePath).into(holder.user_image);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
         } else {
+            //for user
             holder.messageOther.setText(chatsDataModelArrayList.get(position).getMessage());
             holder.timeOther.setText(chatsDataModelArrayList.get(position).getTimeStamp());
             holder.timeOther.setVisibility(View.VISIBLE);
@@ -96,6 +112,18 @@ public class ChatsRecyclerViewAdapter
             holder.msg.setVisibility(View.GONE);
             holder.time.setVisibility(View.GONE);
             holder.user_image.setVisibility(View.GONE);
+            FirebaseDatabase.getInstance().getReference().child("users").child(chatsDataModel.getUserId()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    UserProfileMapModel profileMapModel = dataSnapshot.getValue(UserProfileMapModel.class);
+                    GlideApp.with(context).load(profileMapModel.userImage).into(holder.user_imageOther);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
 
 
