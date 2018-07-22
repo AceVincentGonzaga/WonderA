@@ -29,11 +29,18 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Homepage"
-            android:label="@string/title_activity_homepage"></activity>
+            android:label="@string/title_activity_homepage" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".Municipality"
+            android:label="@string/title_activity_municipality" />
+        <activity
+            android:name=".Phrasebook"
+            android:label="@string/title_activity_phrasebook"></activity>
     </application>
 
 </manifest>
