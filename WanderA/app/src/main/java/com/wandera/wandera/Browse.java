@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 public class Browse extends AppCompatActivity {
@@ -58,7 +57,6 @@ public class Browse extends AppCompatActivity {
                     businessList.add(businessProfileModel);
                 }
                 bussinessListRecyclerViewAdapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -79,9 +77,8 @@ public class Browse extends AppCompatActivity {
          @Override
          public void onClick(View v) {
              selectMunicipalityDialog();
-
-    }
-});
+            }
+        });
     }
     private void selectMunicipalityDialog(){
         final CharSequence[] items = {"Bugasong", "Laua-an", "Barbaza", "Tibiao", "Culasi", "Sebaste", "Pandan", "Libertad", "Caluya"};
