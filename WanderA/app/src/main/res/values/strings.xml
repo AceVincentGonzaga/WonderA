@@ -9,6 +9,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_homepage">Homepage</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_transpo">Transpo</string>
+    <string name="title_phrasebook">Phrasebook</string>
+    <string name="title_itinerary">Itinerary</string>
+    <string name="title_activity_municipality">Municipality</string>
+    <string name="title_activity_phrasebook">Phrasebook</string>
 </resources>
