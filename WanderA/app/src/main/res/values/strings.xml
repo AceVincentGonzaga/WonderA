@@ -14,4 +14,7 @@
     <string name="title_itinerary">Itinerary</string>
     <string name="title_activity_municipality">Municipality</string>
     <string name="title_activity_phrasebook">Phrasebook</string>
+    <string name="title_activity_transpo">Transpo</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
