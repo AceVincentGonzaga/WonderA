@@ -110,7 +110,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             context = OwernerRegistrationUpdate.this;
-            setContentView(R.layout.activity_owerner_registration);
+            setContentView(R.layout.activity_owerner_registration_update);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
             inpt_address = (TextInputEditText) findViewById(R.id.input_address);
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
@@ -118,6 +118,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             saveProfile = (TextView) findViewById(R.id.saveProfile);
             selectBType = (TextView) findViewById(R.id.selectBType);
             businessProfile = (CircleImageView) findViewById(R.id.businessProfile);
+
             mStorageRef = FirebaseStorage.getInstance().getReference();
             c = OwernerRegistrationUpdate.this;
             databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -267,10 +268,11 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
 
         private void saveProfile(String name,String address,String contact,String emaill,String imageUrl){
             String uid = mAuth.getUid();
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,businessKey);
+            String key = databaseReference.child("businessProfiles").push().getKey();
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,key,imageUrl);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
-            childupdates.put(businessKey,profileValue);
+            childupdates.put(key,profileValue);
 
             databaseReference.child("businessProfiles").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
