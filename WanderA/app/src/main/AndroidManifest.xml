@@ -40,7 +40,10 @@
             android:label="@string/title_activity_municipality" />
         <activity
             android:name=".Phrasebook"
-            android:label="@string/title_activity_phrasebook"></activity>
+            android:label="@string/title_activity_phrasebook" />
+        <activity
+            android:name=".Transpo"
+            android:label="@string/title_activity_transpo"></activity>
     </application>
 
 </manifest>

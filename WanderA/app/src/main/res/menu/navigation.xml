@@ -12,7 +12,7 @@
         android:title="Transpo" />
 
     <item
-        android:id="@+id/phrasebook"
+        android:id="@+id/navigation_phrasebook"
         android:icon="@drawable/comments"
         android:title="Phrasebook" />
     <item
