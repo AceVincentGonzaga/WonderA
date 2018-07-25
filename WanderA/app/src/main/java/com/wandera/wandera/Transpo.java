@@ -20,11 +20,14 @@ public class Transpo extends AppCompatActivity {
                 case R.id.navigation_home:
                     mTextMessage.setText(R.string.title_home);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_transpo:
+                    mTextMessage.setText(R.string.title_transpo);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_phrasebook:
                     mTextMessage.setText(R.string.title_notifications);
+                    return true;
+                case R.id.navigation_itinerary:
+                    mTextMessage.setText(R.string.title_itinerary);
                     return true;
             }
             return false;
