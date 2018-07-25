@@ -22,16 +22,16 @@ public class Homepage extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+
                     return true;
                 case R.id.navigation_transpo:
-                    mTextMessage.setText(R.string.title_transpo);
+
                     return true;
                 case R.id.navigation_phrasebook:
-                    mTextMessage.setText(R.string.title_notifications);
+
                     return true;
                 case R.id.navigation_itinerary:
-                    mTextMessage.setText(R.string.title_itinerary);
+
                     return true;
 
             }

@@ -131,33 +131,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String message){
-       /* final String key = mDatabase.push().getKey();
-        final String userID= mAuth.getCurrentUser().getUid();
-        String date = Utils.getDateToStrig();
-        String userName= mAuth.getCurrentUser().getDisplayName();
-        String userImagePath= mAuth.getCurrentUser().getPhotoUrl().toString();
-        ChatMessageMapModel chatMessageMapModel= new ChatMessageMapModel(userID, userName, date, message, businessKey, userImagePath, userID);
-        Map<String,Object> profileValue = chatMessageMapModel.toMap();
-        final Map<String,Object> childupdates = new HashMap<>();
-        childupdates.put(key,profileValue);
-
-        mDatabase.child(Utils.chats).child(businessKey).child(userID).updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Utils.callToast(ChatActivity.this,"Message Sent");
-                inputMessage.setText("");
-                ChatListMapModel chatListMapModel = new ChatListMapModel(userID, key, businessKey);
-                Map<String, Object> userKey = chatListMapModel.toMap();
-                final Map<String, Object>updates = new HashMap<>();
-                updates.put(userID,userKey);
-                mDatabase.child(Utils.chatUserList).child(businessKey).updateChildren(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                });
-            }
-        });*/
        final String key = mDatabase.push().getKey();
        ChatMessageMapModel chatMessageMapModel = new ChatMessageMapModel(userId, businessName,
                Utils.getDateToStrig(), message, businessKey,businessKey);

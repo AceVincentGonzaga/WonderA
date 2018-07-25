@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,12 +18,14 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -55,7 +58,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
+import com.wandera.wanderaowner.datamodel.MunicipalityDataModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
+import com.wandera.wanderaowner.mapModel.MunicipalityMapModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -79,7 +84,7 @@ import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProv
 public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLocationUpdatedListener, OnActivityUpdatedListener, OnGeofencingTransitionListener {
         List<String> categories = new ArrayList<String>();
         Spinner spinner;
-        TextInputEditText inpt_name,inpt_address,input_contact, inpt_email;
+        TextInputEditText inpt_name,input_contact, inpt_email;
         TextView saveProfile,selectBType;
         Context context;
         FirebaseAuth mAuth;
@@ -100,6 +105,10 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         boolean imageSet = false;
         String businessKey;
         ConstraintLayout loadingContainer;
+        TextView selectMunicipality;
+        String municipality;
+        String lastImagePath;
+        TextView setLocation;
 
     @Override
     protected void onStart() {
@@ -110,13 +119,15 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             context = OwernerRegistrationUpdate.this;
-            setContentView(R.layout.activity_owerner_registration_update);
+            setContentView(R.layout.activity_owerner_registration);
+            setLocation = (TextView) findViewById(R.id.setLocation);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
-            inpt_address = (TextInputEditText) findViewById(R.id.input_address);
+
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
             saveProfile = (TextView) findViewById(R.id.saveProfile);
             selectBType = (TextView) findViewById(R.id.selectBType);
+            selectMunicipality = (TextView) findViewById(R.id.selectMunicipality);
             businessProfile = (CircleImageView) findViewById(R.id.businessProfile);
 
             mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -130,15 +141,36 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             loadingContainer = (ConstraintLayout) findViewById(R.id.loadingContainer);
             getStoragePermission();
             mAuth = FirebaseAuth.getInstance();
+            setLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectBusinessLocation();
+                }
+            });
             saveProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (!validate()){
                         Utils.callToast(context,"incomplete");
-
                     }else {
-                       uploadItemBanner(bannerUri);
+
+                       if (bannerUri==null){
+                           saveProfile(inpt_name.getText().toString(),
+                                   municipality,
+                                   input_contact.getText().toString(),
+                                   inpt_email.getText().toString(),lastImagePath
+                           );
+                       }else {
+
+                           uploadItemBanner(bannerUri);
+                       }
                     }
+                }
+            });
+            selectMunicipality.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectMunicipality();
                 }
             });
 
@@ -149,11 +181,34 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
                     inpt_name.setText(businessProfileMapModel.name);
                     inpt_email.setText(businessProfileMapModel.email);
-                    inpt_address.setText(businessProfileMapModel.address);
                     input_contact.setText(businessProfileMapModel.contact);
                     selectBType.setText(businessProfileMapModel.businessType);
+                    imageSet = true;
+                    lastImagePath = businessProfileMapModel.restoProfileImagePath;
                     businessType = businessProfileMapModel.businessType;
-                    Glide.with(c).load(businessProfileMapModel.restoProfileImagePath).into(businessProfile);
+                    try {
+                        Glide.with(c).load(businessProfileMapModel.restoProfileImagePath).into(businessProfile);
+
+                    }catch (IllegalArgumentException e){
+
+                    }
+
+                    FirebaseDatabase.getInstance().getReference().child("municipality").child(businessProfileMapModel.municipality).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            try {
+                                MunicipalityMapModel municipalityMapModel = dataSnapshot.getValue(MunicipalityMapModel.class);
+                                selectMunicipality.setText(municipalityMapModel.municipality);
+                            }catch (NullPointerException e){
+                                selectMunicipality.setText("");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
 
                 }
 
@@ -168,13 +223,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     performFileSearch();
                 }
             });
-            inpt_address.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(OwernerRegistrationUpdate.this, GetLocationActivity.class);
-                    startActivity(i);
-                }
-            });
+
             try {
                 inpt_email.setText(mAuth.getCurrentUser().getEmail());
                 input_contact.setText(mAuth.getCurrentUser().getPhoneNumber());
@@ -187,7 +236,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                 ActivityCompat.requestPermissions(OwernerRegistrationUpdate.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
                 return;
             }
-            startLocation();
+
             selectBType.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -243,9 +292,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             if (inpt_name.getText().toString().trim().length()==0){
                 val = false;
             }
-            if (inpt_address.getText().toString().trim().length()==0){
-                val = false;
-            }
+
             if (input_contact.getText().toString().trim().length()==0){
                 val = false;
             }
@@ -268,8 +315,8 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
 
         private void saveProfile(String name,String address,String contact,String emaill,String imageUrl){
             String uid = mAuth.getUid();
-            String key = databaseReference.child("businessProfiles").push().getKey();
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,key,imageUrl);
+            String key = businessKey;
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,key,address);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
             childupdates.put(key,profileValue);
@@ -277,8 +324,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             databaseReference.child("businessProfiles").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                Intent i = new Intent(context,ManageBusiness.class);
-                startActivity(i);
+
                 finish();
                 }
             });
@@ -288,20 +334,12 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         private void showLast() {
             Location lastLocation = SmartLocation.with(this).location().getLastLocation();
             if (lastLocation != null) {
-                inpt_address.setText(
-                        String.format("",
-                                lastLocation.getLatitude(),
-                                lastLocation.getLongitude())
-                );
+
             }
 
             DetectedActivity detectedActivity = SmartLocation.with(this).activity().getLastActivity();
             if (detectedActivity != null) {
-                inpt_address.setText(
-                        String.format("",
-                                getNameFromType(detectedActivity),
-                                detectedActivity.getConfidence())
-                );
+
             }
         }
 
@@ -329,7 +367,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
 
         private void stopLocation() {
             SmartLocation.with(this).location().stop();
-            inpt_address.setText("Location stopped!");
+
 
             SmartLocation.with(this).activity().stop();
     //        activityText.setText("Activity Recognition stopped!");
@@ -343,8 +381,6 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                 final String text = String.format("",
                         location.getLatitude(),
                         location.getLongitude());
-                inpt_address.setText(text);
-
                 // We are going to get the address for the current position
                 SmartLocation.with(this).geocoding().reverse(location, new OnReverseGeocodingListener() {
                     @Override
@@ -358,12 +394,12 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                                 addressElements.add(result.getAddressLine(i));
                             }
                             builder.append(TextUtils.join(", ", addressElements));
-                            inpt_address.setText(builder.toString());
+
                         }
                     }
                 });
             } else {
-                inpt_address.setText("Null location");
+
             }
         }
 
@@ -531,7 +567,6 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         Glide.with(c).load(uri).into(imageView);
         imageView.setPadding(0,0,0,0);
 
-
     }
 
 
@@ -543,7 +578,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             try {
                 storeBannerFile = getContentResolver().openInputStream(ImageStorageURI);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+
             }
             final InputStream file = storeBannerFile;
 
@@ -558,9 +593,9 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
 //                            uploadPost(caption.getText().toString(),uri.toString());
 
                             Utils.callToast(context,"Success");
-                            loadingContainer.setVisibility(View.GONE);
+
                             saveProfile(inpt_name.getText().toString(),
-                                    inpt_address.getText().toString(),
+                                    municipality,
                                     input_contact.getText().toString(),
                                     inpt_email.getText().toString(),uri.toString()
                             );
@@ -648,6 +683,45 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             }
         }
         return result;
+    }
+
+    private void selectMunicipality(){
+        final ArrayList<String> mun = new ArrayList<>();
+        final ArrayList<MunicipalityDataModel> municipalityDataModelArrayList = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("municipality").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    MunicipalityDataModel municipalityDataModel = new MunicipalityDataModel();
+                    MunicipalityMapModel municipalityMapModel = dataSnapshot1.getValue(MunicipalityMapModel.class);
+                    municipalityDataModel.setKey(municipalityMapModel.key);
+                    municipalityDataModel.setMunicipality(municipalityMapModel.municipality);
+                    municipalityDataModelArrayList.add(municipalityDataModel);
+                    mun.add(municipalityMapModel.municipality);
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(OwernerRegistrationUpdate.this);
+                builder.setTitle("Select Municipality");
+                builder.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, mun),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectMunicipality.setText(mun.get(which));
+                                municipality = municipalityDataModelArrayList.get(which).getKey();
+                            }
+                        });
+                builder.show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void selectBusinessLocation(){
+        Intent i = new Intent(context,MapsProfileUpdateActivity.class);
+        i.putExtra("key",businessKey);
+        startActivity(i);
+
     }
 
 }
