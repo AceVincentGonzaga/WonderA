@@ -62,6 +62,7 @@ public class BusinessProfile extends AppCompatActivity {
                 Intent i = new Intent(BusinessProfile.this,OwernerRegistrationUpdate.class);
                 i.putExtra("businessKey", businessKey);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -71,6 +72,7 @@ public class BusinessProfile extends AppCompatActivity {
                 Intent i=  new Intent(BusinessProfile.this, InboxActivity.class);
                 i.putExtra("key", businessKey);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -80,7 +82,11 @@ public class BusinessProfile extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
                     toolbar.setTitle(businessProfileMapModel.name);
-                    GlideApp.with(BusinessProfile.this).load(businessProfileMapModel.restoProfileImagePath).into(profileIcon);
+                   try {
+                       GlideApp.with(BusinessProfile.this).load(businessProfileMapModel.restoProfileImagePath).into(profileIcon);
+                   }catch (IllegalArgumentException e){
+
+                   }
                 }
 
                 @Override

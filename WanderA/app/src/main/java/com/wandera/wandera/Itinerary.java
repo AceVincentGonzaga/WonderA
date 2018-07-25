@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class Transpo extends AppCompatActivity {
+public class Itinerary extends AppCompatActivity {
 
     private TextView mTextMessage;
 
@@ -19,22 +19,19 @@ public class Transpo extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    Intent home= new Intent(Transpo.this, Homepage.class);
-                    startActivity(home);
-                    finish();
                     return true;
                 case R.id.navigation_transpo:
+                    Intent transpo= new Intent(Itinerary.this, Transpo.class);
+                    startActivity(transpo);
                     return true;
                 case R.id.navigation_phrasebook:
-                    Intent phrasebook= new Intent(Transpo.this, Phrasebook.class);
+                    Intent phrasebook= new Intent(Itinerary.this, Phrasebook.class);
                     startActivity(phrasebook);
-                    finish();
                     return true;
                 case R.id.navigation_itinerary:
-                    Intent itinerary= new Intent(Transpo.this, Itinerary.class);
-                    startActivity(itinerary);
-                    finish();
+
                     return true;
+
             }
             return false;
         }
@@ -43,12 +40,11 @@ public class Transpo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transpo);
+        setContentView(R.layout.activity_itinerary);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_transpo);
     }
 
 }

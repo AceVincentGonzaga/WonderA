@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,15 +41,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
+import com.wandera.wanderaowner.datamodel.MunicipalityDataModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
+import com.wandera.wanderaowner.mapModel.MunicipalityMapModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -87,6 +93,7 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
         CircleImageView businessProfile;
         boolean imageSet = false;
         Uri bannerUri;
+        ConstraintLayout loadingContainer;
         StorageReference mStorageRef;
         TextView selectMunicipality;
         String municipality;
@@ -104,6 +111,7 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
             context = OwernerRegistration.this;
             setContentView(R.layout.activity_owerner_registration);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
+        loadingContainer  = (ConstraintLayout) findViewById(R.id.loadingContainer);
 
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
@@ -389,7 +397,7 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
         }
 
     public void performFileSearch() {
-
+        getStoragePermission();
         // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
         // browser.
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -443,14 +451,12 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
         imageSet = true;
         Glide.with(OwernerRegistration.this).load(uri).into(imageView);
         imageView.setPadding(0,0,0,0);
-
-
     }
 
 
     public void uploadItemBanner(final Uri ImageStorageURI){
 //        setProgress(true);
-//        loadingContainer.setVisibility(View.VISIBLE);
+        loadingContainer.setVisibility(View.VISIBLE);
         if (ImageStorageURI!=null) {
             InputStream storeBannerFile = null;
             try {
@@ -471,7 +477,7 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
 //                            uploadPost(caption.getText().toString(),uri.toString());
 
                             Utils.callToast(context,"Success");
-//                            loadingContainer.setVisibility(View.GONE);
+                            loadingContainer.setVisibility(View.GONE);
                             saveProfile(inpt_name.getText().toString(),
                                     input_contact.getText().toString(),
                                     inpt_email.getText().toString(),uri.toString()
@@ -502,23 +508,6 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
 
     }
 
-    private void getStoragePermission(){
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            access_storage = true;
-
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                    storagepermision_access_code);
-        }
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
@@ -565,20 +554,57 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
         return result;
     }
 
-    private void selectMunicipality(){
-        final String[] items = {"Tibiao", "Culasi", "Sebaste","Pandan","Libertad","Caluya"};
+    private void getStoragePermission(){
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            access_storage = true;
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Municipality");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                // Do something with the selection
-                municipality = items[item];
-                selectMunicipality.setText(municipality);
-                dialog.dismiss();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                    storagepermision_access_code);
+        }
+    }
+    private void selectMunicipality(){
+        final String[] items ={};
+        final ArrayList<String> mun = new ArrayList<>();
+        final ArrayList<MunicipalityDataModel> municipalityDataModelArrayList = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("municipality").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    MunicipalityDataModel municipalityDataModel = new MunicipalityDataModel();
+                    MunicipalityMapModel municipalityMapModel = dataSnapshot1.getValue(MunicipalityMapModel.class);
+                    municipalityDataModel.setKey(municipalityMapModel.key);
+                    municipalityDataModel.setMunicipality(municipalityMapModel.municipality);
+                    municipalityDataModelArrayList.add(municipalityDataModel);
+                    mun.add(municipalityMapModel.municipality);
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(OwernerRegistration.this);
+                builder.setTitle("Select Municipality");
+                builder.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, mun),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectMunicipality.setText(mun.get(which));
+                                municipality = municipalityDataModelArrayList.get(which).getKey();
+                            }
+                        });
+                builder.show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
-        builder.show();
+
+
     }
 
     private void selectBusinessLocation(){

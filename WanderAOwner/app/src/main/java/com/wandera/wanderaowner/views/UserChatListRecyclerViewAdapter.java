@@ -49,12 +49,14 @@ public class UserChatListRecyclerViewAdapter
         public ConstraintLayout container;
 
 
+
         public MyViewHolder(View view){
             super(view);
             userImage=(CircleImageView) view.findViewById(R.id.userImage);
             userName=(TextView) view.findViewById(R.id.userName);
             preview = (TextView) view.findViewById(R.id.preview);
             container = (ConstraintLayout) view.findViewById(R.id.container);
+
 
         }
     }

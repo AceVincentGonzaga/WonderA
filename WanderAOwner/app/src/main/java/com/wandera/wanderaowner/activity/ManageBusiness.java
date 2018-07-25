@@ -53,7 +53,7 @@ public class ManageBusiness extends AppCompatActivity {
         bussinessListRecyclerViewAdapter.notifyDataSetChanged();
 
 
-        databaseReference.child("businessProfiles").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("businessProfiles").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -72,6 +72,7 @@ public class ManageBusiness extends AppCompatActivity {
                                             BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                                             businessProfileModel.setName(businessProfileMapModel.name);
                                             businessProfileModel.setKey(businessProfileMapModel.key);
+                                            businessProfileModel.setBusinessType(businessProfileMapModel.businessType);
                                             businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
                                             businessProfileModelArrayList.add(businessProfileModel);
                                         }
@@ -108,9 +109,20 @@ public class ManageBusiness extends AppCompatActivity {
         bussinessListRecyclerViewAdapter.setOnItemClickListener(new BussinessListRecyclerViewAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position, BusinessProfileModel businessProfileModelArraylist) {
-                Intent i = new Intent(ManageBusiness.this, BusinessProfile.class);
-                i.putExtra("key",businessProfileModelArraylist.getKey());
-                startActivity(i);
+                if (businessProfileModelArraylist.getName().equals("Add Business")){
+                    Intent i = new Intent(ManageBusiness.this,OwernerRegistration.class);
+                    startActivity(i);
+
+                }else {
+                    if (businessProfileModelArraylist.getBusinessType().equals("Restaurants")){
+                        Intent i = new Intent(ManageBusiness.this, BusinessProfileRestaurant.class);
+                        i.putExtra("key",businessProfileModelArraylist.getKey());
+                        startActivity(i);
+                    }
+                }
+
+
+
             }
         });
 

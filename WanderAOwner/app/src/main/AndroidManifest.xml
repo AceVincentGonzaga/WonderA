@@ -29,6 +29,7 @@
         <activity android:name=".activity.InboxActivity"></activity>
         <activity android:name=".activity.MapsProfileUpdateActivity"/>
         <activity android:name=".activity.OwernerRegistrationUpdate"/>
+        <activity android:name=".activity.BusinessProfileRestaurant"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
