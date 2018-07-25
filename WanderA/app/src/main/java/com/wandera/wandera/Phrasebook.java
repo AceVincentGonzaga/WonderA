@@ -1,5 +1,6 @@
 package com.wandera.wandera;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,17 +19,25 @@ public class Phrasebook extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    Intent home= new Intent(Phrasebook.this, Transpo.class);
+                    startActivity(home);
+                    finish();
                     return true;
                 case R.id.navigation_transpo:
-                    mTextMessage.setText(R.string.title_transpo);
+                    Intent transpo= new Intent(Phrasebook.this, Transpo.class);
+                    startActivity(transpo);
+                    finish();
                     return true;
                 case R.id.navigation_phrasebook:
-                    mTextMessage.setText(R.string.title_notifications);
+                    Intent phrasebook= new Intent(Phrasebook.this, Phrasebook.class);
+                    startActivity(phrasebook);
                     return true;
                 case R.id.navigation_itinerary:
-                    mTextMessage.setText(R.string.title_itinerary);
+                    Intent itinerary= new Intent(Phrasebook.this, Itinerary.class);
+                    startActivity(itinerary);
+                    finish();
                     return true;
+
             }
             return false;
         }
@@ -42,6 +51,7 @@ public class Phrasebook extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_phrasebook);
     }
 
 }
