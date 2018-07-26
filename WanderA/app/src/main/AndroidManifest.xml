@@ -43,7 +43,10 @@
             android:label="@string/title_activity_phrasebook" />
         <activity
             android:name=".Transpo"
-            android:label="@string/title_activity_transpo"></activity>
+            android:label="@string/title_activity_transpo" />
+        <activity
+            android:name=".Itinerary"
+            android:label="@string/title_activity_itinerary"></activity>
     </application>
 
 </manifest>

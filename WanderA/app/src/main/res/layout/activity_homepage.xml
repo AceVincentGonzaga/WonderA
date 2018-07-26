@@ -75,29 +75,25 @@
                 android:id="@+id/municipality_button"
                 android:layout_width="120dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/municipality_button"
                 android:padding="8dp"
                 android:text="Municipality"
                 android:textColor="#fff"
                 android:textSize="12dp"
-                app:layout_constraintEnd_toStartOf="@+id/all_button"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/view2"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <Button
                 android:id="@+id/all_button"
                 android:layout_width="120dp"
                 android:layout_height="30dp"
-                android:layout_marginEnd="50dp"
                 android:background="@drawable/all_button"
                 android:padding="8dp"
                 android:text="All"
-               android:textSize="12dp"
                 android:textColor="#fff"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="12dp"
+                app:layout_constraintStart_toEndOf="@+id/view2"
                 app:layout_constraintTop_toTopOf="@+id/municipality_button" />
 
             <android.support.v7.widget.RecyclerView
@@ -112,6 +108,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/municipality_button" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/municipality_list"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
