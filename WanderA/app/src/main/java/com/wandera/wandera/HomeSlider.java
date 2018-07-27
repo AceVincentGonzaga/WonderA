@@ -1,7 +1,10 @@
 package com.wandera.wandera;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -14,11 +17,44 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class HomeSlider extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     EditText selectMunicipality;
+    private TextView mTextMessage;
+    private Button municipalitybutton;
+    private Button allbutton;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    return true;
+                case R.id.navigation_transpo:
+                    Intent transpo= new Intent(HomeSlider.this, Transpo.class);
+                    startActivity(transpo);
+                    finish();
+                    return true;
+                case R.id.navigation_phrasebook:
+                    Intent phrasebook= new Intent(HomeSlider.this, Phrasebook.class);
+                    startActivity(phrasebook);
+                    finish();
+                    return true;
+                case R.id.navigation_itinerary:
+                    Intent itinerary= new Intent(HomeSlider.this, Itinerary.class);
+                    startActivity(itinerary);
+                    finish();
+                    return true;
+
+            }
+            return false;
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,15 +62,6 @@ public class HomeSlider extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         selectMunicipality = (EditText)findViewById(R.id.selectMunicipality);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -44,6 +71,15 @@ public class HomeSlider extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mTextMessage = (TextView) findViewById(R.id.message);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_home);
+        municipalitybutton= (Button) findViewById(R.id.municipality_button);
+        municipalitybutton.setSelected(true);
+        municipalitybutton.setTextColor(getApplication().getResources().getColor(R.color.background));
+
     }
 
     @Override

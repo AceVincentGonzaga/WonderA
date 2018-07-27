@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference().child("users").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Intent i = new Intent(MainActivity.this,Homepage.class);
+                Intent i = new Intent(MainActivity.this,HomeSlider.class);
                 startActivity(i);
                 finish();
 
