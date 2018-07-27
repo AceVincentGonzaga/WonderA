@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.wandera.wanderaowner.GlideApp;
@@ -21,6 +23,8 @@ import com.wandera.wanderaowner.datamodel.MenuDataModel;
 import com.wandera.wanderaowner.datamodel.UserListDataModel;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Keji's Lab on 19/01/2018.
@@ -34,11 +38,14 @@ public class MenusItemRecyclerViewAdapter
     private String businessKey;
 
 
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public  ConstraintLayout constraintLayout;
         public ImageView menuBackGroundImage;
         public TextView menuTitle;
         public ImageView addImage;
+        public TextView menuPrice;
+        public RatingBar menuRating;
 
         public MyViewHolder(View view){
             super(view);
@@ -46,6 +53,8 @@ public class MenusItemRecyclerViewAdapter
             menuBackGroundImage = (ImageView) view.findViewById(R.id.menuBackGroundImage);
             menuTitle = (TextView) view.findViewById(R.id.menuTitle);
             addImage = (ImageView) view.findViewById(R.id.addImage);
+            menuPrice = (TextView) view.findViewById(R.id.menuPrice);
+            menuRating = (RatingBar) view.findViewById(R.id.menuRating);
 
         }
     }
@@ -66,9 +75,12 @@ public class MenusItemRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        MenuDataModel menuDataModel = menuDataModelArrayList.get(position);
+        final MenuDataModel menuDataModel = menuDataModelArrayList.get(position);
         if (menuDataModel.getMenuName().equals("addMenu")){
             holder.addImage.setVisibility(View.VISIBLE);
+            holder.menuTitle.setVisibility(View.GONE);
+            holder.menuPrice.setVisibility(View.GONE);
+            holder.menuRating.setVisibility(View.GONE);
             holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -90,6 +102,17 @@ public class MenusItemRecyclerViewAdapter
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(true);
                     dialog.setContentView(R.layout.dialog_add_menu);
+                    TextView menuTitle = (TextView) dialog.findViewById(R.id.menuTitle);
+                    Button btnDone = (Button) dialog.findViewById(R.id.btnDone);
+                    menuTitle.setText(menuDataModel.getMenuName());
+                    CircleImageView menuIcon = (CircleImageView) dialog.findViewById(R.id.menuIcon);
+                    GlideApp.with(context).load(menuDataModel.getMenuIconPath()).centerCrop().into(menuIcon);
+                    btnDone.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
                     final Window window = dialog.getWindow();
                     window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
                     window.setBackgroundDrawableResource(R.color.colorTransparent);

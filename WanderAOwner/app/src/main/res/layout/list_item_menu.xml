@@ -53,40 +53,37 @@
             <TextView
                 android:id="@+id/menuTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="16dp"
                 android:clickable="false"
                 android:text="Add Menu"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/menuBackGroundImage"
-                app:layout_constraintTop_toBottomOf="@+id/addImage"
-                tools:layout_editor_absoluteX="33dp" />
+                app:layout_constraintBottom_toTopOf="@+id/menuPrice"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/menuPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="0dp"
                 android:text="Menu Price"
                 android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/menuTitle" />
+                app:layout_constraintBottom_toTopOf="@+id/menuRating"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <RatingBar
-                android:id="@+id/ratingBar"
+                android:id="@+id/menuRating"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="0dp"
                 android:stepSize="5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/menuPrice" />
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
+                app:layout_constraintStart_toStartOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
