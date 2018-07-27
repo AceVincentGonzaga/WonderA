@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <group>
+            <item android:id="@+id/nav_item_one"
+                android:icon="@drawable/ic_drafts_black_24dp"
+                android:title="Messages" />
+            <item android:id="@+id/nav_item_two"
+
+                android:title="Signout" />
+
+        </group>
+
+    </menu>
+</menu>
