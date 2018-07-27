@@ -75,7 +75,7 @@ import io.nlopez.smartlocation.geofencing.model.GeofenceModel;
 import io.nlopez.smartlocation.geofencing.utils.TransitionGeofence;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 
-public class OwernerRegistration extends AppCompatActivity implements OnLocationUpdatedListener, OnActivityUpdatedListener, OnGeofencingTransitionListener {
+public class OwernerRegistration extends AppCompatActivity {
         List<String> categories = new ArrayList<String>();
         Spinner spinner;
         TextInputEditText inpt_name,input_contact, inpt_email;
@@ -165,7 +165,7 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
                 ActivityCompat.requestPermissions(OwernerRegistration.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
                 return;
             }
-            startLocation();
+
             selectBType.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -278,112 +278,8 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
 
 
 
-        private void startLocation() {
-
-            provider = new LocationGooglePlayServicesProvider();
-            provider.setCheckLocationSettings(true);
-
-            SmartLocation smartLocation = new SmartLocation.Builder(this).logging(true).build();
-
-            smartLocation.location(provider).start(this);
-            smartLocation.activity().start(this);
-
-            // Create some geofences
-            GeofenceModel mestalla = new GeofenceModel.Builder("1").setTransition(Geofence.GEOFENCE_TRANSITION_ENTER).setLatitude(39.47453120000001).setLongitude(-0.358065799999963).setRadius(500).build();
-            smartLocation.geofencing().add(mestalla).start(this);
-        }
-
-        private void stopLocation() {
-            SmartLocation.with(this).location().stop();
 
 
-            SmartLocation.with(this).activity().stop();
-    //        activityText.setText("Activity Recognition stopped!");
-
-            SmartLocation.with(this).geofencing().stop();
-          //  geofenceText.setText("Geofencing stopped!");
-        }
-
-        private void showLocation(Location location) {
-            if (location != null) {
-                final String text = String.format("",
-                        location.getLatitude(),
-                        location.getLongitude());
-
-
-                // We are going to get the address for the current position
-                SmartLocation.with(this).geocoding().reverse(location, new OnReverseGeocodingListener() {
-                    @Override
-                    public void onAddressResolved(Location original, List<Address> results) {
-                        if (results.size() > 0) {
-                            Address result = results.get(0);
-                            StringBuilder builder = new StringBuilder(text);
-                            builder.append("");
-                            List<String> addressElements = new ArrayList<>();
-                            for (int i = 0; i <= result.getMaxAddressLineIndex(); i++) {
-                                addressElements.add(result.getAddressLine(i));
-                            }
-                            builder.append(TextUtils.join(", ", addressElements));
-
-                        }
-                    }
-                });
-            } else {
-
-            }
-        }
-
-        private void showActivity(DetectedActivity detectedActivity) {
-            if (detectedActivity != null) {
-    //            activityText.setText(
-    //                    String.format("Activity %s with %d%% confidence",
-    //                            getNameFromType(detectedActivity),
-    //                            detectedActivity.getConfidence())
-    //            );
-            } else {
-    //            activityText.setText("Null activity");
-            }
-        }
-
-        private void showGeofence(Geofence geofence, int transitionType) {
-    //        if (geofence != null) {
-    //            geofenceText.setText("Transition " + getTransitionNameFromType(transitionType) + " for Geofence with id = " + geofence.getRequestId());
-    //        } else {
-    //            geofenceText.setText("Null geofence");
-    //        }
-        }
-
-        @Override
-        public void onLocationUpdated(Location location) {
-            showLocation(location);
-        }
-
-        @Override
-        public void onActivityUpdated(DetectedActivity detectedActivity) {
-            showActivity(detectedActivity);
-        }
-
-        @Override
-        public void onGeofenceTransition(TransitionGeofence geofence) {
-            showGeofence(geofence.getGeofenceModel().toGeofence(), geofence.getTransitionType());
-        }
-
-        private String getNameFromType(DetectedActivity activityType) {
-            switch (activityType.getType()) {
-                case DetectedActivity.IN_VEHICLE:
-                    return "in_vehicle";
-                case DetectedActivity.ON_BICYCLE:
-                    return "on_bicycle";
-                case DetectedActivity.ON_FOOT:
-                    return "on_foot";
-                case DetectedActivity.STILL:
-                    return "still";
-                case DetectedActivity.TILTING:
-                    return "tilting";
-                default:
-                    return "unknown";
-            }
-        }
 
         private String getTransitionNameFromType(int transitionType) {
             switch (transitionType) {
@@ -439,10 +335,7 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
             }else {
                 System.out.println("null?");
             }
-
         }
-
-
     }
     private void setImage(Uri uri, ImageView imageView){
         // floatClearImage.setVisibility(View.VISIBLE);
@@ -466,7 +359,7 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
             }
             final InputStream file = storeBannerFile;
 
-            final StorageReference ImagestoreRef = mStorageRef.child("blog/images"+ File.separator+ File.separator + getFileName(ImageStorageURI)
+            final StorageReference ImagestoreRef = mStorageRef.child("images"+ File.separator+ File.separator + getFileName(ImageStorageURI)
                     +storeBannerFile.toString()+File.separator+getFileName(ImageStorageURI));
             ImagestoreRef.putStream(storeBannerFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -513,10 +406,10 @@ public class OwernerRegistration extends AppCompatActivity implements OnLocation
                                            @NonNull String permissions[],
                                            @NonNull int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION_ID && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startLocation();
+
         }
         if (requestCode == LOCATION_PERMISSION_ID && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startLocation();
+
         }
         access_storage = false;
         switch (requestCode) {

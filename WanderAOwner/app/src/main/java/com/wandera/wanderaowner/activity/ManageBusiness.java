@@ -37,10 +37,12 @@ public class ManageBusiness extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_business);
         businessItemsRecyclerView = (RecyclerView) findViewById(R.id.businesItemsRV);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         context = ManageBusiness.this;
         container= (ConstraintLayout)findViewById(R.id.container);
+        databaseReference.child("businessProfiles").keepSynced(true);
 
         bussinessListRecyclerViewAdapter = new BussinessListRecyclerViewAdapter(context,businessProfileModelArrayList);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);

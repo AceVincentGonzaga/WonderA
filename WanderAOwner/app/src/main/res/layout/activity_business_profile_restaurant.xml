@@ -3,46 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#fff"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".activity.BusinessProfile">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
         android:id="@+id/appbar"
-        app:elevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
-        android:layout_height="50dp">
+        app:elevation="0dp">
 
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:background="@color/white" />
 
     </android.support.design.widget.AppBarLayout>
 
 
-
     <android.support.v7.widget.RecyclerView
-        android:layout_width="0dp"
         android:id="@+id/categoryList"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/addCategory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
-    <TextView
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="16dp"
-        android:text="menu"
+    <Button
+        android:id="@+id/addCategory"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:drawableTint="@color/white"
+        android:text="Add category"
+        android:drawableStart="@drawable/ic_add_black_24dp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:background="@drawable/button_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

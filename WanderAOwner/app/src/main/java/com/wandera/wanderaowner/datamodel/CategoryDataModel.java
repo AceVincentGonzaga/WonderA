@@ -4,6 +4,11 @@ public class CategoryDataModel {
 
     private String category;
     private String key;
+    private String businessKey;
+
+    public void setBusinessKey(String businessKey) {
+        this.businessKey = businessKey;
+    }
 
     public void setKey(String key) {
         this.key = key;
@@ -19,6 +24,10 @@ public class CategoryDataModel {
 
     public String getCategory() {
         return category;
+    }
+
+    public String getBusinessKey() {
+        return businessKey;
     }
 }
 

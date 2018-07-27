@@ -12,6 +12,7 @@ import java.util.Map;
 public class CategoryMapModel {
     public String key;
     public String category;
+    public String businessKey;
 
 
 
@@ -19,10 +20,11 @@ public class CategoryMapModel {
 
     }
     public CategoryMapModel(String category,
-                            String key)
+                            String key,String businessKey)
                           {
        this.key = key;
         this.category = category;
+        this.businessKey =  businessKey;
 
     }
     @Exclude
@@ -31,6 +33,7 @@ public class CategoryMapModel {
 
         result.put("key", key);
         result.put("category", category);
+        result.put("businessKey",businessKey);
 
         return result;
     }

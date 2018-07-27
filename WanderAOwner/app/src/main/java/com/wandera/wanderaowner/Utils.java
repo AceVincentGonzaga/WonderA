@@ -79,4 +79,7 @@ public class Utils {
 
         return formattedDate;
     }
+
+    public static String RESTAURANT_DIR = "restaurant";
+    public static String MENUS_DIR ="restaurant/menus";
 }

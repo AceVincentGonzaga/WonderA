@@ -39,6 +39,16 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView image1;
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser!=null){
+            Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
+            startActivity(i);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         text1 = (TextView) findViewById(R.id.text1);
         text2 = (TextView) findViewById(R.id.text2);
         image1 = (ImageView) findViewById(R.id.image1);
-        conntectingLabel = (TextView) findViewById(R.id.connectingLabel);
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -78,34 +88,6 @@ public class LoginActivity extends AppCompatActivity {
                 mAuth = FirebaseAuth.getInstance();
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-         /*       FirebaseDatabase.getInstance().getReference().child("businessProfiles").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try {
-                            System.out.println(dataSnapshot.getValue().toString());
-                            for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                                BusinessProfileModel businessProfileModel = dataSnapshot1.getValue(BusinessProfileModel.class);
-                                if (businessProfileModel.getUserId().toString().equals(mAuth.getUid().toString())){
-                                    Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
-                                    startActivity(i);
-                                    finish();
-                                }else if(!businessProfileModel.getUserId().toString().equals(mAuth.getUid().toString())){
-                                    Intent i = new Intent(LoginActivity.this,OwernerRegistration.class);
-                                    startActivity(i);
-                                }
-                            }
-                        }catch (NullPointerException e){
-                            System.out.println(e);
-                            Intent i = new Intent(LoginActivity.this,OwernerRegistration.class);
-                            startActivity(i);
-                        }
-
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });*/
                 Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
                 startActivity(i);
                 finish();
@@ -147,10 +129,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveProfile(String Id,String btype,String bname,String bAddress,
-                             String bContact,String bEmail){
-
-    }
 
     private void updateUI(boolean conntected){
         if (conntected ==false){

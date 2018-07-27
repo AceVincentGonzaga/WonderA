@@ -26,10 +26,10 @@
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.BusinessProfile" />
         <activity android:name=".activity.UserRegistration" />
-        <activity android:name=".activity.InboxActivity"></activity>
-        <activity android:name=".activity.MapsProfileUpdateActivity"/>
-        <activity android:name=".activity.OwernerRegistrationUpdate"/>
-        <activity android:name=".activity.BusinessProfileRestaurant"/>
+        <activity android:name=".activity.InboxActivity" />
+        <activity android:name=".activity.MapsProfileUpdateActivity" />
+        <activity android:name=".activity.OwernerRegistrationUpdate" />
+        <activity android:name=".activity.BusinessProfileRestaurant" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -38,6 +38,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <activity android:name=".activity.AddMenuActivity"></activity>
     </application>
 
 </manifest>

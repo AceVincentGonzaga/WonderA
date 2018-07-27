@@ -11,10 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,8 +36,6 @@ import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.datamodel.CategoryDataModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.CategoryMapModel;
-import com.wandera.wanderaowner.mapModel.ChatListMapModel;
-import com.wandera.wanderaowner.mapModel.ChatMessageMapModel;
 import com.wandera.wanderaowner.views.CategoryRecyclerViewAdapter;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
@@ -52,7 +52,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
     DatabaseReference mDatabase;
     TextView messages,businessProfile;
     ImageView profileIcon;
-    TextView menu;
+    Button addCategory;
     Context c;
     ArrayList<CategoryDataModel> categoryDataModelArrayList = new ArrayList<>();
     CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
@@ -63,7 +63,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_profile_restaurant);
-        menu  =(TextView) findViewById(R.id.menu);
+        addCategory =(Button) findViewById(R.id.addCategory);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         Bundle bundle=getIntent().getExtras();
         businessKey = bundle.getString("key");
@@ -99,37 +99,10 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
             }
         });
         getCategory();
-        menu.setOnClickListener(new View.OnClickListener() {
+        addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new BottomSheet.Builder(BusinessProfileRestaurant.this)
-                        .setSheet(R.menu.menu_buttom_sheet)
-                        .setTitle("Select Action")
-                        .setListener(new BottomSheetListener() {
-                            @Override
-                            public void onSheetShown(@NonNull BottomSheet bottomSheet, @Nullable Object o) {
-
-                            }
-
-                            @Override
-                            public void onSheetItemSelected(@NonNull BottomSheet bottomSheet, MenuItem menuItem, @Nullable Object o) {
-                                switch (menuItem.getItemId()) {
-                                    case R.id.addMenu:
-                                        Utils.callToast(c,"addMenu");
-                                        break;
-                                    case R.id.addCategory:
-
-                                        addCategory();
-
-                                }
-                            }
-
-                            @Override
-                            public void onSheetDismissed(@NonNull BottomSheet bottomSheet, @Nullable Object o, int i) {
-
-                            }
-                        }).object("some Object")
-                        .show();
+                addCategory();
             }
         });
 
@@ -185,6 +158,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Glide.with(getApplicationContext()).pauseRequests();
+        overridePendingTransition(R.anim.slide_out_left,R.anim.slide_in_right);
     }
 
     private void AddMenuDialog(){
@@ -205,7 +179,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
             public void onClick(View v) {
                 if (inputCategory.getText().toString().trim().length()>0){
                     final String key = mDatabase.child("restaurant").child("category").child(businessKey).push().getKey();
-                    CategoryMapModel categoryMapModel = new CategoryMapModel(inputCategory.getText().toString(),key);
+                    CategoryMapModel categoryMapModel = new CategoryMapModel(inputCategory.getText().toString(),key,businessKey);
                     Map<String,Object> value = categoryMapModel.toMap();
                     Map<String,Object> childUpdates=new HashMap<>();
                     childUpdates.put(key,value);
@@ -218,7 +192,10 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
                 }
             }
         });
-
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawableResource(R.color.colorTransparent);
+        window.setGravity(Gravity.CENTER);
         dialog.show();
 
 
@@ -235,10 +212,10 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
                     CategoryMapModel categoryMapModel = dataSnapshot1.getValue(CategoryMapModel.class);
                     categoryDataModel.setKey(categoryMapModel.key);
                     categoryDataModel.setCategory(categoryMapModel.category);
+                    categoryDataModel.setBusinessKey(categoryMapModel.businessKey);
                     categoryDataModelArrayList.add(categoryDataModel);
                 }
                 categoryRecyclerViewAdapter.notifyDataSetChanged();
-
             }
 
             @Override

@@ -15,19 +15,21 @@ public class MenuMapModel {
     public String key;
     public String menuCategory;
     public String menuIconPath;
+    public String businesskey;
 
 
 
     public MenuMapModel(){
 
     }
-    public MenuMapModel(String menuName,int menuPrice,String key,String menuCategory,String menuIconPath)
+    public MenuMapModel(String menuName,int menuPrice,String key,String menuCategory,String menuIconPath,String businesskey)
                           {
        this.key = key;
         this.menuName = menuName;
         this.menuPrice  =menuPrice;
         this.menuIconPath = menuIconPath;
         this.menuCategory  = menuCategory;
+        this.businesskey = businesskey;
 
     }
     @Exclude
@@ -38,6 +40,7 @@ public class MenuMapModel {
         result.put("menuPrice",menuPrice);
         result.put("menuIconPath",menuIconPath);
         result.put("menuCategory",menuCategory);
+        result.put("businesskey",businesskey);
 
         return result;
     }

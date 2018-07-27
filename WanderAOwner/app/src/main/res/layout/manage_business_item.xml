@@ -9,9 +9,10 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/busIcon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginEnd="8dp"
+        app:civ_circle_background_color="@color/colorPrimary"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:clickable="false"
