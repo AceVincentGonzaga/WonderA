@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,11 +23,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.wandera.wandera.adapter.ViewPagerAdapter;
+import com.wandera.wandera.fragements.HomeFragement;
+import com.wandera.wandera.fragements.ItirenaryFragement;
+import com.wandera.wandera.fragements.PhraseBookFragement;
+import com.wandera.wandera.fragements.TranspoFragement;
+
 public class HomeSlider extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     EditText selectMunicipality;
     private TextView mTextMessage;
     private Button municipalitybutton;
+    HomeFragement homeFragement;
+    ItirenaryFragement itirenaryFragement;
+    PhraseBookFragement phraseBookFragement;
+    TranspoFragement transpoFragement;
+    MenuItem prevMenuItem;
+    private ViewPager viewPager;
     private Button allbutton;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -34,23 +48,17 @@ public class HomeSlider extends AppCompatActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_transpo:
-                    Intent transpo= new Intent(HomeSlider.this, Transpo.class);
-                    startActivity(transpo);
-                    finish();
+                    viewPager.setCurrentItem(1);
                     return true;
                 case R.id.navigation_phrasebook:
-                    Intent phrasebook= new Intent(HomeSlider.this, Phrasebook.class);
-                    startActivity(phrasebook);
-                    finish();
+                    viewPager.setCurrentItem(2);
                     return true;
                 case R.id.navigation_itinerary:
-                    Intent itinerary= new Intent(HomeSlider.this, Itinerary.class);
-                    startActivity(itinerary);
-                    finish();
+                    viewPager.setCurrentItem(3);
                     return true;
-
             }
             return false;
         }
@@ -61,6 +69,7 @@ public class HomeSlider extends AppCompatActivity
         setContentView(R.layout.activity_home_slider);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         selectMunicipality = (EditText)findViewById(R.id.selectMunicipality);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -70,15 +79,57 @@ public class HomeSlider extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+
+//        mTextMessage = (TextView) findViewById(R.id.message);
+        final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
-        municipalitybutton= (Button) findViewById(R.id.municipality_button);
-        municipalitybutton.setSelected(true);
-        municipalitybutton.setTextColor(getApplication().getResources().getColor(R.color.background));
+//        municipalitybutton= (Button) findViewById(R.id.municipality_button);
+//        municipalitybutton.setSelected(true);
+//        municipalitybutton.setTextColor(getApplication().getResources().getColor(R.color.background));
+
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                }
+                else
+                {
+                    navigation.getMenu().getItem(0).setChecked(false);
+                }
+                Log.d("page", "onPageSelected: "+position);
+                navigation.getMenu().getItem(position).setChecked(true);
+                prevMenuItem = navigation.getMenu().getItem(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+       /*  //Disable ViewPager Swipe
+       viewPager.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                return true;
+            }
+        });
+        */
+
+        setupViewPager(viewPager);
 
     }
 
@@ -138,22 +189,20 @@ public class HomeSlider extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void initUI(){
 
-    }
-    private void selectMunicipalityDialog(){
-        final CharSequence[] items = {"Bugasong", "Laua-an", "Barbaza", "Tibiao", "Culasi", "Sebaste", "Pandan", "Libertad", "Caluya"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Municipality");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                // Do something with the selection
-                selectMunicipality.setText(items[item]);
-                dialog.dismiss();
-            }
-        });
-        builder.show();
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        homeFragement=new HomeFragement();
+        itirenaryFragement=new ItirenaryFragement();
+        phraseBookFragement=new PhraseBookFragement();
+        transpoFragement = new TranspoFragement();
+        adapter.addFragment(homeFragement);
+        adapter.addFragment(transpoFragement);
+        adapter.addFragment(phraseBookFragement);
+        adapter.addFragment(itirenaryFragement);
 
+
+        viewPager.setAdapter(adapter);
     }
 }

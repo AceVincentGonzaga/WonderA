@@ -72,7 +72,7 @@
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+           />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -96,15 +96,17 @@
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+           />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintshopping"
         android:layout_width="300dp"
         android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/constraintfood"
         app:layout_constraintStart_toStartOf="@+id/constraintfood"
         app:layout_constraintTop_toBottomOf="@+id/constraintfood">
 
@@ -142,7 +144,7 @@
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+            />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -168,31 +170,9 @@
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+            />
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="300dp"
-            android:layout_height="45dp"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="261dp"></android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="300dp"
-            android:layout_height="45dp"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="261dp"></android.support.constraint.ConstraintLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="300dp"
-            android:layout_height="45dp"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="261dp"></android.support.constraint.ConstraintLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="300dp"
-            android:layout_height="45dp"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="261dp"></android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.BottomNavigationView
