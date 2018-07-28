@@ -7,6 +7,8 @@
     android:theme="@style/transparentBackgroud"
     android:layout_height="wrap_content">
 
+
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="300dp"
@@ -19,6 +21,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_close_black_24dp"
+            android:tint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
@@ -37,16 +50,30 @@
 
         <RatingBar
             android:id="@+id/ratingBar"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:numStars="5"
             app:layout_constraintEnd_toEndOf="@+id/menuTitle"
             app:layout_constraintStart_toStartOf="@+id/menuTitle"
             app:layout_constraintTop_toBottomOf="@+id/menuTitle" />
 
+        <TextView
+            android:id="@+id/menuPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="₱ 15"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="@+id/ratingBar"
+            app:layout_constraintStart_toStartOf="@+id/ratingBar"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
         <Button
-            android:id="@+id/btnDone"
+            android:id="@+id/btnManage"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_marginBottom="8dp"
@@ -54,7 +81,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/button_background"
-            android:text="Done"
+            android:text="Manage Menu"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold"

@@ -103,11 +103,18 @@ public class MenusItemRecyclerViewAdapter
                     dialog.setCancelable(true);
                     dialog.setContentView(R.layout.dialog_add_menu);
                     TextView menuTitle = (TextView) dialog.findViewById(R.id.menuTitle);
-                    Button btnDone = (Button) dialog.findViewById(R.id.btnDone);
+                    Button manageBtn = (Button) dialog.findViewById(R.id.btnManage);
+                    ImageView close = (ImageView) dialog.findViewById(R.id.close);
                     menuTitle.setText(menuDataModel.getMenuName());
                     CircleImageView menuIcon = (CircleImageView) dialog.findViewById(R.id.menuIcon);
                     GlideApp.with(context).load(menuDataModel.getMenuIconPath()).centerCrop().into(menuIcon);
-                    btnDone.setOnClickListener(new View.OnClickListener() {
+                    manageBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                    close.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
