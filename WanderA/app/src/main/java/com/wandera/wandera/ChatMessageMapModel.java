@@ -41,7 +41,7 @@ public class ChatMessageMapModel {
     public Map<String,Object> toMap(){
         HashMap<String,Object> result = new HashMap<>();
         result.put("userId",userId);
-        result.put("userName", userName);
+        result.put("categoryName", userName);
         result.put("timeStamp", timeStamp);
         result.put("message", message);
         result.put("businessKey", businessId);

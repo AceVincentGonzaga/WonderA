@@ -18,6 +18,7 @@ public class Utils {
     public static void print(String message,String premessage){
         System.out.println(premessage +" :"+message);
     }
+    public static String chatUserList_userSide="chatUserList_userSide";
 
     public static String getDateToStrig(){
         Calendar c = Calendar.getInstance();

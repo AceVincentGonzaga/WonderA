@@ -23,16 +23,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.wandera.wandera.activity.InboxActivity;
 import com.wandera.wandera.adapter.ViewPagerAdapter;
 import com.wandera.wandera.fragements.HomeFragement;
 import com.wandera.wandera.fragements.ItirenaryFragement;
 import com.wandera.wandera.fragements.PhraseBookFragement;
 import com.wandera.wandera.fragements.TranspoFragement;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HomeSlider extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     EditText selectMunicipality;
-    private TextView mTextMessage;
+    private TextView mTextMessage,userName,userEmail;
     private Button municipalitybutton;
     HomeFragement homeFragement;
     ItirenaryFragement itirenaryFragement;
@@ -40,7 +45,9 @@ public class HomeSlider extends AppCompatActivity
     TranspoFragement transpoFragement;
     MenuItem prevMenuItem;
     private ViewPager viewPager;
+    CircleImageView circleImageView;
     private Button allbutton;
+    FirebaseAuth firebaseAuth;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -71,7 +78,7 @@ public class HomeSlider extends AppCompatActivity
         selectMunicipality = (EditText)findViewById(R.id.selectMunicipality);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         setSupportActionBar(toolbar);
-
+        firebaseAuth = FirebaseAuth.getInstance();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -79,17 +86,40 @@ public class HomeSlider extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
 
+                if (id == R.id.inbox) {
 
-//        mTextMessage = (TextView) findViewById(R.id.message);
+                    Intent i = new Intent(HomeSlider.this, InboxActivity.class);
+                    startActivity(i);
+                    return true;
+
+                } else if (id == R.id.sign_out) {
+
+                }
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+                drawer.closeDrawer(GravityCompat.START);
+
+                return true;
+            }
+        });
+        View hView = navigationView.inflateHeaderView(R.layout.nav_header_home_slider);
+        TextView userName = (TextView) hView.findViewById(R.id.userName);
+        TextView userEmail = (TextView) hView.findViewById(R.id.userEmail);
+        CircleImageView userImage = (CircleImageView) hView.findViewById(R.id.userImage);
+        userName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        userEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
+        GlideApp.with(HomeSlider.this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
+
         final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
-//        municipalitybutton= (Button) findViewById(R.id.municipality_button);
-//        municipalitybutton.setSelected(true);
-//        municipalitybutton.setTextColor(getApplication().getResources().getColor(R.color.background));
-
-
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -118,17 +148,6 @@ public class HomeSlider extends AppCompatActivity
             }
         });
 
-       /*  //Disable ViewPager Swipe
-       viewPager.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                return true;
-            }
-        });
-        */
-
         setupViewPager(viewPager);
 
     }
@@ -146,7 +165,7 @@ public class HomeSlider extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_slider, menu);
+        getMenuInflater().inflate(R.menu.activity_home_slider_drawer, menu);
         return true;
     }
 
@@ -171,22 +190,21 @@ public class HomeSlider extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.inbox) {
 
-        } else if (id == R.id.nav_slideshow) {
+            Intent i = new Intent(HomeSlider.this, InboxActivity.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.sign_out) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         drawer.closeDrawer(GravityCompat.START);
+
+
         return true;
     }
 

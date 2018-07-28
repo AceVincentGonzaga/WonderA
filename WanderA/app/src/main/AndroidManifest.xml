@@ -46,7 +46,9 @@
             android:label="@string/title_activity_transpo" />
         <activity
             android:name=".Itinerary"
-            android:label="@string/title_activity_itinerary"></activity>
+            android:label="@string/title_activity_itinerary" />
+        <activity android:name=".activity.PhraseBookActivity" />
+        <activity android:name=".activity.InboxActivity"></activity>
     </application>
 
 </manifest>

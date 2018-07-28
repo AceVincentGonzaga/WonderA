@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +28,7 @@ import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
     SlidingRootNav slidingRootNav;
-    Toolbar toolbar;
+
     String businessKey;
     DatabaseReference mDatabase;
     EditText inputMessage;
@@ -35,19 +36,24 @@ public class ChatActivity extends AppCompatActivity {
     String businessName;
     FirebaseAuth mAuth;
     RecyclerView chatList;
+    ImageView bckBtn;
+    TextView business;
     ChatListRecyclerViewAdapter chatListRecyclerViewAdapter;
     ArrayList <ChatDataModel> chatDataModels= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         inputMessage = (EditText) findViewById(R.id.selectMunicipality);
+        business = (TextView) findViewById(R.id.businessName);
         sndBtn = (ImageView) findViewById(R.id.sendBtn);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         businessKey = getIntent().getExtras().getString("key");
         chatList = (RecyclerView)findViewById(R.id.chatList);
         mAuth = FirebaseAuth.getInstance();
+        bckBtn = (ImageView) findViewById(R.id.bckBtn);
+
 
 
         if (businessKey !=null){
@@ -55,8 +61,9 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
-                    toolbar.setTitle(businessProfileMapModel.name);
+
                     businessName = businessProfileMapModel.name;
+                    business.setText(businessName);
                 }
 
                 @Override
@@ -65,7 +72,12 @@ public class ChatActivity extends AppCompatActivity {
                 }
             });
         }
-
+        bckBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         sndBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,17 +87,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        slidingRootNav = new SlidingRootNavBuilder(this)
-                .withMenuOpened(false)
-                .withToolbarMenuToggle(toolbar)
-                .withContentClickableWhenMenuOpened(false)
-                .withSavedState(savedInstanceState)
-                .withRootViewScale(0.7f)
-                .withRootViewYTranslation(4)
-                .withMenuLayout(R.layout.chat_root_nav)
-                .withSavedState(savedInstanceState)
-                .withContentClickableWhenMenuOpened(true)
-                .inject();
+
 
         chatListRecyclerViewAdapter = new ChatListRecyclerViewAdapter(ChatActivity.this, chatDataModels);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
@@ -121,8 +123,17 @@ public class ChatActivity extends AppCompatActivity {
 
                     }
                 });
+                final Map<String, Object>updatesUserSide = new HashMap<>();
+                updatesUserSide.put(businessKey,userKey);
+                mDatabase.child(Utils.chatUserList_userSide).child(userID).updateChildren(updatesUserSide).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
             }
         });
+
 
     }
 

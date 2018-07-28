@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner.mapModel;
+package com.wandera.wandera.mapmodel;
 
 import com.google.firebase.database.Exclude;
 
@@ -9,22 +9,24 @@ import java.util.Map;
  * Created by Keji's Lab on 26/11/2017.
  */
 
-public class CategoryMapModel {
+public class PhrasesMapModel {
     public String key;
     public String category;
-    public String businessKey;
+    public String english;
+    public String karaya;
 
-
-
-    public CategoryMapModel(){
+    public PhrasesMapModel(){
 
     }
-    public CategoryMapModel(String category,
-                            String key,String businessKey)
+    public PhrasesMapModel(String category,
+                           String key,String english,String karaya)
                           {
-        this.key = key;
+       this.key = key;
         this.category = category;
-        this.businessKey =  businessKey;
+        this.english = english;
+        this.category = category;
+
+
     }
     @Exclude
     public Map<String,Object> toMap(){
@@ -32,7 +34,8 @@ public class CategoryMapModel {
 
         result.put("key", key);
         result.put("category", category);
-        result.put("businessKey",businessKey);
+        result.put("englis",english);
+        result.put("karaya",karaya);
 
         return result;
     }

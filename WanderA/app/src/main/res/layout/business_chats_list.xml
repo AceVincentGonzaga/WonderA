@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/businessProfielImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:clickable="false"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/temp_logo"
+        app:civ_border_color="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:clickable="false"
+        android:id="@+id/businessName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/lato_light"
+        android:text="Business Name"
+        android:textSize="18dp"
+        app:layout_constraintStart_toEndOf="@+id/businessProfielImage"
+        app:layout_constraintTop_toTopOf="@+id/businessProfielImage" />
+
+    <TextView
+        android:id="@+id/lastMessage"
+        android:clickable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="last message"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/businessName"
+        app:layout_constraintTop_toBottomOf="@+id/businessName" />
+
+</android.support.constraint.ConstraintLayout>

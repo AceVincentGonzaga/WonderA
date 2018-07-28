@@ -153,6 +153,14 @@ public class ChatActivity extends AppCompatActivity {
 
                         }
                     });
+                    final Map<String, Object>updatesUserSide = new HashMap<>();
+                    updatesUserSide.put(businessKey,userKey);
+                    mDatabase.child(Utils.chatUserList_userSide).child(userId).updateChildren(updatesUserSide).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    });
                 }
             });
         }
