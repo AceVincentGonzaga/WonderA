@@ -18,6 +18,7 @@ public class Utils {
     public static String CHAT_USER_LIST_DIR = "chatUserList";
     public static String chatUserList="chatUserList";
     public static String chatUserList_userSide="chatUserList_userSide";
+    public static String municipality = "municipality";
     public static void callToast(Context context, String mes){
         Toast.makeText(context,mes,Toast.LENGTH_SHORT).show();
     }
