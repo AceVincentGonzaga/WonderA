@@ -48,7 +48,15 @@
             android:name=".Itinerary"
             android:label="@string/title_activity_itinerary" />
         <activity android:name=".activity.PhraseBookActivity" />
-        <activity android:name=".activity.InboxActivity"></activity>
+        <activity android:name=".activity.InboxActivity" />
+        <activity
+            android:name=".activity.BrowseBusinesses"
+            android:label="@string/title_activity_browse_businesses"
+            android:parentActivityName=".HomeSlider">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wandera.wandera.HomeSlider" />
+        </activity>
     </application>
 
 </manifest>

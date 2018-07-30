@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.wandera.wandera.datamodel.BusinessProfileModel;
+
 import java.util.ArrayList;
 
 /**

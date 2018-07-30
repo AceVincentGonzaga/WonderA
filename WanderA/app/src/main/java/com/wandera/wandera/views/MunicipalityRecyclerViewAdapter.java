@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wandera.wandera.Municipality;
 import com.wandera.wandera.R;
+import com.wandera.wandera.activity.BrowseBusinesses;
 import com.wandera.wandera.activity.PhraseBookActivity;
 import com.wandera.wandera.datamodel.MunicipalityDataModel;
 import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
@@ -61,7 +62,9 @@ public class MunicipalityRecyclerViewAdapter
         holder.municipality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(context, BrowseBusinesses.class);
+                i.putExtra("municipalityKey",municipalityDataModel.getKey());
+                context.startActivity(i);
             }
         });
 

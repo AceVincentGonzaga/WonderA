@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wandera.wandera.datamodel.BusinessProfileModel;
+import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
+
 import java.util.ArrayList;
 
 public class Browse extends AppCompatActivity {

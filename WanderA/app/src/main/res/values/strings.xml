@@ -19,4 +19,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_itinerary">Itinerary</string>
+    <string name="title_activity_browse_businesses">BrowseBusinesses</string>
 </resources>

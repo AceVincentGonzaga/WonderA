@@ -35,6 +35,7 @@ public class PhraseBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phrase_book);
         context = PhraseBookActivity.this;
+
         phrasesList = (RecyclerView) findViewById(R.id.phrasesList);
         categorykey = getIntent().getExtras().getString("categoryKey");
         categoryName = (TextView) findViewById(R.id.categoryName);

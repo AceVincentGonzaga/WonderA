@@ -1,4 +1,4 @@
-package com.wandera.wandera;
+package com.wandera.wandera.datamodel;
 
 public class BusinessProfileModel {
     private String userId;

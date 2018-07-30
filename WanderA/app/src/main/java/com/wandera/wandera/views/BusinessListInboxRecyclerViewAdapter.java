@@ -14,14 +14,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.wandera.wandera.BusinessProfileMapModel;
+import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
 import com.wandera.wandera.ChatActivity;
-import com.wandera.wandera.ChatDataModel;
 import com.wandera.wandera.ChatMessageMapModel;
 import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
-import com.wandera.wandera.activity.PhraseBookActivity;
 import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
 import com.wandera.wandera.datamodel.UserListDataModel;
 

@@ -1,4 +1,4 @@
-package com.wandera.wandera;
+package com.wandera.wandera.mapmodel;
 
 import com.google.firebase.database.Exclude;
 

@@ -122,35 +122,35 @@ public class HomeSlider extends AppCompatActivity
         navigation.setSelectedItemId(R.id.navigation_home);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if (prevMenuItem != null) {
+                prevMenuItem.setChecked(false);
             }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (prevMenuItem != null) {
-                    prevMenuItem.setChecked(false);
-                }
-                else
-                {
-                    navigation.getMenu().getItem(0).setChecked(false);
-                }
-                Log.d("page", "onPageSelected: "+position);
-                navigation.getMenu().getItem(position).setChecked(true);
-                prevMenuItem = navigation.getMenu().getItem(position);
-
+            else
+            {
+                navigation.getMenu().getItem(0).setChecked(false);
             }
+            Log.d("page", "onPageSelected: "+position);
+            navigation.getMenu().getItem(position).setChecked(true);
+            prevMenuItem = navigation.getMenu().getItem(position);
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+        }
 
-            }
-        });
+        @Override
+        public void onPageScrollStateChanged(int state) {
 
-        setupViewPager(viewPager);
+        }
+    });
 
-    }
+    setupViewPager(viewPager);
+
+}
 
     @Override
     public void onBackPressed() {

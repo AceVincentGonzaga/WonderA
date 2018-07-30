@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_resto"
+        android:icon="@drawable/ic_restaurant_menu_black_24dp"
+        android:title="Restaurants" />
+
+    <item
+        android:id="@+id/nav_accomodation"
+        android:icon="@drawable/ic_hotel_black_24dp"
+        android:title="Accomodations" />
+
+    <item
+        android:id="@+id/nav_gifting_center"
+        android:icon="@drawable/ic_card_giftcard_black_24dp"
+        android:title="Gift Center" />
+    <item
+        android:id="@+id/nav_hotspots"
+        android:icon="@drawable/ic_whatshot_black_24dp"
+        android:title="Hot Spots" />
+
+</menu>

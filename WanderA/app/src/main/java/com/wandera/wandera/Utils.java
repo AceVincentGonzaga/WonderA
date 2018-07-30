@@ -12,7 +12,10 @@ import java.util.TimeZone;
 public class Utils {
     public static String businessProfiel = "businessProfiles";
     public static String chats = "chats";
-
+    public static String bTypeResto = "Restaurants";
+    public static String bTypeAccomodations = "Accomodations";
+    public static String bTypeGiftingCenter = "Gifting Center";
+    public static String bTypeHotSpots = "Tourist Hot Spots";
     public static String PHRASE_CATEGORY_DIR = "phrasebook/category";
     public static String PHRASES_DIR = "phrasebook/phrases";
     public static String CHAT_USER_LIST_DIR = "chatUserList";
