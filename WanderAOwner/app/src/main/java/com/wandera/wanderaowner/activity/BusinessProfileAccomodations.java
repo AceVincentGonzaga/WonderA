@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,11 +27,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kennyc.bottomsheet.BottomSheet;
-import com.kennyc.bottomsheet.BottomSheetListener;
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
+import com.wandera.wanderaowner.activity.accomodations.AddRoom;
 import com.wandera.wanderaowner.datamodel.CategoryDataModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.CategoryMapModel;
@@ -46,7 +44,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class BusinessProfileRestaurant extends AppCompatActivity {
+public class BusinessProfileAccomodations extends AppCompatActivity {
     SlidingRootNav slidingRootNav;
     Toolbar toolbar;
     DatabaseReference mDatabase;
@@ -62,12 +60,12 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_profile_restaurant);
+        setContentView(R.layout.activity_business_profile_accomodations);
         addCategory =(Button) findViewById(R.id.addCategory);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         Bundle bundle=getIntent().getExtras();
         businessKey = bundle.getString("key");
-        c = BusinessProfileRestaurant.this;
+        c = BusinessProfileAccomodations.this;
         categoryList = (RecyclerView) findViewById(R.id.categoryList);
         categoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(c,categoryDataModelArrayList);
         categoryList.setLayoutManager(new LinearLayoutManager(c));
@@ -92,7 +90,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
         businessProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(BusinessProfileRestaurant.this,OwernerRegistrationUpdate.class);
+                Intent i = new Intent(BusinessProfileAccomodations.this,OwernerRegistrationUpdate.class);
                 i.putExtra("businessKey", businessKey);
                 startActivity(i);
                 finish();
@@ -102,14 +100,15 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
         addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addCategory();
+                Intent  i = new Intent(BusinessProfileAccomodations.this, AddRoom.class);
+                startActivity(i);
             }
         });
 
         messages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=  new Intent(BusinessProfileRestaurant.this, InboxActivity.class);
+                Intent i=  new Intent(BusinessProfileAccomodations.this, InboxActivity.class);
                 i.putExtra("key", businessKey);
                 startActivity(i);
                 finish();
@@ -124,7 +123,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
                     BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
                     toolbar.setTitle(businessProfileMapModel.name);
                    try {
-                       GlideApp.with(BusinessProfileRestaurant.this).load(businessProfileMapModel.restoProfileImagePath).into(profileIcon);
+                       GlideApp.with(BusinessProfileAccomodations.this).load(businessProfileMapModel.restoProfileImagePath).into(profileIcon);
                    }catch (IllegalArgumentException e){
 
                    }
@@ -136,7 +135,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
                 }
             });
         }catch (NullPointerException e){
-            Intent i = new Intent(BusinessProfileRestaurant.this,OwernerRegistration.class);
+            Intent i = new Intent(BusinessProfileAccomodations.this,OwernerRegistration.class);
             startActivity(i);
             finish();
         }

@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner.activity;
+package com.wandera.wanderaowner.activity.restaurant;
 
 import android.Manifest;
 import android.app.Activity;

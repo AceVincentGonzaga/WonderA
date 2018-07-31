@@ -1,5 +1,6 @@
 package com.wandera.wanderaowner.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,6 +11,9 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +36,7 @@ public class ManageBusiness extends AppCompatActivity {
     Context context;
     FirebaseAuth mAuth;
     ConstraintLayout container;
+    TextView addBusinessBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,7 @@ public class ManageBusiness extends AppCompatActivity {
         context = ManageBusiness.this;
         container= (ConstraintLayout)findViewById(R.id.container);
         databaseReference.child("businessProfiles").keepSynced(true);
+        addBusinessBtn = (TextView) findViewById(R.id.addBusiness);
 
         bussinessListRecyclerViewAdapter = new BussinessListRecyclerViewAdapter(context,businessProfileModelArrayList);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
@@ -50,9 +56,13 @@ public class ManageBusiness extends AppCompatActivity {
         businessItemsRecyclerView.setAdapter(bussinessListRecyclerViewAdapter);
 
         BusinessProfileModel businessProfileModelAddBusness = new BusinessProfileModel();
-        businessProfileModelAddBusness.setName("Add Business");
-        businessProfileModelArrayList.add(businessProfileModelAddBusness);
-        bussinessListRecyclerViewAdapter.notifyDataSetChanged();
+
+        addBusinessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectBusinessTypeDialog();
+            }
+        });
 
 
         databaseReference.child("businessProfiles").addValueEventListener(new ValueEventListener() {
@@ -78,9 +88,7 @@ public class ManageBusiness extends AppCompatActivity {
                                             businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
                                             businessProfileModelArrayList.add(businessProfileModel);
                                         }
-                                        BusinessProfileModel businessProfileModelAddBusness = new BusinessProfileModel();
-                                        businessProfileModelAddBusness.setName("Add Business");
-                                        businessProfileModelArrayList.add(businessProfileModelAddBusness);
+
                                         bussinessListRecyclerViewAdapter.notifyDataSetChanged();
 
                                     }
@@ -121,6 +129,11 @@ public class ManageBusiness extends AppCompatActivity {
                         i.putExtra("key",businessProfileModelArraylist.getKey());
                         startActivity(i);
                     }
+                    if (businessProfileModelArraylist.getBusinessType().equals("Accomodations")){
+                        Intent i = new Intent(ManageBusiness.this, BusinessProfileAccomodations.class);
+                        i.putExtra("key",businessProfileModelArraylist.getKey());
+                        startActivity(i);
+                    }
                 }
 
 
@@ -128,5 +141,51 @@ public class ManageBusiness extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    private void selectBusinessTypeDialog(){
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.select_business_type_dialog);
+        final ConstraintLayout selectResto = (ConstraintLayout) dialog.findViewById(R.id.selectResto);
+        final ConstraintLayout selectAccomodation = (ConstraintLayout) dialog.findViewById(R.id.selectAccomodation);
+        final ConstraintLayout selectPasalubongCenter = (ConstraintLayout) dialog.findViewById(R.id.pasalubongCenter);
+        final ConstraintLayout selectTouristSpots = (ConstraintLayout) dialog.findViewById(R.id.touristSpots);
+        selectResto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context,RestaurantRegistration.class);
+                startActivity(i);
+                dialog.dismiss();
+            }
+        });
+        selectAccomodation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context,AccomodationsRegistration.class);
+                startActivity(i);
+                dialog.dismiss();
+            }
+        });
+        selectPasalubongCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+        selectTouristSpots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.show();
     }
 }

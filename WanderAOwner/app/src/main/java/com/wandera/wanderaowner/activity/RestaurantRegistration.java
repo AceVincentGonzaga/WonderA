@@ -8,9 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Address;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -19,8 +19,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,16 +29,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.DetectedActivity;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -66,16 +59,10 @@ import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.nlopez.smartlocation.OnActivityUpdatedListener;
-import io.nlopez.smartlocation.OnGeofencingTransitionListener;
-import io.nlopez.smartlocation.OnLocationUpdatedListener;
-import io.nlopez.smartlocation.OnReverseGeocodingListener;
 import io.nlopez.smartlocation.SmartLocation;
-import io.nlopez.smartlocation.geofencing.model.GeofenceModel;
-import io.nlopez.smartlocation.geofencing.utils.TransitionGeofence;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 
-public class OwernerRegistration extends AppCompatActivity {
+public class RestaurantRegistration extends AppCompatActivity {
         List<String> categories = new ArrayList<String>();
         Spinner spinner;
         TextInputEditText inpt_name,input_contact, inpt_email;
@@ -108,10 +95,10 @@ public class OwernerRegistration extends AppCompatActivity {
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = OwernerRegistration.this;
+            context = RestaurantRegistration.this;
             setContentView(R.layout.activity_owerner_registration);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
-        loadingContainer  = (ConstraintLayout) findViewById(R.id.loadingContainer);
+            loadingContainer  = (ConstraintLayout) findViewById(R.id.loadingContainer);
 
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
@@ -161,17 +148,11 @@ public class OwernerRegistration extends AppCompatActivity {
             }
 
             showLast();
-            if (ContextCompat.checkSelfPermission(OwernerRegistration.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(OwernerRegistration.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
+            if (ContextCompat.checkSelfPermission(RestaurantRegistration.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(RestaurantRegistration.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
                 return;
             }
 
-            selectBType.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectBusinessTypeDialog();
-                }
-            });
             businessProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -181,7 +162,7 @@ public class OwernerRegistration extends AppCompatActivity {
         }
 
         private void selectBusinessTypeDialog(){
-            final Dialog dialog = new Dialog(OwernerRegistration.this);
+            final Dialog dialog = new Dialog(RestaurantRegistration.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.select_business_type_dialog);
@@ -342,7 +323,7 @@ public class OwernerRegistration extends AppCompatActivity {
         // Picasso.with(CreatePostActivity.this).load(uri).resize(300,600).into(imageToUpload);
         bannerUri = uri;
         imageSet = true;
-        Glide.with(OwernerRegistration.this).load(uri).into(imageView);
+        Glide.with(RestaurantRegistration.this).load(uri).into(imageView);
         imageView.setPadding(0,0,0,0);
     }
 
@@ -460,7 +441,7 @@ public class OwernerRegistration extends AppCompatActivity {
 
         } else {
             ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     storagepermision_access_code);
         }
     }
@@ -479,7 +460,7 @@ public class OwernerRegistration extends AppCompatActivity {
                     municipalityDataModelArrayList.add(municipalityDataModel);
                     mun.add(municipalityMapModel.municipality);
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(OwernerRegistration.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantRegistration.this);
                 builder.setTitle("Select Municipality");
                 builder.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, mun),
                         new DialogInterface.OnClickListener() {

@@ -58,7 +58,7 @@ public class BrowseBusinesses extends AppCompatActivity {
                     return true;
                 case R.id.nav_accomodation:
                     viewPager.setCurrentItem(1);
-                 
+
                     return true;
                 case R.id.nav_gifting_center:
                     viewPager.setCurrentItem(2);

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightGrey"
-    tools:context=".activity.AddMenuActivity">
+    tools:context=".activity.restaurant.AddMenuActivity">
     <ImageView
         android:id="@+id/backbtn"
         android:layout_width="wrap_content"

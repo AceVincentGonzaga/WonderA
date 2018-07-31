@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
-import com.wandera.wanderaowner.activity.AddMenuActivity;
+import com.wandera.wanderaowner.activity.restaurant.AddMenuActivity;
 import com.wandera.wanderaowner.datamodel.MenuDataModel;
 import com.wandera.wanderaowner.datamodel.UserListDataModel;
 

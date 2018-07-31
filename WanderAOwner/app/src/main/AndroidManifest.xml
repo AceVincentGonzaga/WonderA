@@ -30,6 +30,8 @@
         <activity android:name=".activity.MapsProfileUpdateActivity" />
         <activity android:name=".activity.OwernerRegistrationUpdate" />
         <activity android:name=".activity.BusinessProfileRestaurant" />
+        <activity android:name=".activity.RestaurantRegistration" />
+        <activity android:name=".activity.AccomodationsRegistration" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -38,7 +40,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".activity.AddMenuActivity"></activity>
+        <activity android:name=".activity.restaurant.AddMenuActivity" />
+        <activity android:name=".activity.BusinessProfileAccomodations" />
+        <activity android:name=".activity.accomodations.AddRoom"></activity>
     </application>
 
 </manifest>

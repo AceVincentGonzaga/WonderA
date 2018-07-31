@@ -4,43 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
-    tools:context=".activity.ManageBusiness">
+    android:background="@color/white"
+    tools:context=".activity.BusinessProfileAccomodations">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/lato"
-        android:lineSpacingExtra="8sp"
-        android:text="Manage Business"
-        android:textAllCaps="true"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        app:elevation="0dp">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
 
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/businesItemsRV"
+        android:id="@+id/categoryList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/addBusiness"
+        app:layout_constraintBottom_toTopOf="@+id/addCategory"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
     <Button
-        android:id="@+id/addBusiness"
+        android:id="@+id/addCategory"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
@@ -49,7 +41,7 @@
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
         android:drawableTint="@color/white"
-        android:text="Add Business"
+        android:text="Add category"
         android:drawableStart="@drawable/ic_add_black_24dp"
         android:textColor="@color/white"
         android:textAllCaps="false"
