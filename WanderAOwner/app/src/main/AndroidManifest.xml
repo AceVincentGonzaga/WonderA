@@ -41,7 +41,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".activity.restaurant.AddMenuActivity" />
-        <activity android:name=".activity.BusinessProfileAccomodations" />
+        <activity android:name=".activity.accomodations.BusinessProfileAccomodations" />
         <activity android:name=".activity.accomodations.AddRoom"></activity>
     </application>
 

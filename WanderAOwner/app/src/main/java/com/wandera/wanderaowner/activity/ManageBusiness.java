@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.activity.accomodations.BusinessProfileAccomodations;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
 import com.wandera.wanderaowner.views.BussinessListRecyclerViewAdapter;
