@@ -89,6 +89,7 @@ public class RestuarantCategoryRecyclerViewAdapter
                     RestaurantMenuDataModel restaurantMenuDataModel = new RestaurantMenuDataModel();
                     restaurantMenuDataModel.setMenuIconPath(restaurantMenuMapModel.menuIconPath);
                     restaurantMenuDataModel.setMenuName(restaurantMenuMapModel.menuName);
+                    restaurantMenuDataModel.setMenuPrice(restaurantMenuMapModel.menuPrice);
                     restaurantMenuDataModelArrayList.add(restaurantMenuDataModel);
                 }
                 restuarantMenusRecyclerViewAdapter.notifyDataSetChanged();

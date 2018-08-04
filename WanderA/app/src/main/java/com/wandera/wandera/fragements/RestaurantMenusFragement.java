@@ -10,6 +10,7 @@ import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +38,7 @@ public class RestaurantMenusFragement extends Fragment {
     DatabaseReference databaseReference;
     RestaurantProfileBotNav act;
     BlurBehindView blurBehindView;
+    ImageView close;
     public RestaurantMenusFragement(){
 
     }
@@ -47,10 +49,11 @@ public class RestaurantMenusFragement extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_menus, container, false);
         blurBehindView = (BlurBehindView) view.findViewById(R.id.blur_behind_view);
-        blurBehindView.updateMode(BlurBehindView.UPDATE_CONTINOUSLY) //更新方式，3种，见demo
-                .blurRadius(8)  //模糊程度，RenderScript方式时，<= 25
+        blurBehindView //更新方式，3种，见demo
+                .blurRadius(5)  //模糊程度，RenderScript方式时，<= 25
                 //圆角
                 .processor(NdkStackBlurProcessor.INSTANCE);
+        close = (ImageView) view.findViewById(R.id.close);
                 act = (RestaurantProfileBotNav) getActivity();
                 categoryList = (RecyclerView) view.findViewById(R.id.categoryList);
                 restuarantCategoryRecyclerViewAdapter = new RestuarantCategoryRecyclerViewAdapter(getActivity(),restaurantMenuCategoryDataModelArrayList);
@@ -85,6 +88,12 @@ public class RestaurantMenusFragement extends Fragment {
             @Override
             public void onItemClick(View view, int position, RestaurantMenuDataModel restaurantMenuDataModel, RestaurantMenuCategoryDataModel restaurantMenuCategoryDataModel) {
                 blurBehindView.setVisibility(View.VISIBLE);
+            }
+        });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                blurBehindView.setVisibility(View.GONE);
             }
         });
 

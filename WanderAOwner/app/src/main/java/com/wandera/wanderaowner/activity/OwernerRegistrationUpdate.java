@@ -184,6 +184,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     input_contact.setText(businessProfileMapModel.contact);
                     selectBType.setText(businessProfileMapModel.businessType);
                     imageSet = true;
+                    municipality = businessProfileMapModel.municipality;
                     lastImagePath = businessProfileMapModel.restoProfileImagePath;
                     businessType = businessProfileMapModel.businessType;
                     try {
@@ -304,6 +305,9 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             }
             if (imageSet == false){
                 val =false;
+            }
+            if (municipality==null){
+                val = false;
             }
 
             return val;

@@ -82,6 +82,7 @@ public class PhrasesRecyclerViewAdapter
 
     public void setOnItemClickListener(OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
+
     }
 }
 

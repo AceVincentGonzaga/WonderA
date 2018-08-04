@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/menuPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Menu Price"
@@ -52,28 +52,30 @@
         android:stepSize="5"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/menuPrice"
+        app:layout_constraintTop_toBottomOf="@+id/menuPrice" />
 
     <ImageView
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginEnd="8dp"
         android:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
-        app:layout_constraintEnd_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/textView10"
-        app:srcCompat="@drawable/ic__ionicons_svg_ios_comment" />
+        app:layout_constraintBottom_toBottomOf="@+id/rateMenu"
+        app:layout_constraintEnd_toStartOf="@+id/rateMenu"
+        app:layout_constraintTop_toTopOf="@+id/rateMenu"
+        app:srcCompat="@drawable/ic_star_border_black_24dp" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/rateMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="16dp"
-        android:text="Comments"
+        android:layout_marginStart="8dp"
+        android:text="Rate Menu"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

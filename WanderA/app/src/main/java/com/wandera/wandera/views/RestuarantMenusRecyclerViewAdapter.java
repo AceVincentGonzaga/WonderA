@@ -27,6 +27,8 @@ public class RestuarantMenusRecyclerViewAdapter
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public ImageView menuImage;
         public TextView menuName;
+        public TextView menuPrice;
+        public TextView rateMenu;
 
 
 
@@ -34,6 +36,8 @@ public class RestuarantMenusRecyclerViewAdapter
             super(view);
             menuImage = (ImageView) view.findViewById(R.id.menuImage);
             menuName = (TextView) view.findViewById(R.id.menuName);
+            menuPrice = (TextView) view.findViewById(R.id.menuPrice);
+            rateMenu = (TextView) view.findViewById(R.id.rateMenu);
         }
     }
 
@@ -55,7 +59,8 @@ public class RestuarantMenusRecyclerViewAdapter
         final RestaurantMenuDataModel restaurantMenuDataModel = restaurantMenuDataModelArrayList.get(position);
         GlideApp.with(context).load(restaurantMenuDataModel.getMenuIconPath()).centerCrop().into(holder.menuImage);
         holder.menuName.setText(restaurantMenuDataModel.getMenuName());
-        holder.menuName.setOnClickListener(new View.OnClickListener() {
+        holder.menuPrice.setText("₱ "+restaurantMenuDataModel.getMenuPrice());
+        holder.rateMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mOnItemClickLitener.onItemClick(v,position,restaurantMenuDataModel);
