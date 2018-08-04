@@ -19,9 +19,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.RestaurantProfileBotNav;
+import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
 import com.wandera.wandera.datamodel.RestaurantMenuCategoryDataModel;
+import com.wandera.wandera.datamodel.RestaurantMenuDataModel;
 import com.wandera.wandera.mapmodel.RestuarantCategoryMenuMapModel;
 import com.wandera.wandera.views.RestuarantCategoryRecyclerViewAdapter;
+
+import net.robinx.lib.blurview.BlurBehindView;
+import net.robinx.lib.blurview.processor.NdkStackBlurProcessor;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,7 @@ public class RestaurantMenusFragement extends Fragment {
     ArrayList<RestaurantMenuCategoryDataModel> restaurantMenuCategoryDataModelArrayList = new ArrayList<>();
     DatabaseReference databaseReference;
     RestaurantProfileBotNav act;
+    BlurBehindView blurBehindView;
     public RestaurantMenusFragement(){
 
     }
@@ -40,6 +46,11 @@ public class RestaurantMenusFragement extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_menus, container, false);
+        blurBehindView = (BlurBehindView) view.findViewById(R.id.blur_behind_view);
+        blurBehindView.updateMode(BlurBehindView.UPDATE_CONTINOUSLY) //更新方式，3种，见demo
+                .blurRadius(8)  //模糊程度，RenderScript方式时，<= 25
+                //圆角
+                .processor(NdkStackBlurProcessor.INSTANCE);
                 act = (RestaurantProfileBotNav) getActivity();
                 categoryList = (RecyclerView) view.findViewById(R.id.categoryList);
                 restuarantCategoryRecyclerViewAdapter = new RestuarantCategoryRecyclerViewAdapter(getActivity(),restaurantMenuCategoryDataModelArrayList);
@@ -68,6 +79,15 @@ public class RestaurantMenusFragement extends Fragment {
                 });
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(categoryList);
+
+
+        restuarantCategoryRecyclerViewAdapter.setOnItemClickListener(new RestuarantCategoryRecyclerViewAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position, RestaurantMenuDataModel restaurantMenuDataModel, RestaurantMenuCategoryDataModel restaurantMenuCategoryDataModel) {
+                blurBehindView.setVisibility(View.VISIBLE);
+            }
+        });
+
         return view;
     }
 }

@@ -1,14 +1,19 @@
 package com.wandera.wandera.activity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.wandera.wandera.R;
@@ -16,6 +21,9 @@ import com.wandera.wandera.adapter.ViewPagerAdapter;
 import com.wandera.wandera.fragements.RestaurantInboxFragement;
 import com.wandera.wandera.fragements.RestaurantLandingPageFragement;
 import com.wandera.wandera.fragements.RestaurantMenusFragement;
+
+import net.robinx.lib.blurview.BlurBehindView;
+import net.robinx.lib.blurview.processor.NdkStackBlurProcessor;
 
 public class RestaurantProfileBotNav extends AppCompatActivity {
 
@@ -28,6 +36,7 @@ public class RestaurantProfileBotNav extends AppCompatActivity {
     BottomNavigationView navigation;
     ViewPagerAdapter adapter;
     String businessKey;
+    Context context;
 
 
 
@@ -42,6 +51,7 @@ public class RestaurantProfileBotNav extends AppCompatActivity {
                     return  true;
                 case R.id.nav_menus:
                     viewPager.setCurrentItem(1);
+
 
                     return true;
                 case R.id.nav_inbox:
@@ -58,6 +68,8 @@ public class RestaurantProfileBotNav extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant_profile_bot_nav);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         businessKey = getIntent().getExtras().getString("businessKey");
+        context = RestaurantProfileBotNav.this;
+
 
         mTextMessage = (TextView) findViewById(R.id.message);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -115,4 +127,6 @@ public class RestaurantProfileBotNav extends AppCompatActivity {
     public String getBusinessKey() {
         return businessKey;
     }
+
+
 }

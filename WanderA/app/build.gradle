@@ -10,6 +10,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled  true
+
     }
     buildTypes {
         release {
@@ -42,6 +45,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'net.robinx:lib.blurview:1.0.2'
 
 //    mdc
 

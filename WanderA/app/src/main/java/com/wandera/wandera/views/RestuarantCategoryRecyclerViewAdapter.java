@@ -72,7 +72,7 @@ public class RestuarantCategoryRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        RestaurantMenuCategoryDataModel restaurantMenuCategoryDataModel = restaurantMenuCategoryDataModelArrayList.get(position);
+        final RestaurantMenuCategoryDataModel restaurantMenuCategoryDataModel = restaurantMenuCategoryDataModelArrayList.get(position);
         final ArrayList<RestaurantMenuDataModel> restaurantMenuDataModelArrayList = new ArrayList<>();
         holder.categoryName.setText(restaurantMenuCategoryDataModel.getCategory());
         restuarantMenusRecyclerViewAdapter = new RestuarantMenusRecyclerViewAdapter(context,restaurantMenuDataModelArrayList);
@@ -101,6 +101,12 @@ public class RestuarantCategoryRecyclerViewAdapter
         });
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(holder.menuList);
+        restuarantMenusRecyclerViewAdapter.setOnItemClickListener(new RestuarantMenusRecyclerViewAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View v, int pos, RestaurantMenuDataModel restaurantMenuDataModel) {
+                mOnItemClickLitener.onItemClick(v,position,restaurantMenuDataModel,restaurantMenuCategoryDataModel);
+            }
+        });
     }
 
     @Override
@@ -109,7 +115,7 @@ public class RestuarantCategoryRecyclerViewAdapter
     }
 
     public interface OnItemClickLitener {
-        void onItemClick(View view, int position, PhraseCategoryDataModel userListDataModel);
+        void onItemClick(View view, int position,RestaurantMenuDataModel restaurantMenuDataModel, RestaurantMenuCategoryDataModel restaurantMenuCategoryDataModel);
 
     }
 

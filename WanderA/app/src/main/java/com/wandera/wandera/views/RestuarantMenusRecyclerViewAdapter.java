@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
-import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
-import com.wandera.wandera.datamodel.RestaurantMenuCategoryDataModel;
 import com.wandera.wandera.datamodel.RestaurantMenuDataModel;
 
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 
 public class RestuarantMenusRecyclerViewAdapter
         extends RecyclerView.Adapter<RestuarantMenusRecyclerViewAdapter.MyViewHolder> {
-    private ArrayList<RestaurantMenuDataModel> restaurantMenuCategoryDataModelArrayList = new ArrayList<>();
+    private ArrayList<RestaurantMenuDataModel> restaurantMenuDataModelArrayList = new ArrayList<>();
     private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -36,15 +34,11 @@ public class RestuarantMenusRecyclerViewAdapter
             super(view);
             menuImage = (ImageView) view.findViewById(R.id.menuImage);
             menuName = (TextView) view.findViewById(R.id.menuName);
-
-
-
-
         }
     }
 
     public RestuarantMenusRecyclerViewAdapter(Context c, ArrayList<RestaurantMenuDataModel> restaurantMenuDataModels){
-        this.restaurantMenuCategoryDataModelArrayList = restaurantMenuDataModels;
+        this.restaurantMenuDataModelArrayList = restaurantMenuDataModels;
         this.context =c;
     }
 
@@ -58,19 +52,30 @@ public class RestuarantMenusRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        RestaurantMenuDataModel restaurantMenuDataModel = restaurantMenuCategoryDataModelArrayList.get(position);
+        final RestaurantMenuDataModel restaurantMenuDataModel = restaurantMenuDataModelArrayList.get(position);
         GlideApp.with(context).load(restaurantMenuDataModel.getMenuIconPath()).centerCrop().into(holder.menuImage);
         holder.menuName.setText(restaurantMenuDataModel.getMenuName());
+        holder.menuName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemClickLitener.onItemClick(v,position,restaurantMenuDataModel);
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return restaurantMenuCategoryDataModelArrayList.size();
+        return restaurantMenuDataModelArrayList.size();
+    }
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
     }
 
+
     public interface OnItemClickLitener {
-        void onItemClick(View view, int position, PhraseCategoryDataModel userListDataModel);
+        void onItemClick(View v,int pos,RestaurantMenuDataModel restaurantMenuDataModel);
 
     }
 
@@ -79,6 +84,7 @@ public class RestuarantMenusRecyclerViewAdapter
     public void setOnItemClickListener(OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
+
 }
 
 

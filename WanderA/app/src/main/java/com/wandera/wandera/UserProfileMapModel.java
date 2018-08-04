@@ -32,7 +32,7 @@ public class UserProfileMapModel {
         HashMap<String,Object> result = new HashMap<>();
         result.put("userId",userId);
         result.put("userImage",userImage);
-        result.put("categoryName", userName);
+        result.put("userName", userName);
         result.put("contactNumber", contactNumber);
         result.put("email", email);
 

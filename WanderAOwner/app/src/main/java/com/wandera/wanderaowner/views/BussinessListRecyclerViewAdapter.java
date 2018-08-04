@@ -91,6 +91,10 @@ public class BussinessListRecyclerViewAdapter
     public int getItemCount() {
         return businessProfileModelArraylist.size();
     }
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 
     public interface OnItemClickLitener {
         void onItemClick(View view, int position,BusinessProfileModel businessProfileModelArraylist);
