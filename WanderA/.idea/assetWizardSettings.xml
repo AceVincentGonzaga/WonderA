@@ -33,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_restaurant_black_24dp" />
-                            <entry key="sourceFile" value="D:\D\_ionicons_svg_md-restaurant.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic__ionicons_svg_ios_comment" />
+                            <entry key="sourceFile" value="D:\D\_ionicons_svg_ios-text.svg" />
                           </map>
                         </option>
                       </PersistentState>

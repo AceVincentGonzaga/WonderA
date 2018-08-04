@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.wandera.wandera.R;
 import com.wandera.wandera.adapter.ViewPagerAdapter;
+import com.wandera.wandera.fragements.RestaurantInboxFragement;
 import com.wandera.wandera.fragements.RestaurantLandingPageFragement;
 import com.wandera.wandera.fragements.RestaurantMenusFragement;
 
@@ -21,6 +22,7 @@ public class RestaurantProfileBotNav extends AppCompatActivity {
     private TextView mTextMessage;
     RestaurantLandingPageFragement restaurantLandingPageFragement;
     RestaurantMenusFragement restaurantMenusFragement;
+    RestaurantInboxFragement restaurantInboxFragement;
     ViewPager viewPager;
     MenuItem prevMenuItem;
     BottomNavigationView navigation;
@@ -41,6 +43,9 @@ public class RestaurantProfileBotNav extends AppCompatActivity {
                 case R.id.nav_menus:
                     viewPager.setCurrentItem(1);
 
+                    return true;
+                case R.id.nav_inbox:
+                    viewPager.setCurrentItem(3);
                     return true;
             }
             return false;
@@ -99,8 +104,10 @@ public class RestaurantProfileBotNav extends AppCompatActivity {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         restaurantLandingPageFragement = new RestaurantLandingPageFragement();
         restaurantMenusFragement = new RestaurantMenusFragement();
+        restaurantInboxFragement = new RestaurantInboxFragement();
         adapter.addFragment(restaurantLandingPageFragement);
         adapter.addFragment(restaurantMenusFragement);
+        adapter.addFragment(restaurantInboxFragement);
 
         viewPager.setAdapter(adapter);
     }
