@@ -22,6 +22,8 @@ public class Utils {
     public static String chatUserList="chatUserList";
     public static String chatUserList_userSide="chatUserList_userSide";
     public static String municipality = "municipality";
+    public static String CATEGORY_DIR ="restaurant/category";
+    public static String MENU_DIR = "restaurant/menus";
     public static void callToast(Context context, String mes){
         Toast.makeText(context,mes,Toast.LENGTH_SHORT).show();
     }

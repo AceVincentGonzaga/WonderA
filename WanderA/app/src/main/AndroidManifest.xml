@@ -24,7 +24,7 @@
         <activity android:name=".Home" />
         <activity android:name=".VerticalNtbActivity" />
         <activity
-            android:name=".HomeSlider"
+            android:name=".activity.HomeSlider"
             android:label="@string/title_activity_home_slider"
             android:theme="@style/AppTheme" />
         <activity
@@ -52,11 +52,14 @@
         <activity
             android:name=".activity.BrowseBusinesses"
             android:label="@string/title_activity_browse_businesses"
-            android:parentActivityName=".HomeSlider">
+            android:parentActivityName=".activity.HomeSlider">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.wandera.wandera.HomeSlider" />
+                android:value="com.wandera.wandera.activity.HomeSlider" />
         </activity>
+        <activity
+            android:name=".activity.RestaurantProfileBotNav"
+            android:label="@string/title_activity_restaurant_profile_bot_nav"></activity>
     </application>
 
 </manifest>

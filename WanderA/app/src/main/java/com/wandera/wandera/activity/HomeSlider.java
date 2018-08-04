@@ -1,14 +1,10 @@
-package com.wandera.wandera;
+package com.wandera.wandera.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -24,8 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.wandera.wandera.activity.InboxActivity;
+import com.wandera.wandera.GlideApp;
+import com.wandera.wandera.R;
 import com.wandera.wandera.adapter.ViewPagerAdapter;
 import com.wandera.wandera.fragements.HomeFragement;
 import com.wandera.wandera.fragements.ItirenaryFragement;

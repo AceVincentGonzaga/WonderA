@@ -1,6 +1,7 @@
 package com.wandera.wandera.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
+import com.wandera.wandera.activity.RestaurantProfileBotNav;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
 import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
 
@@ -55,10 +57,17 @@ public class ResturantBrowseRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        BusinessProfileModel businessProfileModel = businessProfileModelArrayList.get(position);
+        final BusinessProfileModel businessProfileModel = businessProfileModelArrayList.get(position);
         holder.restaurantName.setText(businessProfileModel.getName());
         GlideApp.with(context).load(businessProfileModel.getRestoProfileImagePath()).centerCrop().into(holder.restoIcon);
-
+        holder.restoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, RestaurantProfileBotNav.class);
+                i.putExtra("businessKey",businessProfileModel.getKey());
+                context.startActivity(i);
+            }
+        });
 
     }
 
