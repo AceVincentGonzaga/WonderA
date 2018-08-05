@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
+import com.wandera.wandera.views.ChatListRecyclerViewAdapter;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 
 import java.util.ArrayList;

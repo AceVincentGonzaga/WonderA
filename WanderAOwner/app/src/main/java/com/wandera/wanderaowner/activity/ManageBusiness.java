@@ -117,6 +117,7 @@ public class ManageBusiness extends AppCompatActivity {
             }
         });
 
+
         bussinessListRecyclerViewAdapter.setOnItemClickListener(new BussinessListRecyclerViewAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position, BusinessProfileModel businessProfileModelArraylist) {

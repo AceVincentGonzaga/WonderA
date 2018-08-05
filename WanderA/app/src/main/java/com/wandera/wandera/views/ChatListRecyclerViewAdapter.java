@@ -1,4 +1,4 @@
-package com.wandera.wandera;
+package com.wandera.wandera.views;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -15,7 +15,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wandera.wandera.ChatDataModel;
+import com.wandera.wandera.GlideApp;
+import com.wandera.wandera.R;
+import com.wandera.wandera.UserProfileMapModel;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
+import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
 
 import java.util.ArrayList;
 
@@ -98,6 +103,20 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
             holder.timeOther.setVisibility(View.VISIBLE);
             holder.messageOther.setVisibility(View.VISIBLE);
             holder.user_imageOther.setVisibility(View.VISIBLE);
+
+            FirebaseDatabase.getInstance().getReference().child("businessProfiles").child(chatDataModel.getBusinessId()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
+                    GlideApp.with(context).load(businessProfileMapModel.restoProfileImagePath).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().into(holder.user_imageOther);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
             holder.msg.setVisibility(View.GONE);
             holder.time.setVisibility(View.GONE);
             holder.user_image.setVisibility(View.GONE);

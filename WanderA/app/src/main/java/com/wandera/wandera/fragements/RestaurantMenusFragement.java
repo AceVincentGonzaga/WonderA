@@ -49,9 +49,7 @@ public class RestaurantMenusFragement extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_menus, container, false);
         blurBehindView = (BlurBehindView) view.findViewById(R.id.blur_behind_view);
-        blurBehindView //更新方式，3种，见demo
-                .blurRadius(5)  //模糊程度，RenderScript方式时，<= 25
-                //圆角
+        blurBehindView.blurRadius(5)
                 .processor(NdkStackBlurProcessor.INSTANCE);
         close = (ImageView) view.findViewById(R.id.close);
                 act = (RestaurantProfileBotNav) getActivity();
