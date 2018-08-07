@@ -100,8 +100,6 @@ public class RestuarantCategoryRecyclerViewAdapter
 
             }
         });
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(holder.menuList);
         restuarantMenusRecyclerViewAdapter.setOnItemClickListener(new RestuarantMenusRecyclerViewAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View v, int pos, RestaurantMenuDataModel restaurantMenuDataModel) {

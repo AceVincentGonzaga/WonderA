@@ -57,12 +57,13 @@ public class AccomodationsBrowseFragement extends Fragment {
                     BusinessProfileMapModel businessProfileMapModel = dataSnapshot1.getValue(BusinessProfileMapModel.class);
                     BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                     businessProfileModel.setName(businessProfileMapModel.name);
+                    businessProfileModel.setBusinessType(businessProfileMapModel.businessType);
+                    businessProfileModel.setKey(businessProfileMapModel.key);
                     businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
 
                     if (businessProfileMapModel.businessType.equals(Utils.bTypeAccomodations)){
                         businessProfileModelArrayList.add(businessProfileModel);
                     }
-
                 }
                 resturantBrowseRecyclerViewAdapter.notifyDataSetChanged();
             }

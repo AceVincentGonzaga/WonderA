@@ -9,8 +9,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/menuList"
         android:layout_width="0dp"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoryName" />
@@ -24,7 +25,7 @@
         android:fontFamily="@font/lato_light"
         android:text="Category Name"
         android:textAllCaps="true"
-        android:textColor="@color/white"
+        android:textColor="@color/background"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

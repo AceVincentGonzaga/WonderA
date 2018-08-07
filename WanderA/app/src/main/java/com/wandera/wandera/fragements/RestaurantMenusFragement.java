@@ -37,8 +37,8 @@ public class RestaurantMenusFragement extends Fragment {
     ArrayList<RestaurantMenuCategoryDataModel> restaurantMenuCategoryDataModelArrayList = new ArrayList<>();
     DatabaseReference databaseReference;
     RestaurantProfileBotNav act;
-    BlurBehindView blurBehindView;
-    ImageView close;
+
+
     public RestaurantMenusFragement(){
 
     }
@@ -48,10 +48,8 @@ public class RestaurantMenusFragement extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_menus, container, false);
-        blurBehindView = (BlurBehindView) view.findViewById(R.id.blur_behind_view);
-        blurBehindView.blurRadius(5)
-                .processor(NdkStackBlurProcessor.INSTANCE);
-        close = (ImageView) view.findViewById(R.id.close);
+
+
                 act = (RestaurantProfileBotNav) getActivity();
                 categoryList = (RecyclerView) view.findViewById(R.id.categoryList);
                 restuarantCategoryRecyclerViewAdapter = new RestuarantCategoryRecyclerViewAdapter(getActivity(),restaurantMenuCategoryDataModelArrayList);
@@ -78,22 +76,15 @@ public class RestaurantMenusFragement extends Fragment {
 
                     }
                 });
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(categoryList);
-
 
         restuarantCategoryRecyclerViewAdapter.setOnItemClickListener(new RestuarantCategoryRecyclerViewAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position, RestaurantMenuDataModel restaurantMenuDataModel, RestaurantMenuCategoryDataModel restaurantMenuCategoryDataModel) {
-                blurBehindView.setVisibility(View.VISIBLE);
+
             }
         });
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                blurBehindView.setVisibility(View.GONE);
-            }
-        });
+
+
 
         return view;
     }

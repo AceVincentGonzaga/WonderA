@@ -98,7 +98,11 @@ public class UserChatListRecyclerViewAdapter
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ChatMessageMapModel chatMessageMapModel = dataSnapshot.getValue(ChatMessageMapModel.class);
-                holder.preview.setText(chatMessageMapModel.message);
+                try{
+                    holder.preview.setText(chatMessageMapModel.message);
+                }catch (NullPointerException e){
+
+                }
             }
 
             @Override

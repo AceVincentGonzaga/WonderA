@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.util.Util;
 import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
+import com.wandera.wandera.Utils;
+import com.wandera.wandera.activity.AccomodationProfileBotNav;
 import com.wandera.wandera.activity.RestaurantProfileBotNav;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
 import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
@@ -63,9 +66,17 @@ public class ResturantBrowseRecyclerViewAdapter
         holder.restoIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, RestaurantProfileBotNav.class);
-                i.putExtra("businessKey",businessProfileModel.getKey());
-                context.startActivity(i);
+                if (businessProfileModel.getBusinessType().equals(Utils.bTypeResto)){
+                    Intent i = new Intent(context, RestaurantProfileBotNav.class);
+                    i.putExtra("businessKey",businessProfileModel.getKey());
+                    context.startActivity(i);
+                }
+                if (businessProfileModel.getBusinessType().equals(Utils.bTypeAccomodations)){
+                    Intent i = new Intent(context, AccomodationProfileBotNav.class);
+                    i.putExtra("businessKey",businessProfileModel.getKey());
+                    context.startActivity(i);
+                }
+
             }
         });
 
