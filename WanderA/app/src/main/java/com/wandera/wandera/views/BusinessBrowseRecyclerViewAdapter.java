@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.util.Util;
 import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
@@ -26,8 +25,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Keji's Lab on 19/01/2018.
  */
 
-public class ResturantBrowseRecyclerViewAdapter
-        extends RecyclerView.Adapter<ResturantBrowseRecyclerViewAdapter.MyViewHolder> {
+public class BusinessBrowseRecyclerViewAdapter
+        extends RecyclerView.Adapter<BusinessBrowseRecyclerViewAdapter.MyViewHolder> {
     private ArrayList<BusinessProfileModel> businessProfileModelArrayList = new ArrayList<>();
     private Context context;
 
@@ -45,7 +44,7 @@ public class ResturantBrowseRecyclerViewAdapter
         }
     }
 
-    public ResturantBrowseRecyclerViewAdapter(Context c, ArrayList<BusinessProfileModel> businessProfileModels){
+    public BusinessBrowseRecyclerViewAdapter(Context c, ArrayList<BusinessProfileModel> businessProfileModels){
         this.businessProfileModelArrayList = businessProfileModels;
         this.context =c;
     }
@@ -76,7 +75,6 @@ public class ResturantBrowseRecyclerViewAdapter
                     i.putExtra("businessKey",businessProfileModel.getKey());
                     context.startActivity(i);
                 }
-
             }
         });
 

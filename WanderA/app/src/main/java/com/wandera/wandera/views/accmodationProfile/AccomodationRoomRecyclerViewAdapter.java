@@ -50,7 +50,6 @@ public class AccomodationRoomRecyclerViewAdapter
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_accomodation_room,parent,false);
 
-
         return new MyViewHolder(itemView);
     }
 
@@ -60,7 +59,6 @@ public class AccomodationRoomRecyclerViewAdapter
         GlideApp.with(context).load(roomDataModel.getRoomImage()).centerCrop().into(holder.roomImage);
         holder.roomName.setText(roomDataModel.getRoomName());
         holder.roomPrice.setText("₱ "+roomDataModel.getRoomPrice());
-
     }
 
     @Override

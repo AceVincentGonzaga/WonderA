@@ -20,13 +20,13 @@ import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.BrowseBusinesses;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
-import com.wandera.wandera.views.ResturantBrowseRecyclerViewAdapter;
+import com.wandera.wandera.views.BusinessBrowseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
 public class GiftingCenterBrowseFragement extends Fragment {
     RecyclerView restaurantList;
-    ResturantBrowseRecyclerViewAdapter resturantBrowseRecyclerViewAdapter;
+    BusinessBrowseRecyclerViewAdapter businessBrowseRecyclerViewAdapter;
     ArrayList<BusinessProfileModel> businessProfileModelArrayList = new ArrayList<>();
     DatabaseReference databaseReference;
     BrowseBusinesses act;
@@ -44,9 +44,9 @@ public class GiftingCenterBrowseFragement extends Fragment {
         businessType = (TextView) view.findViewById(R.id.businessType);
         act = (BrowseBusinesses) getActivity();
         businessType.setText(Utils.bTypeGiftingCenter);
-        resturantBrowseRecyclerViewAdapter = new ResturantBrowseRecyclerViewAdapter(getActivity(),businessProfileModelArrayList);
+        businessBrowseRecyclerViewAdapter = new BusinessBrowseRecyclerViewAdapter(getActivity(),businessProfileModelArrayList);
         restaurantList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        restaurantList.setAdapter(resturantBrowseRecyclerViewAdapter);
+        restaurantList.setAdapter(businessBrowseRecyclerViewAdapter);
         businessProfileModelArrayList.clear();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child(Utils.businessProfiel).orderByChild("municipality").equalTo(act.municipalityKey()).addValueEventListener(new ValueEventListener() {
@@ -64,7 +64,7 @@ public class GiftingCenterBrowseFragement extends Fragment {
                     }
 
                 }
-                resturantBrowseRecyclerViewAdapter.notifyDataSetChanged();
+                businessBrowseRecyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override
