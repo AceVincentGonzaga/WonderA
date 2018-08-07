@@ -17,7 +17,7 @@ public class Utils {
     public static String bTypeGiftingCenter = "Gifting Center";
     public static String bTypeHotSpots = "Tourist Hot Spots";
     public static String PHRASE_CATEGORY_DIR = "phrasebook/category";
-    public static String PHRASES_DIR = "phrasebook/phrases";
+    public static String PHRASES_DIR = "phrasebook/translation";
     public static String CHAT_USER_LIST_DIR = "chatUserList";
     public static String chatUserList="chatUserList";
     public static String chatUserList_userSide="chatUserList_userSide";
