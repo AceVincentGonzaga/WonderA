@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,11 +31,13 @@ Context c;
 ArrayList<UserListDataModel> userListDataModelArrayList = new ArrayList<>();
 DatabaseReference mdatabase;
 String businessKey;
+TextView noMessagesYet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
+        noMessagesYet=(TextView)findViewById(R.id.noMessagesYet);
         inboxlist= (RecyclerView)findViewById(R.id.inbox);
         mdatabase = FirebaseDatabase.getInstance().getReference();
         businessKey = getIntent().getExtras().getString("key");
@@ -54,10 +57,13 @@ String businessKey;
                     userListDataModel.setKey(userListMapModel.key);
                     userListDataModel.setUserId(userListMapModel.userId);
                     userListDataModelArrayList.add(userListDataModel);
+                    noMessagesYet.setVisibility(View.GONE);
+                    inboxlist.setVisibility(View.VISIBLE);
                 }
                 Collections.reverse(userListDataModelArrayList);
                 userChatListRecyclerViewAdapter.notifyDataSetChanged();
                 inboxlist.scrollToPosition(userListDataModelArrayList.size());
+
             }
 
             @Override
