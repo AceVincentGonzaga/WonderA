@@ -63,6 +63,8 @@
         <activity android:name=".activity.browseAll.AccomodationAll"/>
         <activity android:name=".activity.AccomodationProfileBotNav" />
         <activity android:name=".activity.browseAll.RestaurantAll"></activity>
+        <activity android:name=".activity.browseAll.GiftingAll"/>
+        <activity android:name=".activity.GiftingProfileBotNav"/>
     </application>
 
 </manifest>

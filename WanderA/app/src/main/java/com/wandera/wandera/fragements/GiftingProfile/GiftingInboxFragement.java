@@ -1,4 +1,4 @@
-package com.wandera.wandera.fragements;
+package com.wandera.wandera.fragements.GiftingProfile;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,19 +20,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.ChatDataModel;
 import com.wandera.wandera.ChatListMapModel;
-import com.wandera.wandera.activity.GiftingProfileBotNav;
-import com.wandera.wandera.views.ChatListRecyclerViewAdapter;
 import com.wandera.wandera.ChatMessageMapModel;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.RestaurantProfileBotNav;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
+import com.wandera.wandera.views.ChatListRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RestaurantInboxFragement extends Fragment {
+public class GiftingInboxFragement extends Fragment {
 
     String businessKey;
     DatabaseReference mDatabase;
@@ -45,9 +44,9 @@ public class RestaurantInboxFragement extends Fragment {
 
     ChatListRecyclerViewAdapter chatListRecyclerViewAdapter;
     ArrayList<ChatDataModel> chatDataModels= new ArrayList<>();
-    GiftingProfileBotNav act;
+    RestaurantProfileBotNav act;
 
-    public RestaurantInboxFragement(){
+    public GiftingInboxFragement(){
 
     }
 
@@ -55,7 +54,7 @@ public class RestaurantInboxFragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        act = (GiftingProfileBotNav) getActivity();
+        act = (RestaurantProfileBotNav) getActivity();
         View view = inflater.inflate(R.layout.frag_restaurant_inbox, container, false);
         businessKey = act.getBusinessKey();
         inputMessage = (EditText) view.findViewById(R.id.selectMunicipality);

@@ -18,6 +18,7 @@ public class Utils {
     public static void print(String message,String premessage){
         System.out.println(premessage +" :"+message);
     }
+    public static String bTypeHotSpots = "Tourist Hot Spots";
     public static String chatUserList_userSide="chatUserList_userSide";
 
     public static String getDateToStrig(){

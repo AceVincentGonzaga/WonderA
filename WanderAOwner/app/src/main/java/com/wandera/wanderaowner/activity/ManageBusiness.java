@@ -22,7 +22,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.activity.accomodations.BusinessProfileAccomodations;
+import com.wandera.wanderaowner.activity.giftingcenter.BusinessProfileGiftingCenter;
+import com.wandera.wanderaowner.activity.giftingcenter.GiftingCenterRegistration;
+import com.wandera.wanderaowner.activity.touristHotSpot.BusinessProfileTouristSpots;
+import com.wandera.wanderaowner.activity.touristHotSpot.TouristHotSpotRegistration;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
 import com.wandera.wanderaowner.views.BussinessListRecyclerViewAdapter;
@@ -136,9 +141,17 @@ public class ManageBusiness extends AppCompatActivity {
                         i.putExtra("key",businessProfileModelArraylist.getKey());
                         startActivity(i);
                     }
+                    if (businessProfileModelArraylist.getBusinessType().equals("Gifting Center")){
+                        Intent i = new Intent(ManageBusiness.this, BusinessProfileGiftingCenter.class);
+                        i.putExtra("key",businessProfileModelArraylist.getKey());
+                        startActivity(i);
+                    }
+                    if (businessProfileModelArraylist.getBusinessType().equals(Utils.bTypeHotSpots)){
+                        Intent i = new Intent(ManageBusiness.this, BusinessProfileTouristSpots.class);
+                        i.putExtra("key",businessProfileModelArraylist.getKey());
+                        startActivity(i);
+                    }
                 }
-
-
 
             }
         });
@@ -174,14 +187,16 @@ public class ManageBusiness extends AppCompatActivity {
         selectPasalubongCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(context, GiftingCenterRegistration.class);
+                startActivity(i);
                 dialog.dismiss();
             }
         });
         selectTouristSpots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(context, TouristHotSpotRegistration.class);
+                startActivity(i);
                 dialog.dismiss();
             }
         });

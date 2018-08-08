@@ -1,4 +1,4 @@
-package com.wandera.wanderaowner.views;
+package com.wandera.wanderaowner.views.gifting;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.activity.giftingcenter.AddMenuGiftingActivity;
 import com.wandera.wanderaowner.activity.restaurant.AddMenuActivity;
 import com.wandera.wanderaowner.datamodel.MenuDataModel;
 import com.wandera.wanderaowner.datamodel.UserListDataModel;
@@ -30,8 +31,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Keji's Lab on 19/01/2018.
  */
 
-public class MenusItemRecyclerViewAdapter
-        extends RecyclerView.Adapter<MenusItemRecyclerViewAdapter.MyViewHolder> {
+public class GiftingMenusItemRecyclerViewAdapter
+        extends RecyclerView.Adapter<GiftingMenusItemRecyclerViewAdapter.MyViewHolder> {
     private ArrayList<MenuDataModel> menuDataModelArrayList = new ArrayList<>();
     private Context context;
     private String categoryKey;
@@ -59,7 +60,7 @@ public class MenusItemRecyclerViewAdapter
         }
     }
 
-    public MenusItemRecyclerViewAdapter(Context c, ArrayList<MenuDataModel> categoryDataModels,String catergoryKey,String businessKey){
+    public GiftingMenusItemRecyclerViewAdapter(Context c, ArrayList<MenuDataModel> categoryDataModels, String catergoryKey, String businessKey){
         this.menuDataModelArrayList = categoryDataModels;
         this.context =c;
         this.categoryKey = catergoryKey;
@@ -84,16 +85,14 @@ public class MenusItemRecyclerViewAdapter
             holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(context, AddMenuActivity.class);
+                    Intent i = new Intent(context, AddMenuGiftingActivity.class);
                     i.putExtra("categoryKey",categoryKey);
                     i.putExtra("businessKey",businessKey);
                     context.startActivity(i);
+
                 }
             });
         }else {
-            holder.menuTitle.setVisibility(View.VISIBLE);
-            holder.menuPrice.setVisibility(View.VISIBLE);
-            holder.menuRating.setVisibility(View.VISIBLE);
             holder.addImage.setVisibility(View.GONE);
             holder.menuTitle.setText(menuDataModel.getMenuName());
             GlideApp.with(context).load(menuDataModel.getMenuIconPath()).centerCrop().into(holder.menuBackGroundImage);

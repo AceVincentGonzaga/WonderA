@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.browseAll.AccomodationAll;
+import com.wandera.wandera.activity.browseAll.GiftingAll;
 import com.wandera.wandera.activity.browseAll.RestaurantAll;
 import com.wandera.wandera.datamodel.MunicipalityDataModel;
 import com.wandera.wandera.mapmodel.MunicipalityMapModel;
@@ -34,7 +35,7 @@ public class HomeFragement extends Fragment {
     ArrayList<MunicipalityDataModel> municipalityDataModelArrayList = new ArrayList<>();
     Button municipalitybutton,all_button;
     ConstraintLayout businessType;
-    ImageView resto,accomodation;
+    ImageView resto,accomodation,gifting;
     public HomeFragement(){
 
     }
@@ -44,7 +45,7 @@ public class HomeFragement extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_home, container, false);
-
+        gifting = (ImageView) view.findViewById(R.id.gifting);
         resto = (ImageView) view.findViewById(R.id.resto);
         accomodation = (ImageView) view.findViewById(R.id.accomodation);
         businessType = (ConstraintLayout) view.findViewById(R.id.businessType);
@@ -104,6 +105,7 @@ public class HomeFragement extends Fragment {
         resto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i = new Intent(getActivity(), RestaurantAll.class);
                 startActivity(i);
             }
@@ -112,6 +114,13 @@ public class HomeFragement extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), AccomodationAll.class);
+                startActivity(i);
+            }
+        });
+        gifting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), GiftingAll.class);
                 startActivity(i);
             }
         });

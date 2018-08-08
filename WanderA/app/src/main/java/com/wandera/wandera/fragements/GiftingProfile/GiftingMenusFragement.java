@@ -1,16 +1,13 @@
-package com.wandera.wandera.fragements;
+package com.wandera.wandera.fragements.GiftingProfile;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,19 +17,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.GiftingProfileBotNav;
-import com.wandera.wandera.activity.RestaurantProfileBotNav;
-import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
 import com.wandera.wandera.datamodel.RestaurantMenuCategoryDataModel;
 import com.wandera.wandera.datamodel.RestaurantMenuDataModel;
 import com.wandera.wandera.mapmodel.RestuarantCategoryMenuMapModel;
 import com.wandera.wandera.views.RestuarantCategoryRecyclerViewAdapter;
 
-import net.robinx.lib.blurview.BlurBehindView;
-import net.robinx.lib.blurview.processor.NdkStackBlurProcessor;
-
 import java.util.ArrayList;
 
-public class RestaurantMenusFragement extends Fragment {
+public class GiftingMenusFragement extends Fragment {
     RecyclerView categoryList;
     RestuarantCategoryRecyclerViewAdapter restuarantCategoryRecyclerViewAdapter;
     ArrayList<RestaurantMenuCategoryDataModel> restaurantMenuCategoryDataModelArrayList = new ArrayList<>();
@@ -40,7 +32,7 @@ public class RestaurantMenusFragement extends Fragment {
     GiftingProfileBotNav act;
 
 
-    public RestaurantMenusFragement(){
+    public GiftingMenusFragement(){
 
     }
 
@@ -57,7 +49,7 @@ public class RestaurantMenusFragement extends Fragment {
                 categoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
                 categoryList.setAdapter(restuarantCategoryRecyclerViewAdapter);
                 databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child(Utils.CATEGORY_DIR)
+                databaseReference.child(Utils.GIFT_CATEGORY_DIR)
                         .child(act.getBusinessKey()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -33,7 +33,7 @@ public class UserProfileMapModel {
         result.put("userId",userId);
         result.put("userImage",userImage);
         result.put("userName", userName);
-        result.put("contactNumber", contactNumber);
+        result.put("number", contactNumber);
         result.put("email", email);
 
 

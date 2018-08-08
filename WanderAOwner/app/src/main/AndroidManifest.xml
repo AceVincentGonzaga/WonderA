@@ -31,7 +31,12 @@
         <activity android:name=".activity.OwernerRegistrationUpdate" />
         <activity android:name=".activity.BusinessProfileRestaurant" />
         <activity android:name=".activity.RestaurantRegistration" />
+        <activity android:name=".activity.giftingcenter.GiftingCenterRegistration"/>
         <activity android:name=".activity.AccomodationsRegistration" />
+        <activity android:name=".activity.giftingcenter.BusinessProfileGiftingCenter"/>
+        <activity android:name=".activity.giftingcenter.AddMenuGiftingActivity"/>
+        <activity android:name=".activity.touristHotSpot.BusinessProfileTouristSpots"/>
+        <activity android:name=".activity.touristHotSpot.AddActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -43,6 +48,7 @@
         <activity android:name=".activity.restaurant.AddMenuActivity" />
         <activity android:name=".activity.accomodations.BusinessProfileAccomodations" />
         <activity android:name=".activity.accomodations.AddRoom"></activity>
+        <activity android:name=".activity.touristHotSpot.TouristHotSpotRegistration"/>
     </application>
 
 </manifest>

@@ -12,9 +12,11 @@ import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.AccomodationProfileBotNav;
+import com.wandera.wandera.activity.GiftingProfileBotNav;
 import com.wandera.wandera.activity.RestaurantProfileBotNav;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
 import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
+import com.wandera.wandera.fragements.GiftingCenterBrowseFragement;
 
 import java.util.ArrayList;
 
@@ -72,6 +74,11 @@ public class BusinessBrowseRecyclerViewAdapter
                 }
                 if (businessProfileModel.getBusinessType().equals(Utils.bTypeAccomodations)){
                     Intent i = new Intent(context, AccomodationProfileBotNav.class);
+                    i.putExtra("businessKey",businessProfileModel.getKey());
+                    context.startActivity(i);
+                }
+                if (businessProfileModel.getBusinessType().equals(Utils.bTypeGiftingCenter)){
+                    Intent i = new Intent(context, GiftingProfileBotNav.class);
                     i.putExtra("businessKey",businessProfileModel.getKey());
                     context.startActivity(i);
                 }

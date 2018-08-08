@@ -1,4 +1,4 @@
-package com.wandera.wandera.fragements;
+package com.wandera.wandera.fragements.GiftingProfile;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,14 +24,14 @@ import com.wandera.wandera.views.BusinessBrowseRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public class GiftingCenterBrowseFragement extends Fragment {
+public class GiftingBrowseFragement extends Fragment {
     RecyclerView restaurantList;
     BusinessBrowseRecyclerViewAdapter businessBrowseRecyclerViewAdapter;
     ArrayList<BusinessProfileModel> businessProfileModelArrayList = new ArrayList<>();
     DatabaseReference databaseReference;
     BrowseBusinesses act;
     TextView businessType;
-    public GiftingCenterBrowseFragement(){
+    public GiftingBrowseFragement(){
 
     }
 
@@ -43,7 +43,7 @@ public class GiftingCenterBrowseFragement extends Fragment {
         restaurantList = (RecyclerView) view.findViewById(R.id.restaurantList);
         businessType = (TextView) view.findViewById(R.id.businessType);
         act = (BrowseBusinesses) getActivity();
-        businessType.setText("Pasalubong Center");
+        businessType.setText(act.getBusinessType());
         businessBrowseRecyclerViewAdapter = new BusinessBrowseRecyclerViewAdapter(getActivity(),businessProfileModelArrayList);
         restaurantList.setLayoutManager(new LinearLayoutManager(getActivity()));
         restaurantList.setAdapter(businessBrowseRecyclerViewAdapter);
@@ -58,13 +58,11 @@ public class GiftingCenterBrowseFragement extends Fragment {
                     BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                     businessProfileModel.setName(businessProfileMapModel.name);
                     businessProfileModel.setKey(businessProfileMapModel.key);
-                    businessProfileModel.setBusinessType(businessProfileMapModel.businessType);
                     businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
 
-                    if (businessProfileMapModel.businessType.equals(Utils.bTypeGiftingCenter)){
+                    if (businessProfileMapModel.businessType.equals(Utils.bTypeResto)){
                         businessProfileModelArrayList.add(businessProfileModel);
                     }
-
                 }
                 businessBrowseRecyclerViewAdapter.notifyDataSetChanged();
             }

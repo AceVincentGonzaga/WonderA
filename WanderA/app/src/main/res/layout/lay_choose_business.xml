@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/ic_hotel_black_24dp" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/gifting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view3"
         app:layout_constraintTop_toBottomOf="@+id/view3"
-        app:srcCompat="@drawable/ic_directions_car_black_24dp" />
+        app:srcCompat="@drawable/ic_card_giftcard_black_24dp" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -113,12 +113,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_light"
-        android:text="Transporation"
+        android:text="Gifting Center"
         android:textAllCaps="true"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/imageView10"
-        app:layout_constraintStart_toStartOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/imageView10" />
+        app:layout_constraintEnd_toEndOf="@+id/gifting"
+        app:layout_constraintStart_toStartOf="@+id/gifting"
+        app:layout_constraintTop_toBottomOf="@+id/gifting" />
 
     <TextView
         android:layout_width="wrap_content"
