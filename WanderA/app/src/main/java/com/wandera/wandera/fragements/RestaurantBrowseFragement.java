@@ -58,6 +58,7 @@ public class RestaurantBrowseFragement extends Fragment {
                     BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                     businessProfileModel.setName(businessProfileMapModel.name);
                     businessProfileModel.setKey(businessProfileMapModel.key);
+                    businessProfileModel.setBusinessType(businessProfileMapModel.businessType);
                     businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
 
                     if (businessProfileMapModel.businessType.equals(Utils.bTypeResto)){
