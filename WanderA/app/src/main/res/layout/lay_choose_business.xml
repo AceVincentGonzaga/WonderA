@@ -66,7 +66,7 @@
         app:srcCompat="@drawable/ic_card_giftcard_black_24dp" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/touristHotSpot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -128,7 +128,7 @@
         android:text="Hot spots"
         android:textAllCaps="true"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/imageView11"
-        app:layout_constraintStart_toStartOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+        app:layout_constraintEnd_toEndOf="@+id/touristHotSpot"
+        app:layout_constraintStart_toStartOf="@+id/touristHotSpot"
+        app:layout_constraintTop_toBottomOf="@+id/touristHotSpot" />
 </android.support.constraint.ConstraintLayout>

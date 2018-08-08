@@ -27,6 +27,7 @@ public class Utils {
     public static String MENU_DIR = "restaurant/menus";
     public static String GIFT_DIR = "gifting/menus";
     public static String ROOMS_DIR = "accomodations/rooms";
+    public static String ACT_DIR = "touristspots/activity";
     public static void callToast(Context context, String mes){
         Toast.makeText(context,mes,Toast.LENGTH_SHORT).show();
     }

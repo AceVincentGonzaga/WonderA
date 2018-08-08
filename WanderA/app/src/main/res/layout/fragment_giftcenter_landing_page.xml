@@ -98,7 +98,7 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView10" />
 
                 <ImageView
-                    android:id="@+id/imageView11"
+                    android:id="@+id/touristHotSpot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -111,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Contac Number"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                    app:layout_constraintBottom_toBottomOf="@+id/touristHotSpot"
                     app:layout_constraintStart_toStartOf="@+id/network" />
 
             </android.support.constraint.ConstraintLayout>

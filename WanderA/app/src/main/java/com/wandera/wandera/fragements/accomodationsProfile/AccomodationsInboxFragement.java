@@ -25,6 +25,7 @@ import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.AccomodationProfileBotNav;
 import com.wandera.wandera.activity.RestaurantProfileBotNav;
+import com.wandera.wandera.activity.TourisSpotsProfileBotNav;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
 import com.wandera.wandera.views.ChatListRecyclerViewAdapter;
 
@@ -45,7 +46,7 @@ public class AccomodationsInboxFragement extends Fragment {
 
     ChatListRecyclerViewAdapter chatListRecyclerViewAdapter;
     ArrayList<ChatDataModel> chatDataModels= new ArrayList<>();
-    AccomodationProfileBotNav act;
+    TourisSpotsProfileBotNav act;
 
     public AccomodationsInboxFragement(){
 
@@ -55,7 +56,7 @@ public class AccomodationsInboxFragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        act = (AccomodationProfileBotNav) getActivity();
+        act = (TourisSpotsProfileBotNav) getActivity();
         View view = inflater.inflate(R.layout.frag_restaurant_inbox, container, false);
         businessKey = act.getBusinessKey();
         inputMessage = (EditText) view.findViewById(R.id.selectMunicipality);

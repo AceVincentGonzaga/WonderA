@@ -112,7 +112,7 @@
                     app:layout_constraintStart_toStartOf="@+id/wifi" />
 
                 <ImageView
-                    android:id="@+id/imageView11"
+                    android:id="@+id/touristHotSpot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -125,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Contac Number"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                    app:layout_constraintBottom_toBottomOf="@+id/touristHotSpot"
                     app:layout_constraintStart_toStartOf="@+id/network" />
 
                 <android.support.v7.widget.RecyclerView
@@ -137,7 +137,7 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+                    app:layout_constraintTop_toBottomOf="@+id/touristHotSpot" />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>

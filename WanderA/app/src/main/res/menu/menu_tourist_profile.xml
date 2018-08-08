@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_restaurant"
+            android:icon="@drawable/ic_whatshot_black_24dp"
+            android:title="HotSpot" />
+        <item
+            android:id="@+id/nav_menus"
+            android:icon="@drawable/ic_directions_run_black_24dp"
+            android:title="Activity" />
+        <item
+            android:id="@+id/nav_inbox"
+            android:icon="@drawable/ic_message_black_24dp"
+            android:title="Messages" />
+    </group>
+</menu>

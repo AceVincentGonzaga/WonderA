@@ -23,6 +23,7 @@ import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.browseAll.AccomodationAll;
 import com.wandera.wandera.activity.browseAll.GiftingAll;
 import com.wandera.wandera.activity.browseAll.RestaurantAll;
+import com.wandera.wandera.activity.browseAll.TouristSpotAll;
 import com.wandera.wandera.datamodel.MunicipalityDataModel;
 import com.wandera.wandera.mapmodel.MunicipalityMapModel;
 import com.wandera.wandera.views.MunicipalityRecyclerViewAdapter;
@@ -35,7 +36,7 @@ public class HomeFragement extends Fragment {
     ArrayList<MunicipalityDataModel> municipalityDataModelArrayList = new ArrayList<>();
     Button municipalitybutton,all_button;
     ConstraintLayout businessType;
-    ImageView resto,accomodation,gifting;
+    ImageView resto,accomodation,gifting,touristHotSpot;
     public HomeFragement(){
 
     }
@@ -48,6 +49,8 @@ public class HomeFragement extends Fragment {
         gifting = (ImageView) view.findViewById(R.id.gifting);
         resto = (ImageView) view.findViewById(R.id.resto);
         accomodation = (ImageView) view.findViewById(R.id.accomodation);
+        touristHotSpot = (ImageView) view.findViewById(R.id.touristHotSpot);
+
         businessType = (ConstraintLayout) view.findViewById(R.id.businessType);
         all_button = (Button)view.findViewById(R.id.all_button);
         municipality_list = (RecyclerView) view.findViewById(R.id.municipality_list);
@@ -124,6 +127,15 @@ public class HomeFragement extends Fragment {
                 startActivity(i);
             }
         });
+        touristHotSpot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), TouristSpotAll.class);
+                startActivity(i);
+
+            }
+        });
+
 
         return view;
     }

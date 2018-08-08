@@ -3,11 +3,6 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
-        <entry key="imageWizard">
-          <value>
-            <PersistentState />
-          </value>
-        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -23,11 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-<<<<<<< HEAD
-                                      <entry key="url" value="jar:file:/E:/android-studio-3.0/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_call_black_24dp.xml" />
-=======
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_local_phone_black_24dp.xml" />
->>>>>>> layouts
+                                      <entry key="url" value="jar:file:/E:/android-studio-3.0/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_directions_run_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -37,13 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-<<<<<<< HEAD
-                            <entry key="outputName" value="ic_call_black_24dp" />
-=======
-                            <entry key="color" value="2d2f31" />
-                            <entry key="outputName" value="ic_local_phone_black_24dp" />
->>>>>>> layouts
-                            <entry key="sourceFile" value="D:\D\_ionicons_svg_ios-text.svg" />
+                            <entry key="outputName" value="ic_directions_run_black_24dp" />
+                            <entry key="sourceFile" value="C:\Users\Keji" />
                           </map>
                         </option>
                       </PersistentState>
