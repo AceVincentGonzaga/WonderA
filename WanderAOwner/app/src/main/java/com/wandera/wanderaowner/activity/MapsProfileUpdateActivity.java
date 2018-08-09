@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -79,7 +80,6 @@ public class MapsProfileUpdateActivity extends FragmentActivity implements OnMap
     String businessLocation = "businessLocations";
     String businessKey;
     private ArrayList<RestaurantLocationModel> restaurantLocationModels = new ArrayList<>();
-
 
 
 
@@ -156,7 +156,8 @@ public class MapsProfileUpdateActivity extends FragmentActivity implements OnMap
                 });
             }
         });
-
+        Toast.makeText(MapsProfileUpdateActivity.this,
+                "This is your current location. Long press the red marker and drag to relocate.", Toast.LENGTH_LONG).show();
     }
 
 

@@ -26,6 +26,7 @@ import com.wandera.wanderaowner.activity.accomodations.BusinessProfileAccomodati
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
 import com.wandera.wanderaowner.views.BussinessListRecyclerViewAdapter;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 
@@ -38,10 +39,13 @@ public class ManageBusiness extends AppCompatActivity {
     FirebaseAuth mAuth;
     ConstraintLayout container;
     TextView addBusinessBtn;
+
+    AVLoadingIndicatorView managebusinessLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_business);
+        managebusinessLoading = (AVLoadingIndicatorView) findViewById(R.id.managebusinessLoading);
         businessItemsRecyclerView = (RecyclerView) findViewById(R.id.businesItemsRV);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -50,6 +54,7 @@ public class ManageBusiness extends AppCompatActivity {
         container= (ConstraintLayout)findViewById(R.id.container);
         databaseReference.child("businessProfiles").keepSynced(true);
         addBusinessBtn = (TextView) findViewById(R.id.addBusiness);
+
 
         bussinessListRecyclerViewAdapter = new BussinessListRecyclerViewAdapter(context,businessProfileModelArrayList);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
@@ -63,6 +68,7 @@ public class ManageBusiness extends AppCompatActivity {
             public void onClick(View v) {
                 selectBusinessTypeDialog();
             }
+
         });
 
 
@@ -89,7 +95,8 @@ public class ManageBusiness extends AppCompatActivity {
                                             businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
                                             businessProfileModelArrayList.add(businessProfileModel);
                                         }
-
+                                        managebusinessLoading.setVisibility(View.GONE);
+                                        businessItemsRecyclerView.setVisibility(View.VISIBLE);
                                         bussinessListRecyclerViewAdapter.notifyDataSetChanged();
 
                                     }
