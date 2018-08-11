@@ -46,13 +46,20 @@ public class ManageBusiness extends AppCompatActivity {
     TextView addBusinessBtn;
 
     AVLoadingIndicatorView managebusinessLoading;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_business);
         managebusinessLoading = (AVLoadingIndicatorView) findViewById(R.id.managebusinessLoading);
         businessItemsRecyclerView = (RecyclerView) findViewById(R.id.businesItemsRV);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         context = ManageBusiness.this;
