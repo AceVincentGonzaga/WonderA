@@ -37,7 +37,7 @@ public class RestaurantMenusFragement extends Fragment {
     RestuarantCategoryRecyclerViewAdapter restuarantCategoryRecyclerViewAdapter;
     ArrayList<RestaurantMenuCategoryDataModel> restaurantMenuCategoryDataModelArrayList = new ArrayList<>();
     DatabaseReference databaseReference;
-    GiftingProfileBotNav act;
+    RestaurantProfileBotNav act;
 
 
     public RestaurantMenusFragement(){
@@ -51,7 +51,7 @@ public class RestaurantMenusFragement extends Fragment {
         View view = inflater.inflate(R.layout.fragment_restaurant_menus, container, false);
 
 
-                act = (GiftingProfileBotNav) getActivity();
+                act = (RestaurantProfileBotNav) getActivity();
                 categoryList = (RecyclerView) view.findViewById(R.id.categoryList);
                 restuarantCategoryRecyclerViewAdapter = new RestuarantCategoryRecyclerViewAdapter(getActivity(),restaurantMenuCategoryDataModelArrayList);
                 categoryList.setLayoutManager(new LinearLayoutManager(getActivity()));

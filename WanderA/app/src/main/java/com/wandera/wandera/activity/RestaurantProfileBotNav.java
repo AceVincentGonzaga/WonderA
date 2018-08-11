@@ -126,5 +126,29 @@ public class RestaurantProfileBotNav extends AppCompatActivity {
         return businessKey;
     }
 
+    @Override
+    public void onBackPressed() {
+        ratingDialog();
+    }
+
+    private void ratingDialog(){
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+
+        dialog.setContentView(R.layout.rating_and_input_comment_dialogue);//layout resource
+        TextView notNow = (TextView) dialog.findViewById(R.id.notNow);
+        notNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+        dialog.show();
+    }
 
 }
