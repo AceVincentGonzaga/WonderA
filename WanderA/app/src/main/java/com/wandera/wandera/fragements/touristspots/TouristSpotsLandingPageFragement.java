@@ -1,4 +1,4 @@
-package com.wandera.wandera.fragements.accomodationsProfile;
+package com.wandera.wandera.fragements.touristspots;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +22,7 @@ import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.businessProfiles.AccomodationProfileBotNav;
+import com.wandera.wandera.activity.businessProfiles.TourisSpotsProfileBotNav;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
 import com.wandera.wandera.datamodel.RatingCommentDataModel;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
@@ -30,9 +31,9 @@ import com.wandera.wandera.views.ratingAndComments.RatingsRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public class AccmodationLandingPageFragement extends Fragment {
+public class TouristSpotsLandingPageFragement extends Fragment {
 
-    AccomodationProfileBotNav act;
+    TourisSpotsProfileBotNav act;
     AppBarLayout appbar;
     CollapsingToolbarLayout colapsToolbar;
     String businessKey;
@@ -42,7 +43,7 @@ public class AccmodationLandingPageFragement extends Fragment {
     RecyclerView ratingAndCommentList;
     RatingsRecyclerViewAdapter ratingsRecyclerViewAdapter;
     ArrayList<RatingCommentDataModel> ratingCommentDataModelArrayList = new ArrayList<>();
-    public AccmodationLandingPageFragement(){
+    public TouristSpotsLandingPageFragement(){
 
     }
 
@@ -50,10 +51,8 @@ public class AccmodationLandingPageFragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        act = (AccomodationProfileBotNav) getActivity();
         View view = inflater.inflate(R.layout.frag_accomodation_prof_landing_page, container, false);
-
-
+        act = (TourisSpotsProfileBotNav) getActivity();
         businessKey = act.getBusinessKey();
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
         colapsToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.colapsToolbar);
@@ -100,7 +99,6 @@ public class AccmodationLandingPageFragement extends Fragment {
 
             }
         });
-
         return view;
     }
 }

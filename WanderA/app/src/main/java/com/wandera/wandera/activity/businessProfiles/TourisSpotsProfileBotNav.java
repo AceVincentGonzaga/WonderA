@@ -1,25 +1,46 @@
 package com.wandera.wandera.activity.businessProfiles;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.R;
+import com.wandera.wandera.Utils;
 import com.wandera.wandera.adapter.ViewPagerAdapter;
 import com.wandera.wandera.fragements.accomodationsProfile.AccmodationLandingPageFragement;
 import com.wandera.wandera.fragements.touristspots.TouristSpotsActivityFragement;
 import com.wandera.wandera.fragements.touristspots.TouristSpotsInboxFragement;
+import com.wandera.wandera.fragements.touristspots.TouristSpotsLandingPageFragement;
+import com.wandera.wandera.mapmodel.RatingCommentMapModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TourisSpotsProfileBotNav extends AppCompatActivity {
 
     private TextView mTextMessage;
-    AccmodationLandingPageFragement accmodationLandingPageFragement;
+    TouristSpotsLandingPageFragement touristSpotsLandingPageFragement;
     TouristSpotsActivityFragement touristSpotsActivityFragement;
     TouristSpotsInboxFragement touristSpotsInboxFragement;
     ViewPager viewPager;
@@ -28,8 +49,9 @@ public class TourisSpotsProfileBotNav extends AppCompatActivity {
     ViewPagerAdapter adapter;
     String businessKey;
     Context context;
-
-
+    Dialog dialog;
+    float finalRating;
+    DatabaseReference databaseReference;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,7 +78,7 @@ public class TourisSpotsProfileBotNav extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tourist_spot_profile_bot_nav);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         businessKey = getIntent().getExtras().getString("businessKey");
         context = TourisSpotsProfileBotNav.this;
 
@@ -101,10 +123,10 @@ public class TourisSpotsProfileBotNav extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        accmodationLandingPageFragement = new AccmodationLandingPageFragement();
+        touristSpotsLandingPageFragement = new TouristSpotsLandingPageFragement();
         touristSpotsActivityFragement = new TouristSpotsActivityFragement();
         touristSpotsInboxFragement = new TouristSpotsInboxFragement();
-        adapter.addFragment(accmodationLandingPageFragement);
+        adapter.addFragment(touristSpotsLandingPageFragement);
         adapter.addFragment(touristSpotsActivityFragement);
         adapter.addFragment(touristSpotsInboxFragement);
 
@@ -114,6 +136,89 @@ public class TourisSpotsProfileBotNav extends AppCompatActivity {
     public String getBusinessKey() {
         return businessKey;
     }
+    private void ratingDialog(){
 
+        dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.rating_and_input_comment_dialogue);//layout resource
+        final TextInputEditText comment = (TextInputEditText) dialog.findViewById(R.id.inputComment);
+        RatingBar ratingBar = (RatingBar) dialog.findViewById(R.id.ratingBar);
+        Button submitBtn = (Button) dialog.findViewById(R.id.submitBtn);
+        TextView notNow = (TextView) dialog.findViewById(R.id.notNow);
+        notNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                finalRating = rating;
+            }
+        });
+
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!comment.getText().toString().trim().equals("") && finalRating!=0){
+                    submitRatingComment(comment.getText().toString(),finalRating);
+                }
+            }
+        });
+
+
+
+
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+        dialog.show();
+    }
+
+    private void submitRatingComment(String comment,float rating){
+
+
+
+        String accountId = FirebaseAuth.getInstance().getUid();
+        RatingCommentMapModel ratingCommentMapModel = new RatingCommentMapModel(accountId,
+                comment,rating,businessKey);
+
+        Map<String,Object> commentvalue = ratingCommentMapModel.toMap();
+        Map<String,Object> childUpdate = new HashMap<>();
+        childUpdate.put(accountId,commentvalue);
+
+        databaseReference.child(Utils.RATING_DIR).child(businessKey).updateChildren(childUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        databaseReference.child(Utils.RATING_DIR).child(businessKey).child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()!=null){
+                    finish();
+                }else {
+                    ratingDialog();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
 
 }
