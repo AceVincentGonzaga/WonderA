@@ -32,23 +32,23 @@
                 android:src="@drawable/kasaraya"
                 android:scaleType="centerCrop" />
 
-           <android.support.constraint.ConstraintLayout
-               android:layout_width="match_parent"
-               android:background="@drawable/grad_menu_overlay"
-               android:layout_height="match_parent">
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/grad_menu_overlay">
 
-               <TextView
-                   android:id="@+id/textTitle"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginBottom="16dp"
-                   android:layout_marginStart="24dp"
-                   android:text="Text Title"
-                   android:textSize="24sp"
-                   app:layout_constraintBottom_toBottomOf="parent"
-                   app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="24dp"
+                    android:text="Text Title"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-           </android.support.constraint.ConstraintLayout>
+            </android.support.constraint.ConstraintLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -71,14 +71,42 @@
                 android:id="@+id/include"
                 layout="@layout/include_landing_page" />
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="0dp"
-                android:id="@+id/ratingAndCommentList"
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/lato_light"
+                android:text="Rating"
+                android:textAllCaps="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include" />
+
+            <RatingBar
+                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:id="@+id/ratingBar"
+                app:layout_constraintBottom_toBottomOf="@+id/rating"
+                app:layout_constraintStart_toEndOf="@+id/rating"
+                app:layout_constraintTop_toTopOf="@+id/rating" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ratingAndCommentList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include"></android.support.v7.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/rating">
+
+            </android.support.v7.widget.RecyclerView>
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>

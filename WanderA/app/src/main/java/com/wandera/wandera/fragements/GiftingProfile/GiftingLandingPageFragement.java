@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,6 +52,7 @@ public class GiftingLandingPageFragement extends Fragment {
     RecyclerView ratingAndCommentList;
     RatingsRecyclerViewAdapter ratingsRecyclerViewAdapter;
     ArrayList<RatingCommentDataModel> ratingCommentDataModelArrayList = new ArrayList<>();
+    RatingBar ratingBar;
     public GiftingLandingPageFragement(){
 
     }
@@ -61,6 +63,7 @@ public class GiftingLandingPageFragement extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_business_prof_landing_page, container, false);
         act = (GiftingProfileBotNav) getActivity();
+        ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         businessKey = act.getBusinessKey();
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
         colapsToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.colapsToolbar);
@@ -90,6 +93,8 @@ public class GiftingLandingPageFragement extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ratingCommentDataModelArrayList.clear();
+                float aveRating = 0;
+
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     RatingCommentDataModel commentDataModel = new RatingCommentDataModel();
                     RatingCommentMapModel ratingCommentMapModel = dataSnapshot1.getValue(RatingCommentMapModel.class);
@@ -98,8 +103,10 @@ public class GiftingLandingPageFragement extends Fragment {
                     commentDataModel.setRating(ratingCommentMapModel.rating);
                     commentDataModel.setBusinessId(ratingCommentMapModel.businessId);
                     ratingCommentDataModelArrayList.add(commentDataModel);
+                    aveRating+=ratingCommentMapModel.rating;
                 }
                 ratingsRecyclerViewAdapter.notifyDataSetChanged();
+                ratingBar.setRating(aveRating/ratingCommentDataModelArrayList.size());
             }
 
             @Override
