@@ -1,4 +1,4 @@
-package com.wandera.wandera.activity;
+package com.wandera.wandera.activity.businessProfiles;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,17 +17,16 @@ import android.widget.TextView;
 
 import com.wandera.wandera.R;
 import com.wandera.wandera.adapter.ViewPagerAdapter;
+import com.wandera.wandera.fragements.GiftingProfile.GiftingInboxFragement;
+import com.wandera.wandera.fragements.GiftingProfile.GiftingLandingPageFragement;
 import com.wandera.wandera.fragements.GiftingProfile.GiftingMenusFragement;
-import com.wandera.wandera.fragements.RestaurantInboxFragement;
-import com.wandera.wandera.fragements.RestaurantLandingPageFragement;
-import com.wandera.wandera.fragements.RestaurantMenusFragement;
 
 public class GiftingProfileBotNav extends AppCompatActivity {
 
     private TextView mTextMessage;
-    RestaurantLandingPageFragement restaurantLandingPageFragement;
+    GiftingLandingPageFragement giftingLandingPageFragement;
     GiftingMenusFragement giftingMenusFragement;
-    RestaurantInboxFragement restaurantInboxFragement;
+    GiftingInboxFragement giftingInboxFragement;
     ViewPager viewPager;
     MenuItem prevMenuItem;
     BottomNavigationView navigation;
@@ -60,7 +59,7 @@ public class GiftingProfileBotNav extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant_profile_bot_nav);
+        setContentView(R.layout.activity_gifting_profile_bot_nav);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         businessKey = getIntent().getExtras().getString("businessKey");
         context = GiftingProfileBotNav.this;
@@ -109,12 +108,12 @@ public class GiftingProfileBotNav extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        restaurantLandingPageFragement = new RestaurantLandingPageFragement();
+        giftingLandingPageFragement = new GiftingLandingPageFragement();
         giftingMenusFragement = new GiftingMenusFragement();
-        restaurantInboxFragement = new RestaurantInboxFragement();
-        adapter.addFragment(restaurantLandingPageFragement);
+        giftingInboxFragement = new GiftingInboxFragement();
+        adapter.addFragment(giftingLandingPageFragement);
         adapter.addFragment(giftingMenusFragement);
-        adapter.addFragment(restaurantInboxFragement);
+        adapter.addFragment(giftingInboxFragement);
 
         viewPager.setAdapter(adapter);
     }
@@ -148,6 +147,4 @@ public class GiftingProfileBotNav extends AppCompatActivity {
         window.setGravity(Gravity.CENTER);
         dialog.show();
     }
-
-
 }

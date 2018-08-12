@@ -18,14 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
-import com.wandera.wandera.activity.AccomodationProfileBotNav;
-import com.wandera.wandera.activity.RestaurantProfileBotNav;
-import com.wandera.wandera.datamodel.RestaurantMenuCategoryDataModel;
-import com.wandera.wandera.datamodel.RestaurantMenuDataModel;
+import com.wandera.wandera.activity.businessProfiles.AccomodationProfileBotNav;
 import com.wandera.wandera.datamodel.RoomDataModel;
-import com.wandera.wandera.mapmodel.RestuarantCategoryMenuMapModel;
 import com.wandera.wandera.mapmodel.RoomMapModel;
-import com.wandera.wandera.views.RestuarantCategoryRecyclerViewAdapter;
 import com.wandera.wandera.views.accmodationProfile.AccomodationRoomRecyclerViewAdapter;
 
 import java.util.ArrayList;

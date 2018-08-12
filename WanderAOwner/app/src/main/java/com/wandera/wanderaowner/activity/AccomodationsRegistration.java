@@ -109,7 +109,7 @@ public class AccomodationsRegistration extends AppCompatActivity {
             selectMunicipality = (TextView) findViewById(R.id.selectMunicipality);
             mStorageRef = FirebaseStorage.getInstance().getReference();
             setLocation = (TextView) findViewById(R.id.setLocation);
-            selectBType("Accomodation");
+            selectBType("Accomodations");
             categories.add("Restaurant");
             categories.add("Accomodation");
             categories.add("Pasalubong Center");

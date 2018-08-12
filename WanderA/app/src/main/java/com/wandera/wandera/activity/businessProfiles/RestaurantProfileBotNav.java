@@ -1,5 +1,6 @@
-package com.wandera.wandera.activity;
+package com.wandera.wandera.activity.businessProfiles;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,28 +8,32 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.wandera.wandera.R;
 import com.wandera.wandera.adapter.ViewPagerAdapter;
-import com.wandera.wandera.fragements.accomodationsProfile.AccmodationLandingPageFragement;
-import com.wandera.wandera.fragements.accomodationsProfile.AccomodationRoomsFragement;
-import com.wandera.wandera.fragements.accomodationsProfile.AccomodationsInboxFragement;
-import com.wandera.wandera.fragements.touristspots.TouristSpotsActivityFragement;
+import com.wandera.wandera.fragements.restaurantProfile.RestaurantInboxFragement;
+import com.wandera.wandera.fragements.restaurantProfile.RestaurantLandingPageFragement;
+import com.wandera.wandera.fragements.restaurantProfile.RestaurantMenusFragement;
 
-public class TourisSpotsProfileBotNav extends AppCompatActivity {
+public class RestaurantProfileBotNav extends AppCompatActivity {
 
     private TextView mTextMessage;
-    AccmodationLandingPageFragement accmodationLandingPageFragement;
-    TouristSpotsActivityFragement touristSpotsActivityFragement;
-    AccomodationsInboxFragement accomodationsInboxFragement;
+    RestaurantLandingPageFragement restaurantLandingPageFragement;
+    RestaurantMenusFragement restaurantMenusFragement;
+    RestaurantInboxFragement restaurantInboxFragement;
     ViewPager viewPager;
     MenuItem prevMenuItem;
     BottomNavigationView navigation;
     ViewPagerAdapter adapter;
     String businessKey;
     Context context;
+    Dialog dialog;
 
 
 
@@ -55,11 +60,10 @@ public class TourisSpotsProfileBotNav extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tourist_spot_profile_bot_nav);
+        setContentView(R.layout.activity_restaurant_profile_bot_nav);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-
         businessKey = getIntent().getExtras().getString("businessKey");
-        context = TourisSpotsProfileBotNav.this;
+        context = RestaurantProfileBotNav.this;
 
 
         mTextMessage = (TextView) findViewById(R.id.message);
@@ -97,17 +101,20 @@ public class TourisSpotsProfileBotNav extends AppCompatActivity {
 
         });
 
+
+
+
         setupViewPager(viewPager);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        accmodationLandingPageFragement = new AccmodationLandingPageFragement();
-        touristSpotsActivityFragement = new TouristSpotsActivityFragement();
-        accomodationsInboxFragement = new AccomodationsInboxFragement();
-        adapter.addFragment(accmodationLandingPageFragement);
-        adapter.addFragment(touristSpotsActivityFragement);
-        adapter.addFragment(accomodationsInboxFragement);
+        restaurantLandingPageFragement = new RestaurantLandingPageFragement();
+        restaurantMenusFragement = new RestaurantMenusFragement();
+        restaurantInboxFragement = new RestaurantInboxFragement();
+        adapter.addFragment(restaurantLandingPageFragement);
+        adapter.addFragment(restaurantMenusFragement);
+        adapter.addFragment(restaurantInboxFragement);
 
         viewPager.setAdapter(adapter);
     }
@@ -116,5 +123,31 @@ public class TourisSpotsProfileBotNav extends AppCompatActivity {
         return businessKey;
     }
 
+    @Override
+    public void onBackPressed() {
+        ratingDialog();
+    }
+
+    private void ratingDialog(){
+        dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+
+        dialog.setContentView(R.layout.rating_and_input_comment_dialogue);//layout resource
+        TextView notNow = (TextView) dialog.findViewById(R.id.notNow);
+        notNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+
+
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+        dialog.show();
+    }
 
 }

@@ -29,7 +29,7 @@ public class TouristSpotAll extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accomodation_all);
+        setContentView(R.layout.activity_tourist_spot_all);
         context = TouristSpotAll.this;
         restaurantlist = (RecyclerView) findViewById(R.id.restaurantlist);
         databaseReference = FirebaseDatabase.getInstance().getReference();

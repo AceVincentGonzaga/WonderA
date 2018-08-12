@@ -28,7 +28,7 @@ public class GiftingAll extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant_all);
+        setContentView(R.layout.activity_gifting_all);
         context = GiftingAll.this;
         restaurantlist = (RecyclerView) findViewById(R.id.restaurantlist);
         databaseReference = FirebaseDatabase.getInstance().getReference();

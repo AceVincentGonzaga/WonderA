@@ -1,4 +1,4 @@
-package com.wandera.wandera.fragements.GiftingProfile;
+package com.wandera.wandera.fragements.touristspots;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,7 +23,7 @@ import com.wandera.wandera.ChatListMapModel;
 import com.wandera.wandera.ChatMessageMapModel;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
-import com.wandera.wandera.activity.businessProfiles.GiftingProfileBotNav;
+import com.wandera.wandera.activity.businessProfiles.TourisSpotsProfileBotNav;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
 import com.wandera.wandera.views.ChatListRecyclerViewAdapter;
 
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GiftingInboxFragement extends Fragment {
+public class TouristSpotsInboxFragement extends Fragment {
 
     String businessKey;
     DatabaseReference mDatabase;
@@ -44,9 +44,9 @@ public class GiftingInboxFragement extends Fragment {
 
     ChatListRecyclerViewAdapter chatListRecyclerViewAdapter;
     ArrayList<ChatDataModel> chatDataModels= new ArrayList<>();
-    GiftingProfileBotNav act;
+    TourisSpotsProfileBotNav act;
 
-    public GiftingInboxFragement(){
+    public TouristSpotsInboxFragement(){
 
     }
 
@@ -54,7 +54,7 @@ public class GiftingInboxFragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        act = (GiftingProfileBotNav) getActivity();
+        act = (TourisSpotsProfileBotNav) getActivity();
         View view = inflater.inflate(R.layout.frag_restaurant_inbox, container, false);
         businessKey = act.getBusinessKey();
         inputMessage = (EditText) view.findViewById(R.id.selectMunicipality);

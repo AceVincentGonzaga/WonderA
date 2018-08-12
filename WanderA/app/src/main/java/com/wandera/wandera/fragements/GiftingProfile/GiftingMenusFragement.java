@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
-import com.wandera.wandera.activity.GiftingProfileBotNav;
+import com.wandera.wandera.activity.businessProfiles.GiftingProfileBotNav;
 import com.wandera.wandera.datamodel.RestaurantMenuCategoryDataModel;
 import com.wandera.wandera.datamodel.RestaurantMenuDataModel;
 import com.wandera.wandera.mapmodel.RestuarantCategoryMenuMapModel;

@@ -1,16 +1,13 @@
-package com.wandera.wandera.fragements;
+package com.wandera.wandera.fragements.restaurantProfile;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,16 +16,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
-import com.wandera.wandera.activity.GiftingProfileBotNav;
-import com.wandera.wandera.activity.RestaurantProfileBotNav;
-import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
+import com.wandera.wandera.activity.businessProfiles.RestaurantProfileBotNav;
 import com.wandera.wandera.datamodel.RestaurantMenuCategoryDataModel;
 import com.wandera.wandera.datamodel.RestaurantMenuDataModel;
 import com.wandera.wandera.mapmodel.RestuarantCategoryMenuMapModel;
 import com.wandera.wandera.views.RestuarantCategoryRecyclerViewAdapter;
-
-import net.robinx.lib.blurview.BlurBehindView;
-import net.robinx.lib.blurview.processor.NdkStackBlurProcessor;
 
 import java.util.ArrayList;
 

@@ -11,13 +11,12 @@ import android.widget.TextView;
 import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
-import com.wandera.wandera.activity.AccomodationProfileBotNav;
-import com.wandera.wandera.activity.GiftingProfileBotNav;
-import com.wandera.wandera.activity.RestaurantProfileBotNav;
-import com.wandera.wandera.activity.TourisSpotsProfileBotNav;
+import com.wandera.wandera.activity.businessProfiles.AccomodationProfileBotNav;
+import com.wandera.wandera.activity.businessProfiles.GiftingProfileBotNav;
+import com.wandera.wandera.activity.businessProfiles.RestaurantProfileBotNav;
+import com.wandera.wandera.activity.businessProfiles.TourisSpotsProfileBotNav;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
 import com.wandera.wandera.datamodel.PhraseCategoryDataModel;
-import com.wandera.wandera.fragements.GiftingCenterBrowseFragement;
 
 import java.util.ArrayList;
 

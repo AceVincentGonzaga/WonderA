@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/menu_accomodation_profile" />
+        app:menu="@menu/menu_pasalubong_profile" />
 
 
 

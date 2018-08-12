@@ -28,6 +28,8 @@ public class Utils {
     public static String GIFT_DIR = "gifting/menus";
     public static String ROOMS_DIR = "accomodations/rooms";
     public static String ACT_DIR = "touristspots/activity";
+    public static String RATING_DIR = "ratings";
+
     public static void callToast(Context context, String mes){
         Toast.makeText(context,mes,Toast.LENGTH_SHORT).show();
     }

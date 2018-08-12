@@ -1,4 +1,4 @@
-package com.wandera.wandera.fragements.accomodationsProfile;
+package com.wandera.wandera.fragements.restaurantProfile;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,20 +18,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
-import com.wandera.wandera.activity.businessProfiles.AccomodationProfileBotNav;
+import com.wandera.wandera.activity.businessProfiles.RestaurantProfileBotNav;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
 
-public class AccmodationLandingPageFragement extends Fragment {
-
-    AccomodationProfileBotNav act;
+public class RestaurantLandingPageFragement extends Fragment {
+    RestaurantProfileBotNav act;
     AppBarLayout appbar;
     CollapsingToolbarLayout colapsToolbar;
     String businessKey;
     DatabaseReference databaseReference;
     ImageView app_bar_image;
     TextView textTitle;
-    public AccmodationLandingPageFragement(){
+    public RestaurantLandingPageFragement(){
 
     }
 
@@ -39,8 +38,8 @@ public class AccmodationLandingPageFragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.frag_accomodation_prof_landing_page, container, false);
-        act = (AccomodationProfileBotNav) getActivity();
+        View view = inflater.inflate(R.layout.frag_business_prof_landing_page, container, false);
+        act = (RestaurantProfileBotNav) getActivity();
         businessKey = act.getBusinessKey();
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
         colapsToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.colapsToolbar);
@@ -61,6 +60,9 @@ public class AccmodationLandingPageFragement extends Fragment {
 
             }
         });
+
         return view;
     }
+
+
 }

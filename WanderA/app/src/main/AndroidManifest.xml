@@ -58,15 +58,15 @@
                 android:value="com.wandera.wandera.activity.HomeSlider" />
         </activity>
         <activity
-            android:name=".activity.RestaurantProfileBotNav"
+            android:name=".activity.businessProfiles.RestaurantProfileBotNav"
             android:label="@string/title_activity_restaurant_profile_bot_nav" />
         <activity android:name=".activity.browseAll.AccomodationAll"/>
-        <activity android:name=".activity.AccomodationProfileBotNav" />
+        <activity android:name=".activity.businessProfiles.AccomodationProfileBotNav" />
         <activity android:name=".activity.browseAll.RestaurantAll"></activity>
         <activity android:name=".activity.browseAll.GiftingAll"/>
         <activity android:name=".activity.browseAll.TouristSpotAll"/>
-        <activity android:name=".activity.GiftingProfileBotNav"/>
-        <activity android:name=".activity.TourisSpotsProfileBotNav"/>
+        <activity android:name=".activity.businessProfiles.GiftingProfileBotNav"/>
+        <activity android:name=".activity.businessProfiles.TourisSpotsProfileBotNav"/>
 
     </application>
 

@@ -1,4 +1,4 @@
-package com.wandera.wandera.activity;
+package com.wandera.wandera.activity.businessProfiles;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -16,11 +16,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.wandera.wandera.R;
-import com.wandera.wandera.Utils;
 import com.wandera.wandera.adapter.ViewPagerAdapter;
-import com.wandera.wandera.fragements.RestaurantInboxFragement;
-import com.wandera.wandera.fragements.RestaurantLandingPageFragement;
-import com.wandera.wandera.fragements.RestaurantMenusFragement;
 import com.wandera.wandera.fragements.accomodationsProfile.AccmodationLandingPageFragement;
 import com.wandera.wandera.fragements.accomodationsProfile.AccomodationRoomsFragement;
 import com.wandera.wandera.fragements.accomodationsProfile.AccomodationsInboxFragement;
