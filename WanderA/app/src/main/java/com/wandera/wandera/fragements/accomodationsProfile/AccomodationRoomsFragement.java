@@ -53,6 +53,7 @@ public class AccomodationRoomsFragement extends Fragment {
                 .child(act.getBusinessKey()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                roomDataModelArrayList.clear();
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     RoomDataModel roomDataModel = new RoomDataModel();
                     RoomMapModel roomMapModel = dataSnapshot1.getValue(RoomMapModel.class);

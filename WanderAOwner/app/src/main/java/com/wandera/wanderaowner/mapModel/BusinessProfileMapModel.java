@@ -20,6 +20,7 @@ public class BusinessProfileMapModel {
     public boolean businessApproval;
     public String key;
     public String municipality;
+    public String barangay;
 
 
     public BusinessProfileMapModel(){
@@ -27,7 +28,7 @@ public class BusinessProfileMapModel {
     }
     public BusinessProfileMapModel(String userId, String name, String address,
                                    String contact, String email, String businessType,
-                                   String restoProfileImagePath,String key,String municipality){
+                                   String restoProfileImagePath,String key,String municipality,String barangay){
         this.userId = userId;
         this.name = name;
         this.address = address;
@@ -37,6 +38,7 @@ public class BusinessProfileMapModel {
         this.restoProfileImagePath = restoProfileImagePath;
         this.key = key;
         this.municipality = municipality;
+        this.barangay = barangay;
     }
     @Exclude
     public Map<String,Object> toMap(){
@@ -51,6 +53,7 @@ public class BusinessProfileMapModel {
         result.put("restoProfileImagePath",restoProfileImagePath);
         result.put("businessApproval",false);
         result.put("key",key);
+        result.put("barangay",barangay);
         return result;
     }
 }

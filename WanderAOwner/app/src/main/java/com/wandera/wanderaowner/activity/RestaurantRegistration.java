@@ -45,9 +45,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
+import com.wandera.wanderaowner.datamodel.BarangayDataModel;
 import com.wandera.wanderaowner.datamodel.MunicipalityDataModel;
+import com.wandera.wanderaowner.mapModel.BarangayMapModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.MunicipalityMapModel;
+import com.wandera.wanderaowner.mapModel.RestaurantLocationMapModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -86,7 +89,10 @@ public class RestaurantRegistration extends AppCompatActivity {
         String municipality;
         String key;
         TextView setLocation;
-
+        TextView selectBarangay;
+        ArrayList<BarangayDataModel> barangayDataModelArrayList = new ArrayList<>();
+        String municipalityId;
+        boolean businessSpecificLocation = false;
     @Override
     protected void onStart() {
         super.onStart();
@@ -99,6 +105,7 @@ public class RestaurantRegistration extends AppCompatActivity {
             setContentView(R.layout.activity_owerner_registration);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
             loadingContainer  = (ConstraintLayout) findViewById(R.id.loadingContainer);
+            selectBarangay = (TextView) findViewById(R.id.selectBarangay);
 
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
@@ -159,7 +166,21 @@ public class RestaurantRegistration extends AppCompatActivity {
                     performFileSearch();
                 }
             });
+            selectBarangay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try{
+                        if (!municipalityId.equals(null)){
+                            fetchBarangays();
+                        }
+                    }catch (NullPointerException e){
+                        Utils.callToast(context,"Select Municipality Firts");
+                    }
+                }
+            });
+        getSpecificLocation();
         }
+
 
         private void selectBusinessTypeDialog(){
             final Dialog dialog = new Dialog(RestaurantRegistration.this);
@@ -205,19 +226,29 @@ public class RestaurantRegistration extends AppCompatActivity {
         }
         private boolean validate(){
             boolean val = true;
-            if (inpt_name.getText().toString().trim().length()==0){
-                val = false;
-            }
-            if (municipality.trim().length()==0){
-                val = false;
-            }
-            if (input_contact.getText().toString().trim().length()==0){
-                val = false;
-            }
-            if(inpt_email.getText().toString().trim().length()==0){
-                val = false;
-            }
-            if (businessType==null){
+            try{
+                if (inpt_name.getText().toString().trim().length()==0){
+                    val = false;
+                }
+                if (municipality.trim().length()==0){
+                    val = false;
+                }
+                if (input_contact.getText().toString().trim().length()==0){
+                    val = false;
+                }
+                if(inpt_email.getText().toString().trim().length()==0){
+                    val = false;
+                }
+                if (businessType==null){
+                    val = false;
+                }
+                if (selectBarangay.getText().toString().equals("Barangay")){
+                    val = false;
+                }
+                if (!businessSpecificLocation){
+                    val = false;
+                }
+            }catch (NullPointerException e){
                 val = false;
             }
             return val;
@@ -227,10 +258,10 @@ public class RestaurantRegistration extends AppCompatActivity {
             businessType = type;
         }
 
-        private void saveProfile(String name,String contact,String emaill,String url){
+        private void saveProfile(String name,String contact,String emaill,String url,String barangay){
             String uid = mAuth.getUid();
 
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality);
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,barangay);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
             childupdates.put(key,profileValue);
@@ -256,10 +287,6 @@ public class RestaurantRegistration extends AppCompatActivity {
 
             }
         }
-
-
-
-
 
 
         private String getTransitionNameFromType(int transitionType) {
@@ -354,7 +381,7 @@ public class RestaurantRegistration extends AppCompatActivity {
                             loadingContainer.setVisibility(View.GONE);
                             saveProfile(inpt_name.getText().toString(),
                                     input_contact.getText().toString(),
-                                    inpt_email.getText().toString(),uri.toString()
+                                    inpt_email.getText().toString(),uri.toString(),selectBarangay.getText().toString()
                             );
                         }
                     });
@@ -467,6 +494,49 @@ public class RestaurantRegistration extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 selectMunicipality.setText(mun.get(which));
                                 municipality = municipalityDataModelArrayList.get(which).getKey();
+                                municipalityId  = municipalityDataModelArrayList.get(which).getKey();
+                            }
+                        });
+                builder.show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void selectBusinessLocation(){
+        Intent i = new Intent(context,MapsProfileUpdateActivity.class);
+        i.putExtra("key",key);
+        startActivity(i);
+
+    }
+
+    private void fetchBarangays(){
+        barangayDataModelArrayList.clear();
+        final ArrayList<String> mun = new ArrayList<>();
+        databaseReference.child(Utils.BARANGAY_DIR).child(municipalityId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                barangayDataModelArrayList.clear();
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    BarangayDataModel barangayDataModel = new BarangayDataModel();
+                    BarangayMapModel barangayMapModel = dataSnapshot1.getValue(BarangayMapModel.class);
+                    barangayDataModel.setBarangay(barangayMapModel.barangay);
+                    barangayDataModel.setKey(barangayMapModel.key);
+                    barangayDataModel.setMunId(barangayMapModel.munId);
+                    barangayDataModelArrayList.add(barangayDataModel);
+                    mun.add(barangayMapModel.barangay);
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantRegistration.this);
+                builder.setTitle("Select Barangay");
+                builder.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, mun),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectBarangay.setText(mun.get(which));
+
                             }
                         });
                 builder.show();
@@ -478,14 +548,27 @@ public class RestaurantRegistration extends AppCompatActivity {
             }
         });
 
-
     }
+    private void getSpecificLocation(){
+        databaseReference.child("businessLocations").child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                RestaurantLocationMapModel restaurantLocationMapModel = dataSnapshot.getValue(RestaurantLocationMapModel.class);
+                try {
+                    if (!restaurantLocationMapModel.key.equals(null)){
+                        businessSpecificLocation = true;
+                        setLocation.setText("true");
+                    }
+                }catch (NullPointerException e){
 
-    private void selectBusinessLocation(){
-        Intent i = new Intent(context,MapsProfileUpdateActivity.class);
-        i.putExtra("key",key);
-        startActivity(i);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

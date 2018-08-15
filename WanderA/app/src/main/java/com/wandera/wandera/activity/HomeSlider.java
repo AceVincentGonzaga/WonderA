@@ -18,9 +18,16 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.wandera.wandera.GlideApp;
+import com.wandera.wandera.MainActivity;
 import com.wandera.wandera.R;
 import com.wandera.wandera.adapter.ViewPagerAdapter;
 import com.wandera.wandera.fragements.HomeFragement;
@@ -192,7 +199,8 @@ public class HomeSlider extends AppCompatActivity
             startActivity(i);
             return true;
         } else if (id == R.id.sign_out) {
-
+            FirebaseAuth.getInstance().signOut();
+            signOut();
 
         }
 
@@ -202,6 +210,26 @@ public class HomeSlider extends AppCompatActivity
 
 
         return true;
+    }
+    private void signOut(){
+        GoogleSignInClient mGoogleSignInClient ;
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {  //signout Google
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        FirebaseAuth.getInstance().signOut(); //signout firebase
+                        Intent setupIntent = new Intent(getBaseContext(),MainActivity.class/*To ur activity calss*/);
+                        Toast.makeText(getBaseContext(), "Logged Out", Toast.LENGTH_LONG).show(); //if u want to show some text
+                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(setupIntent);
+                        finish();
+                    }
+                });
     }
 
 

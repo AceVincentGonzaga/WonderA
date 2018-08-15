@@ -11,7 +11,8 @@ public class TranspoMapModel {
     public String origin;
     public String number;
     public String price;
-    public String capacity;
+    public String seats;
+    public String vanImg;
 
 
     public TranspoMapModel(){
@@ -22,13 +23,14 @@ public class TranspoMapModel {
                            String origin,
                            String contactNumber,
                            String price,
-                           String capacity){
+                           String seats, String vanImg){
         this.name = driverName;
         this.key = key;
         this.origin = origin;
         this.number = contactNumber;
         this.price = price;
-        this.capacity = capacity;
+        this.seats = seats;
+        this.vanImg = vanImg;
     }
     @Exclude
     public Map<String,Object> toMap(){
@@ -37,8 +39,9 @@ public class TranspoMapModel {
         result.put("key",key);
         result.put("origin",origin);
         result.put("price",price);
-        result.put("capacity",capacity);
+        result.put("seats", seats);
         result.put("number",number);
+        result.put("vanImg",vanImg);
 
         return result;
     }

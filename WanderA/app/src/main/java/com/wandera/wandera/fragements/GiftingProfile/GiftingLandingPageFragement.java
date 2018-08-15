@@ -15,11 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,11 +50,13 @@ public class GiftingLandingPageFragement extends Fragment {
     String businessKey;
     DatabaseReference databaseReference;
     ImageView app_bar_image;
-    TextView textTitle;
+    TextView textTitle,rating;
     RecyclerView ratingAndCommentList;
     RatingsRecyclerViewAdapter ratingsRecyclerViewAdapter;
     ArrayList<RatingCommentDataModel> ratingCommentDataModelArrayList = new ArrayList<>();
     RatingBar ratingBar;
+    float finalRating;
+    Dialog dialog;
     public GiftingLandingPageFragement(){
 
     }
@@ -63,6 +67,7 @@ public class GiftingLandingPageFragement extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.frag_business_prof_landing_page, container, false);
         act = (GiftingProfileBotNav) getActivity();
+        rating = (TextView) view.findViewById(R.id.rating);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         businessKey = act.getBusinessKey();
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
@@ -115,7 +120,75 @@ public class GiftingLandingPageFragement extends Fragment {
             }
         });
 
+        rating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ratingDialog();
+            }
+        });
         return view;
+    }
+    private void ratingDialog(){
+
+        dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.rating_and_input_comment_dialogue);//layout resource
+        final TextInputEditText comment = (TextInputEditText) dialog.findViewById(R.id.inputComment);
+        RatingBar ratingBar = (RatingBar) dialog.findViewById(R.id.ratingBar);
+        Button submitBtn = (Button) dialog.findViewById(R.id.submitBtn);
+        TextView notNow = (TextView) dialog.findViewById(R.id.notNow);
+        notNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                finalRating = rating;
+            }
+        });
+
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!comment.getText().toString().trim().equals("") && finalRating!=0){
+                    submitRatingComment(comment.getText().toString(),finalRating);
+                }
+            }
+        });
+
+
+
+
+        final Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+        dialog.show();
+    }
+
+    private void submitRatingComment(String comment,float rating){
+
+
+
+        String accountId = FirebaseAuth.getInstance().getUid();
+        RatingCommentMapModel ratingCommentMapModel = new RatingCommentMapModel(accountId,
+                comment,rating,businessKey);
+
+        Map<String,Object> commentvalue = ratingCommentMapModel.toMap();
+        Map<String,Object> childUpdate = new HashMap<>();
+        childUpdate.put(accountId,commentvalue);
+
+        databaseReference.child(Utils.RATING_DIR).child(businessKey).updateChildren(childUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                dialog.dismiss();
+            }
+        });
+
+
     }
 
 }

@@ -47,7 +47,10 @@ import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.activity.ManageBusiness;
 import com.wandera.wanderaowner.activity.MapsProfileUpdateActivity;
+import com.wandera.wanderaowner.activity.giftingcenter.GiftingCenterRegistration;
+import com.wandera.wanderaowner.datamodel.BarangayDataModel;
 import com.wandera.wanderaowner.datamodel.MunicipalityDataModel;
+import com.wandera.wanderaowner.mapModel.BarangayMapModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.MunicipalityMapModel;
 
@@ -88,6 +91,8 @@ public class TouristHotSpotRegistration extends AppCompatActivity {
         String municipality;
         String key;
         TextView setLocation;
+        TextView selectBarangay;
+        ArrayList<BarangayDataModel> barangayDataModelArrayList = new ArrayList<>();
 
     @Override
     protected void onStart() {
@@ -101,6 +106,7 @@ public class TouristHotSpotRegistration extends AppCompatActivity {
             setContentView(R.layout.activity_owerner_registration);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
             loadingContainer  = (ConstraintLayout) findViewById(R.id.loadingContainer);
+            selectBarangay = (TextView) findViewById(R.id.selectBarangay);
 
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
@@ -161,6 +167,19 @@ public class TouristHotSpotRegistration extends AppCompatActivity {
                     performFileSearch();
                 }
             });
+
+        selectBarangay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    if (!municipality.equals(null)){
+                        fetchBarangays();
+                    }
+                }catch (NullPointerException e){
+                    Utils.callToast(context,"Select Municipality Firts");
+                }
+            }
+        });
         }
 
         private void selectBusinessTypeDialog(){
@@ -222,6 +241,10 @@ public class TouristHotSpotRegistration extends AppCompatActivity {
             if (businessType==null){
                 val = false;
             }
+
+            if (selectBarangay.getText().toString().equals("barangay")){
+                val = false;
+            }
             return val;
         }
         private void selectBType(String type){
@@ -229,10 +252,10 @@ public class TouristHotSpotRegistration extends AppCompatActivity {
             businessType = type;
         }
 
-        private void saveProfile(String name,String contact,String emaill,String url){
+        private void saveProfile(String name,String contact,String emaill,String url,String barangay){
             String uid = mAuth.getUid();
 
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality);
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,barangay);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
             childupdates.put(key,profileValue);
@@ -356,7 +379,7 @@ public class TouristHotSpotRegistration extends AppCompatActivity {
                             loadingContainer.setVisibility(View.GONE);
                             saveProfile(inpt_name.getText().toString(),
                                     input_contact.getText().toString(),
-                                    inpt_email.getText().toString(),uri.toString()
+                                    inpt_email.getText().toString(),uri.toString(),selectBarangay.getText().toString()
                             );
                         }
                     });
@@ -489,4 +512,38 @@ public class TouristHotSpotRegistration extends AppCompatActivity {
 
     }
 
+    private void fetchBarangays(){
+        barangayDataModelArrayList.clear();
+        final ArrayList<String> mun = new ArrayList<>();
+        databaseReference.child(Utils.BARANGAY_DIR).child(municipality).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                barangayDataModelArrayList.clear();
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    BarangayDataModel barangayDataModel = new BarangayDataModel();
+                    BarangayMapModel barangayMapModel = dataSnapshot1.getValue(BarangayMapModel.class);
+                    barangayDataModel.setBarangay(barangayMapModel.barangay);
+                    barangayDataModel.setKey(barangayMapModel.key);
+                    barangayDataModel.setMunId(barangayMapModel.munId);
+                    barangayDataModelArrayList.add(barangayDataModel);
+                    mun.add(barangayMapModel.barangay);
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(TouristHotSpotRegistration.this);
+                builder.setTitle("Select Barangay");
+                builder.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, mun),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectBarangay.setText(mun.get(which));
+                            }
+                        });
+                builder.show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 }

@@ -2,7 +2,6 @@ package com.wandera.wanderaowner.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,8 +20,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -45,7 +42,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
+import com.wandera.wanderaowner.datamodel.BarangayDataModel;
 import com.wandera.wanderaowner.datamodel.MunicipalityDataModel;
+import com.wandera.wanderaowner.mapModel.BarangayMapModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.MunicipalityMapModel;
 
@@ -83,9 +82,12 @@ public class AccomodationsRegistration extends AppCompatActivity {
         ConstraintLayout loadingContainer;
         StorageReference mStorageRef;
         TextView selectMunicipality;
-        String municipality;
+        String municipalityKey;
         String key;
         TextView setLocation;
+        TextView selectBarangay;
+        ArrayList<BarangayDataModel> barangayDataModelArrayList = new ArrayList<>();
+
 
     @Override
     protected void onStart() {
@@ -99,7 +101,7 @@ public class AccomodationsRegistration extends AppCompatActivity {
             setContentView(R.layout.activity_owerner_registration);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
             loadingContainer  = (ConstraintLayout) findViewById(R.id.loadingContainer);
-
+            selectBarangay = (TextView) findViewById(R.id.selectBarangay);
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
             saveProfile = (TextView) findViewById(R.id.saveProfile);
@@ -159,6 +161,18 @@ public class AccomodationsRegistration extends AppCompatActivity {
                     performFileSearch();
                 }
             });
+        selectBarangay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    if (!municipalityKey.equals(null)){
+                        fetchBarangays();
+                    }
+                }catch (NullPointerException e){
+                    Utils.callToast(context,"Select Municipality Firts");
+                }
+            }
+        });
         }
 
         private boolean validate(){
@@ -166,7 +180,7 @@ public class AccomodationsRegistration extends AppCompatActivity {
             if (inpt_name.getText().toString().trim().length()==0){
                 val = false;
             }
-            if (municipality.trim().length()==0){
+            if (municipalityKey.trim().length()==0){
                 val = false;
             }
             if (input_contact.getText().toString().trim().length()==0){
@@ -178,6 +192,9 @@ public class AccomodationsRegistration extends AppCompatActivity {
             if (businessType==null){
                 val = false;
             }
+            if (selectBarangay.getText().toString().equals("barangay")){
+                val = false;
+            }
             return val;
         }
         private void selectBType(String type){
@@ -185,13 +202,14 @@ public class AccomodationsRegistration extends AppCompatActivity {
             businessType = type;
         }
 
-        private void saveProfile(String name,String contact,String emaill,String url){
+        private void saveProfile(String name,String contact,String emaill,String url,String barangay){
             String uid = mAuth.getUid();
 
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality);
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key, municipalityKey,barangay);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
             childupdates.put(key,profileValue);
+
 
             databaseReference.child("businessProfiles").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -202,7 +220,6 @@ public class AccomodationsRegistration extends AppCompatActivity {
                 }
             });
         }
-
         private void showLast() {
             Location lastLocation = SmartLocation.with(this).location().getLastLocation();
             if (lastLocation != null) {
@@ -214,11 +231,6 @@ public class AccomodationsRegistration extends AppCompatActivity {
 
             }
         }
-
-
-
-
-
 
         private String getTransitionNameFromType(int transitionType) {
             switch (transitionType) {
@@ -312,7 +324,8 @@ public class AccomodationsRegistration extends AppCompatActivity {
                             loadingContainer.setVisibility(View.GONE);
                             saveProfile(inpt_name.getText().toString(),
                                     input_contact.getText().toString(),
-                                    inpt_email.getText().toString(),uri.toString()
+                                    inpt_email.getText().toString(),uri.toString(),
+                                    selectBarangay.getText().toString()
                             );
                         }
                     });
@@ -424,7 +437,7 @@ public class AccomodationsRegistration extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 selectMunicipality.setText(mun.get(which));
-                                municipality = municipalityDataModelArrayList.get(which).getKey();
+                                municipalityKey = municipalityDataModelArrayList.get(which).getKey();
                             }
                         });
                 builder.show();
@@ -443,6 +456,42 @@ public class AccomodationsRegistration extends AppCompatActivity {
         Intent i = new Intent(context,MapsProfileUpdateActivity.class);
         i.putExtra("key",key);
         startActivity(i);
+
+    }
+
+    private void fetchBarangays(){
+        barangayDataModelArrayList.clear();
+        final ArrayList<String> mun = new ArrayList<>();
+        databaseReference.child(Utils.BARANGAY_DIR).child(municipalityKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                barangayDataModelArrayList.clear();
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    BarangayDataModel barangayDataModel = new BarangayDataModel();
+                    BarangayMapModel barangayMapModel = dataSnapshot1.getValue(BarangayMapModel.class);
+                    barangayDataModel.setBarangay(barangayMapModel.barangay);
+                    barangayDataModel.setKey(barangayMapModel.key);
+                    barangayDataModel.setMunId(barangayMapModel.munId);
+                    barangayDataModelArrayList.add(barangayDataModel);
+                    mun.add(barangayMapModel.barangay);
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(AccomodationsRegistration.this);
+                builder.setTitle("Select Barangay");
+                builder.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, mun),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectBarangay.setText(mun.get(which));
+
+                            }
+                        });
+                builder.show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

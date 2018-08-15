@@ -58,7 +58,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
+import com.wandera.wanderaowner.activity.touristHotSpot.TouristHotSpotRegistration;
+import com.wandera.wanderaowner.datamodel.BarangayDataModel;
 import com.wandera.wanderaowner.datamodel.MunicipalityDataModel;
+import com.wandera.wanderaowner.mapModel.BarangayMapModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.MunicipalityMapModel;
 
@@ -109,6 +112,8 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         String municipality;
         String lastImagePath;
         TextView setLocation;
+        TextView selectBarangay;
+        ArrayList<BarangayDataModel> barangayDataModelArrayList = new ArrayList<>();
 
     @Override
     protected void onStart() {
@@ -122,6 +127,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             setContentView(R.layout.activity_owerner_registration);
             setLocation = (TextView) findViewById(R.id.setLocation);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
+            selectBarangay = (TextView) findViewById(R.id.selectBarangay);
 
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
@@ -158,7 +164,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                            saveProfile(inpt_name.getText().toString(),
                                    municipality,
                                    input_contact.getText().toString(),
-                                   inpt_email.getText().toString(),lastImagePath
+                                   inpt_email.getText().toString(),lastImagePath,selectBarangay.getText().toString()
                            );
                        }else {
 
@@ -174,7 +180,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                 }
             });
 
-            FirebaseDatabase.getInstance().getReference().child("businessProfiles")
+            databaseReference.child("businessProfiles")
                     .child(businessKey).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -187,6 +193,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     municipality = businessProfileMapModel.municipality;
                     lastImagePath = businessProfileMapModel.restoProfileImagePath;
                     businessType = businessProfileMapModel.businessType;
+                    selectBarangay.setText(businessProfileMapModel.barangay);
                     try {
                         Glide.with(c).load(businessProfileMapModel.restoProfileImagePath).into(businessProfile);
 
@@ -194,15 +201,12 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
 
                     }
 
-                    FirebaseDatabase.getInstance().getReference().child("municipality").child(businessProfileMapModel.municipality).addValueEventListener(new ValueEventListener() {
+                    databaseReference.child("municipality").child(businessProfileMapModel.municipality).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            try {
-                                MunicipalityMapModel municipalityMapModel = dataSnapshot.getValue(MunicipalityMapModel.class);
-                                selectMunicipality.setText(municipalityMapModel.municipality);
-                            }catch (NullPointerException e){
-                                selectMunicipality.setText("");
-                            }
+                            MunicipalityMapModel municipalityMapModel = dataSnapshot.getValue(MunicipalityMapModel.class);
+                            selectMunicipality.setText(municipalityMapModel.municipality);
+
                         }
 
                         @Override
@@ -244,8 +248,20 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     selectBusinessTypeDialog();
                 }
             });
-        }
 
+        selectBarangay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    if (!municipality.equals(null)){
+                        fetchBarangays();
+                    }
+                }catch (NullPointerException e){
+                    Utils.callToast(context,"Select Municipality Firts");
+                }
+            }
+        });
+        }
         private void selectBusinessTypeDialog(){
             final Dialog dialog = new Dialog(OwernerRegistrationUpdate.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -309,6 +325,10 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             if (municipality==null){
                 val = false;
             }
+            if (selectBarangay.getText().toString().equals("barangay")){
+                val = false;
+
+            }
 
             return val;
         }
@@ -317,10 +337,10 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             businessType = type;
         }
 
-        private void saveProfile(String name,String address,String contact,String emaill,String imageUrl){
+        private void saveProfile(String name,String address,String contact,String emaill,String imageUrl,String barangay){
             String uid = mAuth.getUid();
             String key = businessKey;
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,key,address);
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,key,address,barangay);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
             childupdates.put(key,profileValue);
@@ -601,7 +621,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                             saveProfile(inpt_name.getText().toString(),
                                     municipality,
                                     input_contact.getText().toString(),
-                                    inpt_email.getText().toString(),uri.toString()
+                                    inpt_email.getText().toString(),uri.toString(),selectBarangay.getText().toString()
                             );
                         }
                     });
@@ -725,6 +745,42 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         Intent i = new Intent(context,MapsProfileUpdateActivity.class);
         i.putExtra("key",businessKey);
         startActivity(i);
+
+    }
+
+    private void fetchBarangays(){
+        barangayDataModelArrayList.clear();
+        final ArrayList<String> mun = new ArrayList<>();
+        databaseReference.child(Utils.BARANGAY_DIR).child(municipality).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                barangayDataModelArrayList.clear();
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    BarangayDataModel barangayDataModel = new BarangayDataModel();
+                    BarangayMapModel barangayMapModel = dataSnapshot1.getValue(BarangayMapModel.class);
+                    barangayDataModel.setBarangay(barangayMapModel.barangay);
+                    barangayDataModel.setKey(barangayMapModel.key);
+                    barangayDataModel.setMunId(barangayMapModel.munId);
+                    barangayDataModelArrayList.add(barangayDataModel);
+                    mun.add(barangayMapModel.barangay);
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(OwernerRegistrationUpdate.this);
+                builder.setTitle("Select Barangay");
+                builder.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, mun),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectBarangay.setText(mun.get(which));
+
+                            }
+                        });
+                builder.show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

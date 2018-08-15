@@ -7,12 +7,14 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.datamodel.RestaurantMenuCategoryDataModel;
@@ -37,13 +39,22 @@ public class TransportaionRecyclerViewAdapter
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView drivername;
+        TextView seats;
+        TextView price;
+        TextView contactNumber;
+        ImageView vamImage;
+        ImageView callIcon;
+
 
 
         public MyViewHolder(View view){
             super(view);
             drivername = (TextView) view.findViewById(R.id.drivername);
-
-
+            seats = (TextView) view.findViewById(R.id.seats);
+            price = (TextView) view.findViewById(R.id.price);
+            contactNumber = (TextView) view.findViewById(R.id.contactNumber);
+            vamImage = (ImageView) view.findViewById(R.id.vanImage);
+            callIcon = (ImageView) view.findViewById(R.id.callIcon);
 
 
         }
@@ -64,8 +75,19 @@ public class TransportaionRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        TranspoDataModel transpoDataModel = transpoDataModelArrayList.get(position);
+        final TranspoDataModel transpoDataModel = transpoDataModelArrayList.get(position);
         holder.drivername.setText(transpoDataModel.getDriverName());
+        holder.contactNumber.setText(transpoDataModel.getContactNumber());
+        holder.price.setText("₱ "+transpoDataModel.getPrice());
+        holder.seats.setText("Capacity: "+transpoDataModel.getCapacity());
+        GlideApp.with(context).load(transpoDataModel.getVanImg()).centerCrop().into(holder.vamImage);
+        holder.callIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemClickLitener.onItemClick(v,position,transpoDataModel);
+            }
+        });
+
     }
 
     @Override
@@ -74,7 +96,7 @@ public class TransportaionRecyclerViewAdapter
     }
 
     public interface OnItemClickLitener {
-        void onItemClick(View view, int position, RestaurantMenuDataModel restaurantMenuDataModel, RestaurantMenuCategoryDataModel restaurantMenuCategoryDataModel);
+        void onItemClick(View view, int position, TranspoDataModel transpoDataModel);
 
     }
 

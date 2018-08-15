@@ -7,6 +7,11 @@ public class TranspoDataModel {
    private String contactNumber;
    private String price;
    private String capacity;
+   private String vanImg;
+
+    public void setVanImg(String vanImg) {
+        this.vanImg = vanImg;
+    }
 
     public void setKey(String key) {
         this.key = key;
@@ -56,4 +61,7 @@ public class TranspoDataModel {
         return price;
     }
 
+    public String getVanImg() {
+        return vanImg;
+    }
 }

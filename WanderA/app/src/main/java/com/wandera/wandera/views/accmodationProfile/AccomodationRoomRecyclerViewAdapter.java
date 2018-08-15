@@ -59,6 +59,7 @@ public class AccomodationRoomRecyclerViewAdapter
         GlideApp.with(context).load(roomDataModel.getRoomImage()).centerCrop().into(holder.roomImage);
         holder.roomName.setText(roomDataModel.getRoomName());
         holder.roomPrice.setText("₱ "+roomDataModel.getRoomPrice());
+
     }
 
     @Override

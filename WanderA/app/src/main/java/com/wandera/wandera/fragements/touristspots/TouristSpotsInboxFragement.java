@@ -1,15 +1,23 @@
 package com.wandera.wandera.fragements.touristspots;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +33,7 @@ import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.businessProfiles.TourisSpotsProfileBotNav;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
+import com.wandera.wandera.mapmodel.RatingCommentMapModel;
 import com.wandera.wandera.views.ChatListRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -45,6 +54,8 @@ public class TouristSpotsInboxFragement extends Fragment {
     ChatListRecyclerViewAdapter chatListRecyclerViewAdapter;
     ArrayList<ChatDataModel> chatDataModels= new ArrayList<>();
     TourisSpotsProfileBotNav act;
+    float finalRating;
+
 
     public TouristSpotsInboxFragement(){
 
@@ -55,7 +66,9 @@ public class TouristSpotsInboxFragement extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         act = (TourisSpotsProfileBotNav) getActivity();
+
         View view = inflater.inflate(R.layout.frag_restaurant_inbox, container, false);
+        view.findViewById(R.id.rating);
         businessKey = act.getBusinessKey();
         inputMessage = (EditText) view.findViewById(R.id.selectMunicipality);
 
@@ -165,4 +178,5 @@ public class TouristSpotsInboxFragement extends Fragment {
             }
         });
     }
+
 }

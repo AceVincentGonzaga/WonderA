@@ -28,5 +28,9 @@
         <item name="android:textColor">@color/white</item>
 
     </style>
+    <style name="AppThemeRatingBar" parent="Theme.AppCompat">
+        <item name="colorAccent">#f9a825</item>
+
+    </style>
 
 </resources>

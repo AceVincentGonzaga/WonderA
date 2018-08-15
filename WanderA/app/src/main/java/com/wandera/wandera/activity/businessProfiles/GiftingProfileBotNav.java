@@ -119,9 +119,6 @@ public class GiftingProfileBotNav extends AppCompatActivity {
 
         });
 
-
-
-
         setupViewPager(viewPager);
     }
 
@@ -203,8 +200,6 @@ public class GiftingProfileBotNav extends AppCompatActivity {
     }
 
     private void submitRatingComment(String comment,float rating){
-
-
 
         String accountId = FirebaseAuth.getInstance().getUid();
         RatingCommentMapModel ratingCommentMapModel = new RatingCommentMapModel(accountId,

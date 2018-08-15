@@ -1,6 +1,8 @@
 package com.wandera.wandera;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -95,4 +97,5 @@ public class Utils {
 
         return formattedDate;
     }
+
 }

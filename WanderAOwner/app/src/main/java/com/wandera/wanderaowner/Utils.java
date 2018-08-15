@@ -84,4 +84,6 @@ public class Utils {
 
     public static String RESTAURANT_DIR = "restaurant";
     public static String MENUS_DIR ="restaurant/menus";
+    public static String BARANGAY_DIR = "barangay";
+
 }

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/background"
+    android:paddingBottom="16dp"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/drivername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/lato_light"
-        android:text="Driver Name"
+        android:text="Company Name"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/vanImage"
+        app:layout_constraintTop_toTopOf="@+id/vanImage" />
 
     <ImageView
         android:layout_width="30dp"
@@ -26,9 +27,49 @@
         android:layout_marginEnd="32dp"
         android:layout_marginTop="8dp"
         android:tint="#388e3c"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/callIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/vanImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vanImage"
         app:srcCompat="@drawable/ic_call_black_24dp" />
+
+    <ImageView
+        android:id="@+id/vanImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_directions_car_black_24dp" />
+
+    <TextView
+        android:id="@+id/seats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:text="Seats Available"
+        app:layout_constraintStart_toStartOf="@+id/drivername"
+        app:layout_constraintTop_toBottomOf="@+id/drivername" />
+
+    <TextView
+        android:id="@+id/price"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="price"
+        app:layout_constraintStart_toEndOf="@+id/vanImage"
+        app:layout_constraintTop_toBottomOf="@+id/seats" />
+
+    <TextView
+        android:id="@+id/contactNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact Number"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/price"
+        app:layout_constraintTop_toBottomOf="@+id/price" />
 
 </android.support.constraint.ConstraintLayout>
