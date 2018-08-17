@@ -14,7 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,8 +50,8 @@ public class ManageBusiness extends AppCompatActivity {
     FirebaseAuth mAuth;
     ConstraintLayout container;
     TextView addBusinessBtn;
-
     AVLoadingIndicatorView managebusinessLoading;
+    TextView signOut;
 
     @Override
     protected void onStart() {
@@ -59,7 +65,7 @@ public class ManageBusiness extends AppCompatActivity {
         setContentView(R.layout.activity_manage_business);
         managebusinessLoading = (AVLoadingIndicatorView) findViewById(R.id.managebusinessLoading);
         businessItemsRecyclerView = (RecyclerView) findViewById(R.id.businesItemsRV);
-
+        signOut = (TextView) findViewById(R.id.signOut);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         context = ManageBusiness.this;
@@ -169,6 +175,13 @@ public class ManageBusiness extends AppCompatActivity {
 
             }
         });
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                signOut();
+            }
+        });
 
     }
 
@@ -219,4 +232,27 @@ public class ManageBusiness extends AppCompatActivity {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         dialog.show();
     }
+
+    private void signOut(){
+        GoogleSignInClient mGoogleSignInClient ;
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {  //signout Google
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        FirebaseAuth.getInstance().signOut(); //signout firebase
+                        Intent setupIntent = new Intent(getBaseContext(),LoginActivity.class/*To ur activity calss*/);
+                        Toast.makeText(getBaseContext(), "Logged Out", Toast.LENGTH_LONG).show(); //if u want to show some text
+                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(setupIntent);
+                        finish();
+                    }
+                });
+    }
+
+
 }
