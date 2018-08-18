@@ -58,6 +58,9 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
     CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
     RecyclerView categoryList;
     String businessKey;
+    TextView textWifi;
+    ImageView wifiIcon;
+    boolean wifiAvail = true;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,8 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
         addCategory =(Button) findViewById(R.id.addCategory);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         Bundle bundle=getIntent().getExtras();
+
+
         businessKey = bundle.getString("key");
         c = BusinessProfileRestaurant.this;
         categoryList = (RecyclerView) findViewById(R.id.categoryList);
@@ -223,6 +228,8 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 }

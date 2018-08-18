@@ -93,6 +93,9 @@ public class RestaurantRegistration extends AppCompatActivity {
         ArrayList<BarangayDataModel> barangayDataModelArrayList = new ArrayList<>();
         String municipalityId;
         boolean businessSpecificLocation = false;
+        TextView textWifi;
+        ImageView wifiIcon;
+        boolean wifiAvail = true;
     @Override
     protected void onStart() {
         super.onStart();
@@ -106,6 +109,8 @@ public class RestaurantRegistration extends AppCompatActivity {
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
             loadingContainer  = (ConstraintLayout) findViewById(R.id.loadingContainer);
             selectBarangay = (TextView) findViewById(R.id.selectBarangay);
+        textWifi = (TextView) findViewById(R.id.textWifi);
+        wifiIcon = (ImageView) findViewById(R.id.wifiIcon);
 
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
@@ -179,6 +184,12 @@ public class RestaurantRegistration extends AppCompatActivity {
                 }
             });
         getSpecificLocation();
+        textWifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wifiAvailability();
+            }
+        });
         }
 
 
@@ -571,4 +582,16 @@ public class RestaurantRegistration extends AppCompatActivity {
         });
     }
 
+    private void wifiAvailability(){
+        Utils.callToast(RestaurantRegistration.this,"clicked");
+        if (wifiAvail){
+            wifiIcon.setColorFilter(getResources().getColor(R.color.lightGrey));
+            textWifi.setText("Wifi Unavailable");
+            wifiAvail = !wifiAvail;
+        }else {
+            wifiIcon.setColorFilter(getResources().getColor(R.color.green));
+            textWifi.setText("Wifi Available");
+            wifiAvail = !wifiAvail;
+        }
+    }
 }

@@ -12,10 +12,10 @@
         android:layout_height="150dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_add_black_24dp"
         app:civ_border_color="@color/lightGrey"
         app:civ_border_width="5dp"
-        android:src="@drawable/ic_add_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/lato"
         android:text="Select Business Type"
         android:textStyle="bold"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:hint="Company Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -52,10 +52,10 @@
             android:id="@+id/input_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:background="@android:color/transparent"
             android:backgroundTint="@color/colorAccent"
-            android:drawablePadding="10dp" />
+            android:drawablePadding="10dp"
+            android:padding="8dp" />
     </android.support.design.widget.TextInputLayout>
 
     <TextView
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/address_background_round"
         android:paddingBottom="8dp"
         android:paddingLeft="20dp"
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/address_background_round"
         android:paddingBottom="8dp"
         android:paddingLeft="20dp"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/address_background_round"
         android:paddingBottom="8dp"
         android:paddingLeft="20dp"
@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:hint="Contact"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -138,7 +138,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:hint="Email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -147,13 +147,52 @@
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/inpt_email"
-            android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:backgroundTint="@color/colorAccent"
-            android:drawablePadding="10dp" />
+            android:drawablePadding="10dp"
+            android:padding="8dp" />
     </android.support.design.widget.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_signal_cellular_0_bar_black_24dp"
+        app:layout_constraintStart_toStartOf="@+id/field_email"
+        app:layout_constraintTop_toBottomOf="@+id/field_email" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Click to Set Signal Strength"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/wifiIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_signal_wifi_0_bar_black_24dp"
+        android:tint="#66bb6a"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textWifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Wifi Available"
+        app:layout_constraintBottom_toBottomOf="@+id/wifiIcon"
+        app:layout_constraintStart_toEndOf="@+id/wifiIcon"
+        app:layout_constraintTop_toTopOf="@+id/wifiIcon" />
 
     <TextView
         android:id="@+id/saveProfile"
@@ -168,7 +207,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/field_email" />
+        app:layout_constraintTop_toBottomOf="@+id/textWifi" />
 
 
     <android.support.constraint.ConstraintLayout
