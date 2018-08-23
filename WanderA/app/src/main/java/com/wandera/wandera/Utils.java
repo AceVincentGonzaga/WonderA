@@ -31,6 +31,7 @@ public class Utils {
     public static String ROOMS_DIR = "accomodations/rooms";
     public static String ACT_DIR = "touristspots/activity";
     public static String RATING_DIR = "ratings";
+    public static String GAL_DIR ="gallery";
 
     public static void callToast(Context context, String mes){
         Toast.makeText(context,mes,Toast.LENGTH_SHORT).show();
@@ -97,5 +98,6 @@ public class Utils {
 
         return formattedDate;
     }
+
 
 }

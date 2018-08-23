@@ -8,7 +8,10 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,14 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,17 +43,21 @@ import com.wandera.wandera.R;
 import com.wandera.wandera.Utils;
 import com.wandera.wandera.activity.businessProfiles.RestaurantProfileBotNav;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
+import com.wandera.wandera.datamodel.GalleryDataModel;
 import com.wandera.wandera.datamodel.RatingCommentDataModel;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
+import com.wandera.wandera.mapmodel.GalleryMapModel;
 import com.wandera.wandera.mapmodel.MunicipalityMapModel;
 import com.wandera.wandera.mapmodel.RatingCommentMapModel;
+import com.wandera.wandera.mapmodel.RestaurantLocationMapModel;
+import com.wandera.wandera.views.GalleryRecyclerViewAdapter;
 import com.wandera.wandera.views.ratingAndComments.RatingsRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RestaurantLandingPageFragement extends Fragment {
+public class RestaurantLandingPageFragement extends Fragment implements OnMapReadyCallback {
     RestaurantProfileBotNav act;
     AppBarLayout appbar;
     CollapsingToolbarLayout colapsToolbar;
@@ -55,6 +70,11 @@ public class RestaurantLandingPageFragement extends Fragment {
     ArrayList<RatingCommentDataModel> ratingCommentDataModelArrayList = new ArrayList<>();
     RatingBar ratingBar;
     TextView rating;
+    GoogleMap mMap;
+    Marker marker;
+    RecyclerView galleryList;
+    ArrayList<GalleryDataModel> galleryDataModelArrayList = new ArrayList<>();
+    GalleryRecyclerViewAdapter galleryRecyclerViewAdapter;
     public RestaurantLandingPageFragement(){
 
     }
@@ -68,6 +88,41 @@ public class RestaurantLandingPageFragement extends Fragment {
         View view = inflater.inflate(R.layout.frag_business_prof_landing_page, container, false);
         act = (RestaurantProfileBotNav) getActivity();
         businessKey = act.getBusinessKey();
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                mMap = googleMap;
+                databaseReference.child("businessLocations").child(businessKey).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            RestaurantLocationMapModel restaurantLocationMapModel = dataSnapshot.getValue(RestaurantLocationMapModel.class);
+                            LatLng latLng = new LatLng(restaurantLocationMapModel.locationLatitude,restaurantLocationMapModel.locationLongitude);
+                            if (mMap != null) {
+                                marker = mMap.addMarker(new MarkerOptions()
+                                        .position(latLng).title("test")
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
+                                        .draggable(false).visible(true));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                        new LatLng(restaurantLocationMapModel.locationLatitude,
+                                                restaurantLocationMapModel.locationLongitude), 15));
+                            }
+
+                        }catch (NullPointerException e){
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+        galleryList = (RecyclerView) view.findViewById(R.id.galleryList);
         rating = (TextView) view.findViewById(R.id.rating);
         contactNumber = (TextView) view.findViewById(R.id.contactNumber);
         location = (TextView) view.findViewById(R.id.location);
@@ -105,6 +160,7 @@ public class RestaurantLandingPageFragement extends Fragment {
 
             }
         });
+
         rating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,8 +199,36 @@ public class RestaurantLandingPageFragement extends Fragment {
 
             }
         });
-
+        galleryRecyclerViewAdapter = new GalleryRecyclerViewAdapter(getActivity(),galleryDataModelArrayList,businessKey);
+        galleryList.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
+        galleryList.setAdapter(galleryRecyclerViewAdapter);
+        getGallery();
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(galleryList);
         return view;
+    }
+    private void getGallery(){
+        FirebaseDatabase.getInstance().getReference().child(Utils.GAL_DIR).child(businessKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    GalleryMapModel galleryMapModel = dataSnapshot1.getValue(GalleryMapModel.class);
+                    GalleryDataModel galleryDataModel = new GalleryDataModel();
+                    galleryDataModel.setImagePath(galleryMapModel.imagePath);
+                    galleryDataModelArrayList.add(galleryDataModel);
+                }
+                galleryRecyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
     }
 
     private void ratingDialog(){

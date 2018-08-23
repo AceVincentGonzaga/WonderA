@@ -12,6 +12,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 19
         renderscriptSupportModeEnabled true
+        resValue "string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
 
     }
     buildTypes {
@@ -46,6 +47,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'net.robinx:lib.blurview:1.0.2'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
 
 //    mdc
 

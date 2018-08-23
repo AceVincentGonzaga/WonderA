@@ -53,6 +53,7 @@ public class RestaurantMenusFragement extends Fragment {
                         .child(act.getBusinessKey()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        restaurantMenuCategoryDataModelArrayList.clear();
                        for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                            RestaurantMenuCategoryDataModel restaurantMenuCategoryDataModel = new RestaurantMenuCategoryDataModel();
                            RestuarantCategoryMenuMapModel restuarantCategoryMenuMapModel = dataSnapshot1.getValue(RestuarantCategoryMenuMapModel.class);

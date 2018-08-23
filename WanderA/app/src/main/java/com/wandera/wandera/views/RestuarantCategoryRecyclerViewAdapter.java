@@ -100,12 +100,7 @@ public class RestuarantCategoryRecyclerViewAdapter
 
             }
         });
-        restuarantMenusRecyclerViewAdapter.setOnItemClickListener(new RestuarantMenusRecyclerViewAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View v, int pos, RestaurantMenuDataModel restaurantMenuDataModel) {
-                mOnItemClickLitener.onItemClick(v,position,restaurantMenuDataModel,restaurantMenuCategoryDataModel);
-            }
-        });
+
     }
 
     @Override

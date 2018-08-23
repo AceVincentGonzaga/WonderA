@@ -62,6 +62,7 @@
         <activity
             android:name=".activity.businessProfiles.RestaurantProfileBotNav"
             android:label="@string/title_activity_restaurant_profile_bot_nav" />
+
         <activity android:name=".activity.browseAll.AccomodationAll"/>
         <activity android:name=".activity.businessProfiles.AccomodationProfileBotNav" />
         <activity android:name=".activity.browseAll.RestaurantAll"></activity>
@@ -70,6 +71,10 @@
         <activity android:name=".activity.businessProfiles.GiftingProfileBotNav"/>
         <activity android:name=".activity.businessProfiles.TourisSpotsProfileBotNav"/>
 
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
 
 </manifest>

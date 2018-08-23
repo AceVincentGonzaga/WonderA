@@ -38,6 +38,7 @@
         <activity android:name=".activity.giftingcenter.AddMenuGiftingActivity"/>
         <activity android:name=".activity.touristHotSpot.BusinessProfileTouristSpots"/>
         <activity android:name=".activity.touristHotSpot.AddActivity"/>
+        <activity android:name=".activity.restaurant.AddGalleryActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
