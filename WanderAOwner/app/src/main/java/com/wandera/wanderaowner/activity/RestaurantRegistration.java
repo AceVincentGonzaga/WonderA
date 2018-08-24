@@ -51,6 +51,7 @@ import com.wandera.wanderaowner.mapModel.BarangayMapModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.MunicipalityMapModel;
 import com.wandera.wanderaowner.mapModel.RestaurantLocationMapModel;
+import com.wandera.wanderaowner.mapModel.SignalWifiMapModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -95,7 +96,11 @@ public class RestaurantRegistration extends AppCompatActivity {
         boolean businessSpecificLocation = false;
         TextView textWifi;
         ImageView wifiIcon;
+        TextView signalStreng;
         boolean wifiAvail = true;
+        ImageView signalImage;
+        String signalLabel = "No Signal";
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -109,9 +114,10 @@ public class RestaurantRegistration extends AppCompatActivity {
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
             loadingContainer  = (ConstraintLayout) findViewById(R.id.loadingContainer);
             selectBarangay = (TextView) findViewById(R.id.selectBarangay);
-        textWifi = (TextView) findViewById(R.id.textWifi);
-        wifiIcon = (ImageView) findViewById(R.id.wifiIcon);
-
+            textWifi = (TextView) findViewById(R.id.textWifi);
+            wifiIcon = (ImageView) findViewById(R.id.wifiIcon);
+            signalStreng = (TextView) findViewById(R.id.signalStreng);
+            signalImage = (ImageView) findViewById(R.id.signalImage);
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
             saveProfile = (TextView) findViewById(R.id.saveProfile);
@@ -121,7 +127,7 @@ public class RestaurantRegistration extends AppCompatActivity {
             selectMunicipality = (TextView) findViewById(R.id.selectMunicipality);
             mStorageRef = FirebaseStorage.getInstance().getReference();
             setLocation = (TextView) findViewById(R.id.setLocation);
-            selectBType("Restaurants");
+            selectBType(getIntent().getExtras().getString("businessType"));
             categories.add("Restaurant");
             categories.add("Accomodation");
             categories.add("Pasalubong Center");
@@ -190,6 +196,39 @@ public class RestaurantRegistration extends AppCompatActivity {
                 wifiAvailability();
             }
         });
+        signalStreng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setSignalStreng();
+            }
+        });
+        }
+
+        private void setSignalStreng(){
+
+            if (signalLabel.equals("No Signal")) {
+                signalImage.setColorFilter(getResources().getColor(R.color.poor));
+                signalLabel = "poor";
+                signalStreng.setText("poor");
+            }
+            else if (signalLabel.equals("poor")){
+                signalImage.setColorFilter(getResources().getColor(R.color.fair));
+                signalLabel = "fair";
+                signalStreng.setText("fair");
+            }
+            else if (signalLabel.equals("fair")){
+                signalImage.setColorFilter(getResources().getColor(R.color.Strong));
+                signalLabel = "Strong";
+                signalStreng.setText("Strong");
+            }
+
+            else if (signalLabel.equals("Strong")){
+                signalImage.setColorFilter(getResources().getColor(R.color.noSignal));
+                signalLabel = "No Signal";
+                signalStreng.setText("No Signal");
+            }
+
+
         }
 
 
@@ -269,23 +308,7 @@ public class RestaurantRegistration extends AppCompatActivity {
             businessType = type;
         }
 
-        private void saveProfile(String name,String contact,String emaill,String url,String barangay){
-            String uid = mAuth.getUid();
 
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,barangay);
-            Map<String,Object> profileValue = businessProfileMapModel.toMap();
-            Map<String,Object> childupdates = new HashMap<>();
-            childupdates.put(key,profileValue);
-
-            databaseReference.child("businessProfiles").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                Intent i = new Intent(context,ManageBusiness.class);
-                startActivity(i);
-                finish();
-                }
-            });
-        }
 
         private void showLast() {
             Location lastLocation = SmartLocation.with(this).location().getLastLocation();
@@ -394,6 +417,7 @@ public class RestaurantRegistration extends AppCompatActivity {
                                     input_contact.getText().toString(),
                                     inpt_email.getText().toString(),uri.toString(),selectBarangay.getText().toString()
                             );
+                            signalWifiStrength(signalLabel,wifiAvail);
                         }
                     });
                 }
@@ -594,4 +618,40 @@ public class RestaurantRegistration extends AppCompatActivity {
             wifiAvail = !wifiAvail;
         }
     }
+
+    private void signalWifiStrength(String signal,boolean wifi){
+        SignalWifiMapModel signalWifiMapModel =  new SignalWifiMapModel(key,wifi,signal);
+        Map<String,Object> profileValue = signalWifiMapModel.toMap();
+        Map<String,Object> childupdates = new HashMap<>();
+        childupdates.put(key,profileValue);
+
+        databaseReference.child("signalWifiStrength").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Intent i = new Intent(context,ManageBusiness.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    private void saveProfile(String name,String contact,String emaill,String url,String barangay){
+        String uid = mAuth.getUid();
+
+        BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,barangay);
+        Map<String,Object> profileValue = businessProfileMapModel.toMap();
+        Map<String,Object> childupdates = new HashMap<>();
+        childupdates.put(key,profileValue);
+
+        databaseReference.child("businessProfiles").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Intent i = new Intent(context,ManageBusiness.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
 }
+
+

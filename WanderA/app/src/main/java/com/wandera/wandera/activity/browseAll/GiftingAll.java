@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,19 +36,28 @@ public class GiftingAll extends AppCompatActivity {
         businessBrowseRecyclerViewAdapter = new BusinessBrowseRecyclerViewAdapter(context,businessProfileModelArrayList);
         restaurantlist.setLayoutManager(new LinearLayoutManager(context));
         restaurantlist.setAdapter(businessBrowseRecyclerViewAdapter);
-
+        findViewById(R.id.bckBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         databaseReference.child("businessProfiles").orderByChild("businessType").equalTo("Gifting Center").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 businessProfileModelArrayList.clear();
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+
                     BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                     BusinessProfileMapModel businessProfileMapModel = dataSnapshot1.getValue(BusinessProfileMapModel.class);
                     businessProfileModel.setName(businessProfileMapModel.name);
                     businessProfileModel.setBusinessType(businessProfileMapModel.businessType);
                     businessProfileModel.setKey(businessProfileMapModel.key);
                     businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
-                    businessProfileModelArrayList.add(businessProfileModel);
+
+                    if (businessProfileMapModel.businessApproval){
+                        businessProfileModelArrayList.add(businessProfileModel);
+                    }
                 }
                 businessBrowseRecyclerViewAdapter.notifyDataSetChanged();
             }

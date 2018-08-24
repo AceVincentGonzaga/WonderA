@@ -64,6 +64,7 @@ import com.wandera.wanderaowner.datamodel.MunicipalityDataModel;
 import com.wandera.wanderaowner.mapModel.BarangayMapModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.MunicipalityMapModel;
+import com.wandera.wanderaowner.mapModel.SignalWifiMapModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -115,6 +116,13 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         TextView selectBarangay;
         ArrayList<BarangayDataModel> barangayDataModelArrayList = new ArrayList<>();
 
+        TextView textWifi;
+        ImageView wifiIcon;
+        TextView signalStreng;
+        boolean wifiAvail = true;
+        ImageView signalImage;
+        String signalLabel = "No Signal";
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -128,14 +136,17 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             setLocation = (TextView) findViewById(R.id.setLocation);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
             selectBarangay = (TextView) findViewById(R.id.selectBarangay);
-
+            textWifi = (TextView) findViewById(R.id.textWifi);
+            wifiIcon = (ImageView) findViewById(R.id.wifiIcon);
+            signalStreng = (TextView) findViewById(R.id.signalStreng);
+            signalImage = (ImageView) findViewById(R.id.signalImage);
             input_contact = (TextInputEditText) findViewById(R.id.input_contact);
             inpt_email = (TextInputEditText) findViewById(R.id.inpt_email);
             saveProfile = (TextView) findViewById(R.id.saveProfile);
             selectBType = (TextView) findViewById(R.id.selectBType);
             selectMunicipality = (TextView) findViewById(R.id.selectMunicipality);
             businessProfile = (CircleImageView) findViewById(R.id.businessProfile);
-
+            setSignalColor();
             mStorageRef = FirebaseStorage.getInstance().getReference();
             c = OwernerRegistrationUpdate.this;
             databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -153,6 +164,18 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     selectBusinessLocation();
                 }
             });
+            signalStreng.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setSignalStreng();
+                }
+            });
+            textWifi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    wifiAvailability();
+                }
+            });
             saveProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -166,6 +189,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                                    input_contact.getText().toString(),
                                    inpt_email.getText().toString(),lastImagePath,selectBarangay.getText().toString()
                            );
+                           signalWifiStrength();
                        }else {
 
                            uploadItemBanner(bannerUri);
@@ -200,6 +224,37 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     }catch (IllegalArgumentException e){
 
                     }
+
+                        databaseReference.child(Utils.WIFISIGNAL_DIR).child(businessKey).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                               try {
+                                   SignalWifiMapModel signalWifiMapModel = dataSnapshot.getValue(SignalWifiMapModel.class);
+                                   wifiAvail = signalWifiMapModel.wifi;
+                                   signalLabel = signalWifiMapModel.signal;
+                                   signalStreng.setText(signalLabel);
+                                   setSignalColor();
+                                   if (!wifiAvail){
+                                       wifiIcon.setColorFilter(getResources().getColor(R.color.lightGrey));
+                                       textWifi.setText("Wifi Unavailable");
+
+                                   }else {
+                                       wifiIcon.setColorFilter(getResources().getColor(R.color.green));
+                                       textWifi.setText("Wifi Available");
+
+                                   }
+
+                               }catch (NullPointerException e){
+
+                               }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
 
                     databaseReference.child("municipality").child(businessProfileMapModel.municipality).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -623,6 +678,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                                     input_contact.getText().toString(),
                                     inpt_email.getText().toString(),uri.toString(),selectBarangay.getText().toString()
                             );
+                            signalWifiStrength();
                         }
                     });
                 }
@@ -782,6 +838,85 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             }
         });
 
+    }
+
+    private void signalWifiStrength(){
+        SignalWifiMapModel signalWifiMapModel =  new SignalWifiMapModel(businessKey,wifiAvail,signalLabel);
+        Map<String,Object> profileValue = signalWifiMapModel.toMap();
+        Map<String,Object> childupdates = new HashMap<>();
+        childupdates.put(businessKey,profileValue);
+
+        databaseReference.child("signalWifiStrength").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Intent i = new Intent(context,ManageBusiness.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    private void wifiAvailability(){
+
+        if (wifiAvail){
+            wifiIcon.setColorFilter(getResources().getColor(R.color.lightGrey));
+            textWifi.setText("Wifi Unavailable");
+            wifiAvail = !wifiAvail;
+        }else {
+            wifiIcon.setColorFilter(getResources().getColor(R.color.green));
+            textWifi.setText("Wifi Available");
+            wifiAvail = !wifiAvail;
+        }
+    }
+
+    private void setSignalStreng(){
+
+        if (signalLabel.equals("No Signal")) {
+            signalImage.setColorFilter(getResources().getColor(R.color.poor));
+            signalLabel = "poor";
+            signalStreng.setText("poor");
+        }
+        else if (signalLabel.equals("poor")){
+            signalImage.setColorFilter(getResources().getColor(R.color.fair));
+            signalLabel = "fair";
+            signalStreng.setText("fair");
+        }
+        else if (signalLabel.equals("fair")){
+            signalImage.setColorFilter(getResources().getColor(R.color.Strong));
+            signalLabel = "Strong";
+            signalStreng.setText("Strong");
+        }
+
+        else if (signalLabel.equals("Strong")){
+            signalImage.setColorFilter(getResources().getColor(R.color.noSignal));
+            signalLabel = "No Signal";
+            signalStreng.setText("No Signal");
+        }
+
+
+    }
+
+    private void setSignalColor(){
+        if (signalLabel.equals("No Signal")) {
+
+            signalImage.setColorFilter(getResources().getColor(R.color.noSignal));
+        }
+        else if (signalLabel.equals("poor")){
+            signalImage.setColorFilter(getResources().getColor(R.color.poor));
+
+
+        }
+        else if (signalLabel.equals("fair")){
+            signalImage.setColorFilter(getResources().getColor(R.color.fair));
+
+
+        }
+
+        else if (signalLabel.equals("Strong")){
+            signalImage.setColorFilter(getResources().getColor(R.color.Strong));
+
+
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.wandera.wandera.fragements.restaurantProfile;
 
 import android.app.Dialog;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -50,6 +51,7 @@ import com.wandera.wandera.mapmodel.GalleryMapModel;
 import com.wandera.wandera.mapmodel.MunicipalityMapModel;
 import com.wandera.wandera.mapmodel.RatingCommentMapModel;
 import com.wandera.wandera.mapmodel.RestaurantLocationMapModel;
+import com.wandera.wandera.mapmodel.SignalWifiMapModel;
 import com.wandera.wandera.views.GalleryRecyclerViewAdapter;
 import com.wandera.wandera.views.ratingAndComments.RatingsRecyclerViewAdapter;
 
@@ -75,6 +77,10 @@ public class RestaurantLandingPageFragement extends Fragment implements OnMapRea
     RecyclerView galleryList;
     ArrayList<GalleryDataModel> galleryDataModelArrayList = new ArrayList<>();
     GalleryRecyclerViewAdapter galleryRecyclerViewAdapter;
+    ImageView wifiImage;
+    TextView network;
+    ImageView networkImage;
+    TextView wifi;
     public RestaurantLandingPageFragement(){
 
     }
@@ -122,6 +128,10 @@ public class RestaurantLandingPageFragement extends Fragment implements OnMapRea
                 });
             }
         });
+        wifi = (TextView) view.findViewById(R.id.wifi);
+        wifiImage = (ImageView) view.findViewById(R.id.wifiImage);
+        networkImage = (ImageView) view.findViewById(R.id.networkImage);
+        network = (TextView) view.findViewById(R.id.network);
         galleryList = (RecyclerView) view.findViewById(R.id.galleryList);
         rating = (TextView) view.findViewById(R.id.rating);
         contactNumber = (TextView) view.findViewById(R.id.contactNumber);
@@ -132,6 +142,7 @@ public class RestaurantLandingPageFragement extends Fragment implements OnMapRea
         app_bar_image = (ImageView) view.findViewById(R.id.app_bar_image);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        getSignalWifiStats();
         databaseReference.child("businessProfiles").child(businessKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -294,5 +305,58 @@ public class RestaurantLandingPageFragement extends Fragment implements OnMapRea
 
     }
 
+    private void getSignalWifiStats(){
+        databaseReference.child(Utils.WIFISIGNAL_DIR).child(businessKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    SignalWifiMapModel signalWifiMapModel = dataSnapshot.getValue(SignalWifiMapModel.class);
+                    setSignalColor(signalWifiMapModel.signal);
+                    if (signalWifiMapModel.wifi){
+                        wifiImage.setColorFilter(getResources().getColor(R.color.Strong));
+                        wifi.setText("Available");
+
+                    }else {
+
+                        wifi.setText("Unavailable");
+                        wifiImage.setColorFilter(getResources().getColor(R.color.noSignal));
+
+                    }
+                }catch (NullPointerException e){
+                    setSignalColor("No Signal");
+                    wifi.setText("Unavailable");
+                    wifiImage.setColorFilter(getResources().getColor(R.color.noSignal));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void setSignalColor(String signalLabel){
+        network.setText(signalLabel);
+        if (signalLabel.equals("No Signal")) {
+
+            networkImage.setColorFilter(getResources().getColor(R.color.noSignal));
+        }
+        else if (signalLabel.equals("poor")){
+            networkImage.setColorFilter(getResources().getColor(R.color.poor));
+
+
+        }
+        else if (signalLabel.equals("fair")){
+            networkImage.setColorFilter(getResources().getColor(R.color.fair));
+
+
+        }
+
+        else if (signalLabel.equals("Strong")){
+            networkImage.setColorFilter(getResources().getColor(R.color.Strong));
+
+
+        }
+    }
 
 }

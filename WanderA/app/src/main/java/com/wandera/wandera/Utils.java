@@ -32,6 +32,7 @@ public class Utils {
     public static String ACT_DIR = "touristspots/activity";
     public static String RATING_DIR = "ratings";
     public static String GAL_DIR ="gallery";
+    public static String WIFISIGNAL_DIR = "signalWifiStrength";
 
     public static void callToast(Context context, String mes){
         Toast.makeText(context,mes,Toast.LENGTH_SHORT).show();

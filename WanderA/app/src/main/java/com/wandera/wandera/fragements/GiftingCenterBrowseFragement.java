@@ -61,7 +61,7 @@ public class GiftingCenterBrowseFragement extends Fragment {
                     businessProfileModel.setBusinessType(businessProfileMapModel.businessType);
                     businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
 
-                    if (businessProfileMapModel.businessType.equals(Utils.bTypeGiftingCenter)){
+                    if (businessProfileMapModel.businessType.equals(Utils.bTypeGiftingCenter) && businessProfileMapModel.businessApproval){
                         businessProfileModelArrayList.add(businessProfileModel);
                     }
 

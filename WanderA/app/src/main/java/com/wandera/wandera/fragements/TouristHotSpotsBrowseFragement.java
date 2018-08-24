@@ -61,7 +61,7 @@ public class TouristHotSpotsBrowseFragement extends Fragment {
                     businessProfileModel.setKey(businessProfileMapModel.key);
                     businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
 
-                    if (businessProfileMapModel.businessType.equals(Utils.bTypeHotSpots)){
+                    if (businessProfileMapModel.businessType.equals(Utils.bTypeHotSpots) && businessProfileMapModel.businessApproval){
                         businessProfileModelArrayList.add(businessProfileModel);
                     }
 

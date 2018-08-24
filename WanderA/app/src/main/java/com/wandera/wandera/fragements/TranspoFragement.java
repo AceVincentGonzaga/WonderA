@@ -81,8 +81,9 @@ public class TranspoFragement extends Fragment {
         transportaionRecyclerViewAdapter.setOnItemClickListener(new TransportaionRecyclerViewAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position, TranspoDataModel transpoDataModel) {
-                yourfunction(transpoDataModel.getContactNumber());
                 numberToCall = transpoDataModel.getContactNumber();
+                yourfunction(transpoDataModel.getContactNumber());
+
             }
         });
 
@@ -111,7 +112,7 @@ public class TranspoFragement extends Fragment {
             @Override
             public void run() {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:+"+numberToCall));
+                callIntent.setData(Uri.parse("tel:"+numberToCall));
                 startActivity(callIntent);
             }
         });

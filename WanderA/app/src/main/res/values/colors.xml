@@ -10,4 +10,10 @@
     <color name="lightGrey">#cacaca</color>
     <color name="background">#2b2b2b</color>
     <color name="transparent">#00ffffff</color>
+
+    <color name="poor">#2b2b2b</color>
+    <color name="fair">#c0ca33</color>
+    <color name="Strong">#3df944</color>
+    <color name="noSignal">#d05050</color>
+
 </resources>

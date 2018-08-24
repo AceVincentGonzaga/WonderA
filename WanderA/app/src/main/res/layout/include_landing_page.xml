@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/wifiImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -39,17 +39,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wifi"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+        app:layout_constraintBottom_toBottomOf="@+id/wifiImage"
         app:layout_constraintStart_toStartOf="@+id/location"
-        app:layout_constraintTop_toTopOf="@+id/imageView8" />
+        app:layout_constraintTop_toTopOf="@+id/wifiImage" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/networkImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        app:layout_constraintStart_toStartOf="@+id/wifiImage"
+        app:layout_constraintTop_toBottomOf="@+id/wifiImage"
         app:srcCompat="@drawable/ic_network_cell_black_24dp" />
 
     <TextView
@@ -58,17 +58,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Network strength"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+        app:layout_constraintBottom_toBottomOf="@+id/networkImage"
         app:layout_constraintStart_toStartOf="@+id/wifi"
-        app:layout_constraintTop_toTopOf="@+id/imageView10" />
+        app:layout_constraintTop_toTopOf="@+id/networkImage" />
 
     <ImageView
         android:id="@+id/touristHotSpot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/imageView10"
+        app:layout_constraintStart_toStartOf="@+id/networkImage"
+        app:layout_constraintTop_toBottomOf="@+id/networkImage"
         app:srcCompat="@drawable/ic_local_phone_black_24dp" />
 
     <TextView

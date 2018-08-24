@@ -81,7 +81,7 @@
         app:srcCompat="@drawable/ic_whatshot_black_24dp" />
 
     <TextView
-        android:id="@+id/notNow"
+        android:id="@+id/restoAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -94,6 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/resto" />
 
     <TextView
+        android:id="@+id/accomodationAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -107,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/accomodation" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/giftingAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -121,6 +122,7 @@
         app:layout_constraintTop_toBottomOf="@+id/gifting" />
 
     <TextView
+        android:id="@+id/touristSpotAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

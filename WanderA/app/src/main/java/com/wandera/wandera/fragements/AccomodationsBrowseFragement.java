@@ -61,7 +61,7 @@ public class AccomodationsBrowseFragement extends Fragment {
                     businessProfileModel.setKey(businessProfileMapModel.key);
                     businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
 
-                    if (businessProfileMapModel.businessType.equals(Utils.bTypeAccomodations)){
+                    if (businessProfileMapModel.businessType.equals(Utils.bTypeAccomodations) && businessProfileMapModel.businessApproval){
                         businessProfileModelArrayList.add(businessProfileModel);
                     }
                 }

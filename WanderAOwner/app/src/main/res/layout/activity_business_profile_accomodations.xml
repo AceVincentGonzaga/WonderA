@@ -41,7 +41,7 @@
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
         android:drawableTint="@color/white"
-        android:text="Add category"
+        android:text="Add Room"
         android:drawableStart="@drawable/ic_add_black_24dp"
         android:textColor="@color/white"
         android:textAllCaps="false"

@@ -1,5 +1,7 @@
 package com.wandera.wandera.fragements;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.support.annotation.NonNull;
@@ -109,34 +111,67 @@ public class HomeFragement extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(getActivity(), RestaurantAll.class);
-                startActivity(i);
+              openBusinessAll(RestaurantAll.class);
             }
         });
+
+
+        view.findViewById(R.id.restoAll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openBusinessAll(RestaurantAll.class);
+            }
+        });
+
+
         accomodation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), AccomodationAll.class);
-                startActivity(i);
+              openBusinessAll(AccomodationAll.class);
             }
         });
+        view.findViewById(R.id.accomodationAll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openBusinessAll(AccomodationAll.class);
+            }
+        });
+
+
         gifting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), GiftingAll.class);
-                startActivity(i);
+                openBusinessAll(GiftingAll.class);
             }
         });
+        view.findViewById(R.id.giftingAll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openBusinessAll(GiftingAll.class);
+            }
+        });
+
+
         touristHotSpot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TouristSpotAll.class);
-                startActivity(i);
-
+                openBusinessAll(TouristSpotAll.class);
+            }
+        });
+        view.findViewById(R.id.touristSpotAll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openBusinessAll(TouristSpotAll.class);
             }
         });
 
 
+
         return view;
+    }
+
+    private void openBusinessAll(Class cl){
+        Intent i = new Intent(getActivity(),cl);
+        startActivity(i);
     }
 }

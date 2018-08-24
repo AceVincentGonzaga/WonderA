@@ -2,6 +2,7 @@ package com.wandera.wanderaowner.activity.accomodations;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -23,17 +24,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.activity.InboxActivity;
 import com.wandera.wanderaowner.activity.OwernerRegistration;
 import com.wandera.wanderaowner.activity.OwernerRegistrationUpdate;
+import com.wandera.wanderaowner.datamodel.GalleryDataModel;
 import com.wandera.wanderaowner.datamodel.MenuDataModel;
 import com.wandera.wanderaowner.datamodel.RoomDataModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.RoomMapModel;
 import com.wandera.wanderaowner.views.BussinessListRecyclerViewAdapter;
+import com.wandera.wanderaowner.views.GalleryRecyclerViewAdapter;
 import com.wandera.wanderaowner.views.RoomsRecyclerViewAdapter;
 import com.yarolegovich.slidingrootnav.SlideGravity;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
@@ -56,6 +60,15 @@ public class BusinessProfileAccomodations extends AppCompatActivity {
     ArrayList<RoomDataModel> roomDataModelArrayList = new ArrayList<>();
     RecyclerView roomList;
     String businessKey;
+    ArrayList<GalleryDataModel> galleryDataModelArrayList = new ArrayList<>();
+    GalleryRecyclerViewAdapter galleryRecyclerViewAdapter;
+    RecyclerView galleryList;
+    private static final int READ_REQUEST_CODE = 42;
+    boolean access_storage;
+    private static final int storagepermision_access_code = 548;
+    StorageReference mStorageRef;
+    Uri bannerUri;
+    boolean imageSet;
 
     @Override
 

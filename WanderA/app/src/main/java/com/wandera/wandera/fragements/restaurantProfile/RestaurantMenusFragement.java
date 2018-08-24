@@ -78,8 +78,6 @@ public class RestaurantMenusFragement extends Fragment {
             }
         });
 
-
-
         return view;
     }
 }

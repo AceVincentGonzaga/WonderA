@@ -92,5 +92,6 @@ public class Utils {
     public static String BARANGAY_DIR = "barangay";
 
     public static String GAL_DIR ="gallery";
+    public static String WIFISIGNAL_DIR = "signalWifiStrength";
 }
 

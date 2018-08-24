@@ -185,7 +185,6 @@ public class ManageBusiness extends AppCompatActivity {
 
     }
 
-
     private void selectBusinessTypeDialog(){
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -199,6 +198,7 @@ public class ManageBusiness extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context,RestaurantRegistration.class);
+                i.putExtra("businessType","Restaurants");
                 startActivity(i);
                 dialog.dismiss();
             }
@@ -206,7 +206,8 @@ public class ManageBusiness extends AppCompatActivity {
         selectAccomodation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context,AccomodationsRegistration.class);
+                Intent i = new Intent(context,RestaurantRegistration.class);
+                i.putExtra("businessType","Accomodations");
                 startActivity(i);
                 dialog.dismiss();
             }
@@ -214,7 +215,8 @@ public class ManageBusiness extends AppCompatActivity {
         selectPasalubongCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, GiftingCenterRegistration.class);
+                Intent i = new Intent(context,RestaurantRegistration.class);
+                i.putExtra("businessType","Gifting Center");
                 startActivity(i);
                 dialog.dismiss();
             }
@@ -222,7 +224,8 @@ public class ManageBusiness extends AppCompatActivity {
         selectTouristSpots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, TouristHotSpotRegistration.class);
+                Intent i = new Intent(context,RestaurantRegistration.class);
+                i.putExtra("businessType",Utils.bTypeHotSpots);
                 startActivity(i);
                 dialog.dismiss();
             }

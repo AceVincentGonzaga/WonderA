@@ -156,7 +156,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/signalImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -166,13 +166,14 @@
         app:layout_constraintTop_toBottomOf="@+id/field_email" />
 
     <TextView
+        android:id="@+id/signalStreng"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Click to Set Signal Strength"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        android:text="No Signal"
+        app:layout_constraintBottom_toBottomOf="@+id/signalImage"
+        app:layout_constraintStart_toEndOf="@+id/signalImage"
+        app:layout_constraintTop_toTopOf="@+id/signalImage" />
 
     <ImageView
         android:id="@+id/wifiIcon"
@@ -181,8 +182,8 @@
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_signal_wifi_0_bar_black_24dp"
         android:tint="#66bb6a"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/signalImage"
+        app:layout_constraintTop_toBottomOf="@+id/signalImage" />
 
     <TextView
         android:id="@+id/textWifi"

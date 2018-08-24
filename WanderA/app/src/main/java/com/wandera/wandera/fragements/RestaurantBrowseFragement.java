@@ -61,7 +61,7 @@ public class RestaurantBrowseFragement extends Fragment {
                     businessProfileModel.setBusinessType(businessProfileMapModel.businessType);
                     businessProfileModel.setRestoProfileImagePath(businessProfileMapModel.restoProfileImagePath);
 
-                    if (businessProfileMapModel.businessType.equals(Utils.bTypeResto)){
+                    if (businessProfileMapModel.businessType.equals(Utils.bTypeResto) && businessProfileMapModel.businessApproval){
                         businessProfileModelArrayList.add(businessProfileModel);
                     }
                 }
