@@ -34,6 +34,7 @@ import com.wandera.wandera.activity.businessProfiles.AccomodationProfileBotNav;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
 import com.wandera.wandera.datamodel.RatingCommentDataModel;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
+import com.wandera.wandera.mapmodel.MunicipalityMapModel;
 import com.wandera.wandera.mapmodel.RatingCommentMapModel;
 import com.wandera.wandera.views.ratingAndComments.RatingsRecyclerViewAdapter;
 
@@ -57,6 +58,7 @@ public class AccmodationLandingPageFragement extends Fragment {
     Dialog dialog;
     float finalRating;
     TextView rating;
+    TextView location;
     public AccmodationLandingPageFragement(){
 
     }
@@ -66,6 +68,7 @@ public class AccmodationLandingPageFragement extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         act = (AccomodationProfileBotNav) getActivity();
+
         View view = inflater.inflate(R.layout.frag_accomodation_prof_landing_page, container, false);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         rating = (TextView) view.findViewById(R.id.rating);
@@ -79,8 +82,20 @@ public class AccmodationLandingPageFragement extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 BusinessProfileModel businessProfileModel = new BusinessProfileModel();
-                BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
+                final BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
                 textTitle.setText(businessProfileMapModel.name);
+                databaseReference.child("municipality").child(businessProfileMapModel.municipality).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        MunicipalityMapModel municipalityMapModel = dataSnapshot.getValue(MunicipalityMapModel.class);
+                        location.setText(businessProfileMapModel.barangay+", "+municipalityMapModel.municipality);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 GlideApp.with(getActivity()).load(businessProfileMapModel.restoProfileImagePath).centerCrop().into(app_bar_image);
             }
 
@@ -89,6 +104,7 @@ public class AccmodationLandingPageFragement extends Fragment {
 
             }
         });
+        location = (TextView) view.findViewById(R.id.location);
         ratingAndCommentList = (RecyclerView) view.findViewById(R.id.ratingAndCommentList);
         ratingsRecyclerViewAdapter = new RatingsRecyclerViewAdapter(getActivity(),ratingCommentDataModelArrayList);
         ratingAndCommentList.setLayoutManager(new LinearLayoutManager(getActivity()));

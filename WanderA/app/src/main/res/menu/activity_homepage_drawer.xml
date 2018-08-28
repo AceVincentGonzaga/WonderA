@@ -4,7 +4,7 @@
         <group>
             <item android:id="@+id/nav_item_one"
                 android:icon="@drawable/ic_drafts_black_24dp"
-                android:title="Messages" />
+                android:title="Message" />
             <item android:id="@+id/nav_item_two"
 
                 android:title="Signout" />

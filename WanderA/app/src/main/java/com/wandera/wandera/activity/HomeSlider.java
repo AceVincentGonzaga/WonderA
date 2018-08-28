@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -26,14 +27,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.MainActivity;
 import com.wandera.wandera.R;
+import com.wandera.wandera.Utils;
 import com.wandera.wandera.adapter.ViewPagerAdapter;
 import com.wandera.wandera.fragements.HomeFragement;
 import com.wandera.wandera.fragements.ItirenaryFragement;
 import com.wandera.wandera.fragements.PhraseBookFragement;
 import com.wandera.wandera.fragements.TranspoFragement;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -66,9 +71,7 @@ public class HomeSlider extends AppCompatActivity
                 case R.id.navigation_phrasebook:
                     viewPager.setCurrentItem(2);
                     return true;
-                case R.id.navigation_itinerary:
-                    viewPager.setCurrentItem(3);
-                    return true;
+
             }
             return false;
         }
@@ -102,6 +105,7 @@ public class HomeSlider extends AppCompatActivity
 
                 } else if (id == R.id.sign_out) {
 
+                    signOut();
                 }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -111,6 +115,7 @@ public class HomeSlider extends AppCompatActivity
                 return true;
             }
         });
+
         View hView = navigationView.inflateHeaderView(R.layout.nav_header_home_slider);
         TextView userName = (TextView) hView.findViewById(R.id.userName);
         TextView userEmail = (TextView) hView.findViewById(R.id.userEmail);
@@ -152,6 +157,27 @@ public class HomeSlider extends AppCompatActivity
     });
 
     setupViewPager(viewPager);
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        // your code here
+                        try {
+
+                            HashMap<String, Object> result = new HashMap<>();
+                            result.put("user", true);
+                            FirebaseDatabase.getInstance()
+                                    .getReference().child("users")
+                                    .child(FirebaseAuth.getInstance().getUid()).updateChildren(result);
+                        }catch (NullPointerException e){
+
+                        }
+
+                    }
+
+                },
+                5000
+        );
 
 }
 
@@ -197,10 +223,10 @@ public class HomeSlider extends AppCompatActivity
 
             Intent i = new Intent(HomeSlider.this, InboxActivity.class);
             startActivity(i);
-            return true;
-        } else if (id == R.id.sign_out) {
-            FirebaseAuth.getInstance().signOut();
-            signOut();
+
+        }
+        else if (id == R.id.sign_out) {
+
 
         }
 
@@ -217,13 +243,13 @@ public class HomeSlider extends AppCompatActivity
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+        mGoogleSignInClient = GoogleSignIn.getClient(HomeSlider.this, gso);
+        mGoogleSignInClient.signOut().addOnCompleteListener(HomeSlider.this,
                 new OnCompleteListener<Void>() {  //signout Google
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         FirebaseAuth.getInstance().signOut(); //signout firebase
-                        Intent setupIntent = new Intent(getBaseContext(),MainActivity.class/*To ur activity calss*/);
+                        Intent setupIntent = new Intent(HomeSlider.this,MainActivity.class/*To ur activity calss*/);
                         Toast.makeText(getBaseContext(), "Logged Out", Toast.LENGTH_LONG).show(); //if u want to show some text
                         setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(setupIntent);
@@ -242,7 +268,7 @@ public class HomeSlider extends AppCompatActivity
         adapter.addFragment(homeFragement);
         adapter.addFragment(transpoFragement);
         adapter.addFragment(phraseBookFragement);
-        adapter.addFragment(itirenaryFragement);
+
 
 
         viewPager.setAdapter(adapter);

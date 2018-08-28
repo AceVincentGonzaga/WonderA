@@ -84,9 +84,13 @@ public class BusinessListInboxRecyclerViewAdapter
         FirebaseDatabase.getInstance().getReference().child(Utils.businessProfiel).child(userListDataModel.getBusinessKey()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
-                holder.businessName.setText(businessProfileMapModel.name);
-                GlideApp.with(context).load(businessProfileMapModel.restoProfileImagePath).centerCrop().into(holder.businessProfielImage);
+               try {
+                   BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
+                   holder.businessName.setText(businessProfileMapModel.name);
+                   GlideApp.with(context).load(businessProfileMapModel.restoProfileImagePath).centerCrop().into(holder.businessProfielImage);
+               }catch (NullPointerException e){
+
+               }
             }
 
             @Override

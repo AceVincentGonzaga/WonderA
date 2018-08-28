@@ -28,10 +28,6 @@ public class Itinerary extends AppCompatActivity {
                     Intent phrasebook= new Intent(Itinerary.this, Phrasebook.class);
                     startActivity(phrasebook);
                     return true;
-                case R.id.navigation_itinerary:
-
-                    return true;
-
             }
             return false;
         }

@@ -29,6 +29,8 @@ import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
 
+import java.util.HashMap;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -45,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser!=null){
             Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
+
+
             startActivity(i);
             finish();
         }
@@ -86,12 +90,16 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
+
+
                 mAuth = FirebaseAuth.getInstance();
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
                 Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
                 startActivity(i);
                 finish();
+
+
 
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately

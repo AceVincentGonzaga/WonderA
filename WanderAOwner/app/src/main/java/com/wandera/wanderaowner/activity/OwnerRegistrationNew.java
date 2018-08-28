@@ -66,7 +66,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 
-public class RestaurantRegistration extends AppCompatActivity {
+public class OwnerRegistrationNew extends AppCompatActivity {
         List<String> categories = new ArrayList<String>();
         Spinner spinner;
         TextInputEditText inpt_name,input_contact, inpt_email;
@@ -109,7 +109,7 @@ public class RestaurantRegistration extends AppCompatActivity {
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = RestaurantRegistration.this;
+            context = OwnerRegistrationNew.this;
             setContentView(R.layout.activity_owerner_registration);
             inpt_name = (TextInputEditText) findViewById(R.id.input_name);
             loadingContainer  = (ConstraintLayout) findViewById(R.id.loadingContainer);
@@ -138,7 +138,7 @@ public class RestaurantRegistration extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (!validate()){
-                        Utils.callToast(context,"incomplete");
+
                     }else {
                         Utils.callToast(context,"Success");
                         uploadItemBanner(bannerUri);
@@ -166,8 +166,8 @@ public class RestaurantRegistration extends AppCompatActivity {
             }
 
             showLast();
-            if (ContextCompat.checkSelfPermission(RestaurantRegistration.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(RestaurantRegistration.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
+            if (ContextCompat.checkSelfPermission(OwnerRegistrationNew.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(OwnerRegistrationNew.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
                 return;
             }
 
@@ -233,7 +233,7 @@ public class RestaurantRegistration extends AppCompatActivity {
 
 
         private void selectBusinessTypeDialog(){
-            final Dialog dialog = new Dialog(RestaurantRegistration.this);
+            final Dialog dialog = new Dialog(OwnerRegistrationNew.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.select_business_type_dialog);
@@ -279,24 +279,31 @@ public class RestaurantRegistration extends AppCompatActivity {
             try{
                 if (inpt_name.getText().toString().trim().length()==0){
                     val = false;
+                    inpt_name.setError("This field can not be blank");
                 }
-                if (municipality.trim().length()==0){
+                else if (municipality.trim().length()==0){
+                    val = false;
+                    Utils.callToast(context,"Select Municipality");
+                }
+                else if (input_contact.getText().toString().trim().length()!=11 ){
+                    val = false;
+                    input_contact.setError("Number not Valid");
+                }
+
+                else if(inpt_email.getText().toString().trim().length()==0){
+                    val = false;
+                    inpt_email.setError("This field can not be blank");
+                }
+                else if (businessType==null){
                     val = false;
                 }
-                if (input_contact.getText().toString().trim().length()==0){
+                else if (selectBarangay.getText().toString().equals("Barangay")){
                     val = false;
+                    Utils.callToast(context,"Select Barangay");
                 }
-                if(inpt_email.getText().toString().trim().length()==0){
+                else if (!businessSpecificLocation){
                     val = false;
-                }
-                if (businessType==null){
-                    val = false;
-                }
-                if (selectBarangay.getText().toString().equals("Barangay")){
-                    val = false;
-                }
-                if (!businessSpecificLocation){
-                    val = false;
+                    Utils.callToast(context,"Select Location");
                 }
             }catch (NullPointerException e){
                 val = false;
@@ -384,7 +391,7 @@ public class RestaurantRegistration extends AppCompatActivity {
         // Picasso.with(CreatePostActivity.this).load(uri).resize(300,600).into(imageToUpload);
         bannerUri = uri;
         imageSet = true;
-        Glide.with(RestaurantRegistration.this).load(uri).into(imageView);
+        Glide.with(OwnerRegistrationNew.this).load(uri).into(imageView);
         imageView.setPadding(0,0,0,0);
     }
 
@@ -522,7 +529,7 @@ public class RestaurantRegistration extends AppCompatActivity {
                     municipalityDataModelArrayList.add(municipalityDataModel);
                     mun.add(municipalityMapModel.municipality);
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantRegistration.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(OwnerRegistrationNew.this);
                 builder.setTitle("Select Municipality");
                 builder.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, mun),
                         new DialogInterface.OnClickListener() {
@@ -565,7 +572,7 @@ public class RestaurantRegistration extends AppCompatActivity {
                     barangayDataModelArrayList.add(barangayDataModel);
                     mun.add(barangayMapModel.barangay);
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantRegistration.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(OwnerRegistrationNew.this);
                 builder.setTitle("Select Barangay");
                 builder.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, mun),
                         new DialogInterface.OnClickListener() {
@@ -607,7 +614,7 @@ public class RestaurantRegistration extends AppCompatActivity {
     }
 
     private void wifiAvailability(){
-        Utils.callToast(RestaurantRegistration.this,"clicked");
+        Utils.callToast(OwnerRegistrationNew.this,"clicked");
         if (wifiAvail){
             wifiIcon.setColorFilter(getResources().getColor(R.color.lightGrey));
             textWifi.setText("Wifi Unavailable");

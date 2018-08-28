@@ -31,7 +31,7 @@
         <activity android:name=".activity.MapsProfileUpdateActivity" />
         <activity android:name=".activity.OwernerRegistrationUpdate" />
         <activity android:name=".activity.BusinessProfileRestaurant" />
-        <activity android:name=".activity.RestaurantRegistration" />
+        <activity android:name=".activity.OwnerRegistrationNew" />
         <activity android:name=".activity.giftingcenter.GiftingCenterRegistration"/>
         <activity android:name=".activity.AccomodationsRegistration" />
         <activity android:name=".activity.giftingcenter.BusinessProfileGiftingCenter"/>

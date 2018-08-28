@@ -32,11 +32,8 @@ public class Phrasebook extends AppCompatActivity {
                     Intent phrasebook= new Intent(Phrasebook.this, Phrasebook.class);
                     startActivity(phrasebook);
                     return true;
-                case R.id.navigation_itinerary:
-                    Intent itinerary= new Intent(Phrasebook.this, Itinerary.class);
-                    startActivity(itinerary);
-                    finish();
-                    return true;
+
+
 
             }
             return false;

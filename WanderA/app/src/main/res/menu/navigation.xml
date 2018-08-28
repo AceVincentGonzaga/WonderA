@@ -15,9 +15,6 @@
         android:id="@+id/navigation_phrasebook"
         android:icon="@drawable/comments"
         android:title="Phrasebook" />
-    <item
-        android:id="@+id/navigation_itinerary"
-        android:icon="@drawable/itinerary"
-        android:title="Itinerary" />
+
 
 </menu>

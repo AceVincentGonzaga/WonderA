@@ -41,11 +41,7 @@ public class Homepage extends AppCompatActivity implements
                     startActivity(phrasebook);
                     finish();
                     return true;
-                case R.id.navigation_itinerary:
-                    Intent itinerary= new Intent(Homepage.this, Itinerary.class);
-                    startActivity(itinerary);
-                    finish();
-                    return true;
+
 
             }
             return false;

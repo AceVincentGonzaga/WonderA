@@ -43,7 +43,7 @@ public class BusinessProfile extends AppCompatActivity {
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withMenuOpened(false)
                 .withToolbarMenuToggle(toolbar)
-                .withDragDistance(200)
+                .withDragDistance(400)
                 .withContentClickableWhenMenuOpened(false)
                 .withSavedState(savedInstanceState)
                 .withRootViewScale(1f)

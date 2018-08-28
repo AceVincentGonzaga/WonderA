@@ -31,15 +31,14 @@ import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.activity.accomodations.BusinessProfileAccomodations;
 import com.wandera.wanderaowner.activity.giftingcenter.BusinessProfileGiftingCenter;
-import com.wandera.wanderaowner.activity.giftingcenter.GiftingCenterRegistration;
 import com.wandera.wanderaowner.activity.touristHotSpot.BusinessProfileTouristSpots;
-import com.wandera.wanderaowner.activity.touristHotSpot.TouristHotSpotRegistration;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
 import com.wandera.wanderaowner.views.BussinessListRecyclerViewAdapter;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ManageBusiness extends AppCompatActivity {
     DatabaseReference databaseReference;
@@ -72,6 +71,7 @@ public class ManageBusiness extends AppCompatActivity {
         container= (ConstraintLayout)findViewById(R.id.container);
         databaseReference.child("businessProfiles").keepSynced(true);
         addBusinessBtn = (TextView) findViewById(R.id.addBusiness);
+
 
 
         bussinessListRecyclerViewAdapter = new BussinessListRecyclerViewAdapter(context,businessProfileModelArrayList);
@@ -183,6 +183,24 @@ public class ManageBusiness extends AppCompatActivity {
             }
         });
 
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        // your code here
+
+                        HashMap<String, Object> result = new HashMap<>();
+                        result.put("owner", true);
+                        FirebaseDatabase.getInstance()
+                                .getReference().child("users")
+                                .child(FirebaseAuth.getInstance().getUid()).updateChildren(result);
+                    }
+
+                },
+                5000
+        );
+
     }
 
     private void selectBusinessTypeDialog(){
@@ -197,7 +215,7 @@ public class ManageBusiness extends AppCompatActivity {
         selectResto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context,RestaurantRegistration.class);
+                Intent i = new Intent(context,OwnerRegistrationNew.class);
                 i.putExtra("businessType","Restaurants");
                 startActivity(i);
                 dialog.dismiss();
@@ -206,7 +224,7 @@ public class ManageBusiness extends AppCompatActivity {
         selectAccomodation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context,RestaurantRegistration.class);
+                Intent i = new Intent(context,OwnerRegistrationNew.class);
                 i.putExtra("businessType","Accomodations");
                 startActivity(i);
                 dialog.dismiss();
@@ -215,7 +233,7 @@ public class ManageBusiness extends AppCompatActivity {
         selectPasalubongCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context,RestaurantRegistration.class);
+                Intent i = new Intent(context,OwnerRegistrationNew.class);
                 i.putExtra("businessType","Gifting Center");
                 startActivity(i);
                 dialog.dismiss();
@@ -224,7 +242,7 @@ public class ManageBusiness extends AppCompatActivity {
         selectTouristSpots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context,RestaurantRegistration.class);
+                Intent i = new Intent(context,OwnerRegistrationNew.class);
                 i.putExtra("businessType",Utils.bTypeHotSpots);
                 startActivity(i);
                 dialog.dismiss();

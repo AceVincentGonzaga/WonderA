@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser!=null){
             Intent i = new Intent(MainActivity.this,HomeSlider.class);
+
             startActivity(i);
             finish();
         }
@@ -91,9 +92,15 @@ public class MainActivity extends AppCompatActivity {
                                   saveUserProfile(FirebaseAuth.getInstance().getCurrentUser()
                                           .getUid(),FirebaseAuth.getInstance().getCurrentUser()
                                           .getPhotoUrl().toString());
+                                  HashMap<String, Object> result = new HashMap<>();
+                                  result.put("user", true);
+                                  FirebaseDatabase.getInstance()
+                                          .getReference().child("users")
+                                          .child(mAuth.getUid()).updateChildren(result);
                               }catch (NullPointerException e){
                                   Snackbar.make(constraintLayout,e.toString(),Snackbar.LENGTH_SHORT).show();
                               }
+
                             }
 
                         },

@@ -35,6 +35,7 @@ import com.wandera.wandera.activity.businessProfiles.TourisSpotsProfileBotNav;
 import com.wandera.wandera.datamodel.BusinessProfileModel;
 import com.wandera.wandera.datamodel.RatingCommentDataModel;
 import com.wandera.wandera.mapmodel.BusinessProfileMapModel;
+import com.wandera.wandera.mapmodel.MunicipalityMapModel;
 import com.wandera.wandera.mapmodel.RatingCommentMapModel;
 import com.wandera.wandera.views.ratingAndComments.RatingsRecyclerViewAdapter;
 
@@ -58,6 +59,7 @@ public class TouristSpotsLandingPageFragement extends Fragment {
     TextView rating;
     Dialog dialog;
     float finalRating;
+    TextView location;
     public TouristSpotsLandingPageFragement(){
 
     }
@@ -79,8 +81,20 @@ public class TouristSpotsLandingPageFragement extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 BusinessProfileModel businessProfileModel = new BusinessProfileModel();
-                BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
+               final BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
                 textTitle.setText(businessProfileMapModel.name);
+                databaseReference.child("municipality").child(businessProfileMapModel.municipality).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        MunicipalityMapModel municipalityMapModel = dataSnapshot.getValue(MunicipalityMapModel.class);
+                        location.setText(businessProfileMapModel.barangay+", "+municipalityMapModel.municipality);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 GlideApp.with(getActivity()).load(businessProfileMapModel.restoProfileImagePath).centerCrop().into(app_bar_image);
             }
 
@@ -89,6 +103,7 @@ public class TouristSpotsLandingPageFragement extends Fragment {
 
             }
         });
+        location = (TextView) view.findViewById(R.id.location);
         rating = (TextView) view.findViewById(R.id.rating);
         ratingAndCommentList = (RecyclerView) view.findViewById(R.id.ratingAndCommentList);
         ratingsRecyclerViewAdapter = new RatingsRecyclerViewAdapter(getActivity(),ratingCommentDataModelArrayList);
