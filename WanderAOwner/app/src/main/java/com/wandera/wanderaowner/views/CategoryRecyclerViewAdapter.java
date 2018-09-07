@@ -70,7 +70,7 @@ public class CategoryRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        CategoryDataModel categoryDataModel = categoryDataModelArrayList.get(position);
+        final CategoryDataModel categoryDataModel = categoryDataModelArrayList.get(position);
         holder.categoryItemName.setText(categoryDataModel.getCategory());
         final ArrayList<MenuDataModel> menuDataModelArrayList = new ArrayList<>();
 
@@ -88,6 +88,8 @@ public class CategoryRecyclerViewAdapter
                     menuDataModel.setMenuName(menuMapModel.menuName);
                     menuDataModel.setMenuIconPath(menuMapModel.menuIconPath);
                     menuDataModel.setMenuPrice(menuMapModel.menuPrice);
+                    menuDataModel.setMenuCategory(categoryDataModel.getKey());
+                    menuDataModel.setKey(menuMapModel.key);
 
                     menuDataModelArrayList.add(menuDataModel);
                 }

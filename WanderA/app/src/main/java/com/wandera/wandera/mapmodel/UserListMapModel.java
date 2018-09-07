@@ -9,6 +9,8 @@ public class UserListMapModel {
     public String userId;
     public String key;
     public String businessKey;
+    public boolean seen_owner;
+    public boolean seen_user;
 
     public UserListMapModel(){
 
@@ -26,6 +28,9 @@ public class UserListMapModel {
         result.put("userId", userId);
         result.put("key",key);
         result.put("businessKey", businessKey);
+        result.put("seen_owner",false);
+        result.put("seen_user",true);
+
         return result;
     }
 }

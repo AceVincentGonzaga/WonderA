@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -28,8 +29,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
+import com.wandera.wanderaowner.mapModel.UserProfileMapModel;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "GoogleActivity";
@@ -147,5 +150,29 @@ public class LoginActivity extends AppCompatActivity {
             conntectingLabel.setVisibility(View.INVISIBLE);
 
         }
+    }
+
+    private void saveUserProfile(String userId,String userImage){
+
+        String userID= mAuth.getCurrentUser().getUid();
+        String userImagePath= mAuth.getCurrentUser().getPhotoUrl().toString();
+        UserProfileMapModel userProfileMapModel= new UserProfileMapModel(userID,
+                userImagePath,mAuth.getCurrentUser().getDisplayName(),
+                mAuth.getCurrentUser().getPhoneNumber(),
+                mAuth.getCurrentUser().getEmail());
+        Map<String,Object> profileValue = userProfileMapModel.toMap();
+        Map<String,Object> childupdates = new HashMap<>();
+        childupdates.put(userId,profileValue);
+
+        FirebaseDatabase.getInstance().getReference().child("users").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
     }
 }

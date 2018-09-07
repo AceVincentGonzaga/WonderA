@@ -9,6 +9,8 @@ public class UserListMapModel {
     public String userId;
     public String key;
     public String businessKey;
+    public boolean seen_owner;
+    public boolean seen_user;
 
     public UserListMapModel(){
 
@@ -19,6 +21,8 @@ public class UserListMapModel {
         this.userId=userId;
         this.key=key;
         this.businessKey=businessKey;
+        this.seen_owner = true;
+        this.seen_user = false;
     }
     @Exclude
     public Map<String,Object> toMap(){
@@ -26,6 +30,8 @@ public class UserListMapModel {
         result.put("userId", userId);
         result.put("key",key);
         result.put("businessKey", businessKey);
+        result.put("seen_owner", seen_owner);
+        result.put("seen_user",seen_user);
         return result;
     }
 }

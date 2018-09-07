@@ -1,11 +1,15 @@
 package com.wandera.wanderaowner.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +32,7 @@ public class BusinessProfile extends AppCompatActivity {
     SlidingRootNav slidingRootNav;
     Toolbar toolbar;
     DatabaseReference mDatabase;
-    TextView messages,businessProfile;
+    TextView messages,businessProfile,deleteBusiness;
     ImageView profileIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class BusinessProfile extends AppCompatActivity {
         messages = (TextView)findViewById(R.id.messages);
         businessProfile = (TextView) findViewById(R.id.manageProfile);
         profileIcon = (CircleImageView) findViewById(R.id.profileIcon);
+        deleteBusiness = (TextView) findViewById(R.id.deleteBusiness);
 
         businessProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +78,12 @@ public class BusinessProfile extends AppCompatActivity {
                 i.putExtra("key", businessKey);
                 startActivity(i);
                 finish();
+            }
+        });
+        deleteBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBusinessCofirmation();
             }
         });
 
@@ -106,4 +117,19 @@ public class BusinessProfile extends AppCompatActivity {
         super.onDestroy();
         Glide.with(getApplicationContext()).pauseRequests();
     }
+
+
+    private void deleteBusinessCofirmation(){
+        final Dialog dialog = new Dialog(BusinessProfile.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dilog_delete_business);
+
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+
 }

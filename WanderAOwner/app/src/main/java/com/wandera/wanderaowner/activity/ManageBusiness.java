@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,11 +35,13 @@ import com.wandera.wanderaowner.activity.giftingcenter.BusinessProfileGiftingCen
 import com.wandera.wanderaowner.activity.touristHotSpot.BusinessProfileTouristSpots;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.datamodel.BusinessProfileModel;
+import com.wandera.wanderaowner.mapModel.UserProfileMapModel;
 import com.wandera.wanderaowner.views.BussinessListRecyclerViewAdapter;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ManageBusiness extends AppCompatActivity {
     DatabaseReference databaseReference;
@@ -93,6 +96,8 @@ public class ManageBusiness extends AppCompatActivity {
         databaseReference.child("businessProfiles").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
 
                 new java.util.Timer().schedule(
                         new java.util.TimerTask() {
@@ -189,12 +194,19 @@ public class ManageBusiness extends AppCompatActivity {
                     @Override
                     public void run() {
                         // your code here
+                        try {
+                            saveUserProfile(FirebaseAuth.getInstance().getCurrentUser()
+                                    .getUid(),FirebaseAuth.getInstance().getCurrentUser()
+                                    .getPhotoUrl().toString());
+                            HashMap<String, Object> result = new HashMap<>();
+                            result.put("owner", true);
+                            FirebaseDatabase.getInstance()
+                                    .getReference().child("users")
+                                    .child(mAuth.getUid()).updateChildren(result);
+                        }catch (NullPointerException e){
 
-                        HashMap<String, Object> result = new HashMap<>();
-                        result.put("owner", true);
-                        FirebaseDatabase.getInstance()
-                                .getReference().child("users")
-                                .child(FirebaseAuth.getInstance().getUid()).updateChildren(result);
+                        }
+
                     }
 
                 },
@@ -273,6 +285,27 @@ public class ManageBusiness extends AppCompatActivity {
                         finish();
                     }
                 });
+    }
+
+    private void saveUserProfile(String userId,String userImage){
+
+        String userID= mAuth.getCurrentUser().getUid();
+        String userImagePath= mAuth.getCurrentUser().getPhotoUrl().toString();
+        UserProfileMapModel userProfileMapModel= new UserProfileMapModel(userID,
+                userImagePath,mAuth.getCurrentUser().getDisplayName(),
+                mAuth.getCurrentUser().getPhoneNumber(),
+                mAuth.getCurrentUser().getEmail());
+        Map<String,Object> profileValue = userProfileMapModel.toMap();
+        Map<String,Object> childupdates = new HashMap<>();
+        childupdates.put(userId,profileValue);
+
+        FirebaseDatabase.getInstance().getReference().child("users").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+        });
+
     }
 
 

@@ -33,6 +33,24 @@
         app:layout_constraintTop_toBottomOf="@+id/profileIcon" />
 
     <TextView
+        android:id="@+id/unreadMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/chat_bubble_background_owner"
+        android:padding="3dp"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="10dp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/messages"
+        app:layout_constraintStart_toEndOf="@+id/messages"
+        app:layout_constraintTop_toTopOf="@+id/messages" />
+
+
+
+    <TextView
         android:id="@+id/manageProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,6 +63,20 @@
         android:theme="@style/sideNavMenus"
         app:layout_constraintStart_toStartOf="@+id/messages"
         app:layout_constraintTop_toBottomOf="@+id/messages" />
+
+    <TextView
+        android:id="@+id/deleteBusiness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_delete_black_24dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="Delete Business"
+        android:theme="@style/sideNavMenus"
+        app:layout_constraintStart_toStartOf="@+id/messages"
+        app:layout_constraintTop_toBottomOf="@+id/manageProfile" />
 
     <TextView
         android:id="@+id/logout"

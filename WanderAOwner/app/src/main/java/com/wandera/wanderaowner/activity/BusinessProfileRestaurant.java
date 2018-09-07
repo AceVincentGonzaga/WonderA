@@ -27,6 +27,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -54,10 +55,12 @@ import com.wandera.wanderaowner.activity.restaurant.AddGalleryActivity;
 import com.wandera.wanderaowner.datamodel.CategoryDataModel;
 import com.wandera.wanderaowner.datamodel.GalleryDataModel;
 import com.wandera.wanderaowner.datamodel.MenuDataModel;
+import com.wandera.wanderaowner.datamodel.UserListDataModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.CategoryMapModel;
 import com.wandera.wanderaowner.mapModel.GalleryMapModel;
 import com.wandera.wanderaowner.mapModel.MenuMapModel;
+import com.wandera.wanderaowner.mapModel.UserListMapModel;
 import com.wandera.wanderaowner.views.CategoryRecyclerViewAdapter;
 import com.wandera.wanderaowner.views.GalleryRecyclerViewAdapter;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
@@ -68,6 +71,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,6 +95,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
     ArrayList<GalleryDataModel> galleryDataModelArrayList = new ArrayList<>();
     GalleryRecyclerViewAdapter galleryRecyclerViewAdapter;
     RecyclerView galleryList;
+    TextView deleteBusiness;
     private static final int READ_REQUEST_CODE = 42;
     boolean access_storage;
     private static final int storagepermision_access_code = 548;
@@ -130,6 +135,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
         messages = (TextView)findViewById(R.id.messages);
         businessProfile = (TextView) findViewById(R.id.manageProfile);
         profileIcon = (CircleImageView) findViewById(R.id.profileIcon);
+        deleteBusiness = (TextView) findViewById(R.id.deleteBusiness);
 
         businessProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +161,12 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
                 i.putExtra("key", businessKey);
                 startActivity(i);
                 finish();
+            }
+        });
+        deleteBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBusinessCofirmation();
             }
         });
 
@@ -188,6 +200,8 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(galleryList);
         getGallery();
+
+        getInboxUnReadMessages();
     }
 
     @Override
@@ -432,6 +446,8 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
             });
         }
 
+
+
     }
     private String getFileName(Uri uri) {
 
@@ -473,5 +489,70 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
 
     }
 
+    private void deleteBusinessCofirmation(){
+        final Dialog dialog = new Dialog(BusinessProfileRestaurant.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dilog_delete_business);
+        dialog.findViewById(R.id.deleteCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
+        dialog.findViewById(R.id.deleteConfirmed).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBusiness(dialog);
+            }
+        });
+
+
+
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+    private void deleteBusiness(final Dialog dialog){
+        FirebaseDatabase.getInstance().getReference()
+                .child("businessProfiles").child(businessKey)
+                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+    }
+
+    private void getInboxUnReadMessages(){
+
+
+        FirebaseDatabase.getInstance().getReference().child("chatUserList").child(businessKey).orderByChild("key").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int unreadMessage = 0;
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
+
+                    UserListMapModel userListMapModel = dataSnapshot1.getValue(UserListMapModel.class);
+                    if (!userListMapModel.seen_owner){
+                        unreadMessage++;
+                    }
+                }
+                TextView unreadMessageCounter = findViewById(R.id.unreadMessage);
+                if (unreadMessage!=0){
+                    unreadMessageCounter.setVisibility(View.VISIBLE);
+                }
+                unreadMessageCounter.setText(unreadMessage+"");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

@@ -1,5 +1,6 @@
 package com.wandera.wanderaowner.activity.touristHotSpot;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
+import com.wandera.wanderaowner.activity.BusinessProfile;
+import com.wandera.wanderaowner.activity.BusinessProfileRestaurant;
 import com.wandera.wanderaowner.activity.InboxActivity;
 import com.wandera.wanderaowner.activity.OwernerRegistration;
 import com.wandera.wanderaowner.activity.OwernerRegistrationUpdate;
@@ -33,6 +39,7 @@ import com.wandera.wanderaowner.activity.accomodations.AddRoom;
 import com.wandera.wanderaowner.datamodel.RoomDataModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.RoomMapModel;
+import com.wandera.wanderaowner.views.ActivityRecyclerViewAdapter;
 import com.wandera.wanderaowner.views.RoomsRecyclerViewAdapter;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
@@ -49,7 +56,7 @@ public class BusinessProfileTouristSpots extends AppCompatActivity {
     ImageView profileIcon;
     Button addCategory;
     Context c;
-    RoomsRecyclerViewAdapter roomsRecyclerViewAdapter;
+    ActivityRecyclerViewAdapter roomsRecyclerViewAdapter;
     ArrayList<RoomDataModel> roomDataModelArrayList = new ArrayList<>();
     RecyclerView roomList;
     String businessKey;
@@ -82,7 +89,7 @@ public class BusinessProfileTouristSpots extends AppCompatActivity {
         businessProfile = (TextView) findViewById(R.id.manageProfile);
         profileIcon = (CircleImageView) findViewById(R.id.profileIcon);
 
-        roomsRecyclerViewAdapter = new RoomsRecyclerViewAdapter(BusinessProfileTouristSpots.this,roomDataModelArrayList);
+        roomsRecyclerViewAdapter = new ActivityRecyclerViewAdapter(BusinessProfileTouristSpots.this,roomDataModelArrayList);
         roomList.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
         roomList.setAdapter(roomsRecyclerViewAdapter);
 
@@ -112,6 +119,12 @@ public class BusinessProfileTouristSpots extends AppCompatActivity {
                 i.putExtra("key", businessKey);
                 startActivity(i);
                 finish();
+            }
+        });
+        findViewById(R.id.deleteBusiness).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBusinessCofirmation();
             }
         });
 
@@ -175,6 +188,8 @@ public class BusinessProfileTouristSpots extends AppCompatActivity {
                     roomDataModel.setRoomName(roomMapModel.roomName);
                     roomDataModel.setRoomImage(roomMapModel.roomImage);
                     roomDataModel.setRoomPrice(roomMapModel.roomPrice);
+                    roomDataModel.setBusinessKey(roomMapModel.businessKey);
+                    roomDataModel.setRoomId(roomMapModel.roomId);
                     roomDataModel.setRoomDescription(roomMapModel.roomDescription);
                     roomDataModelArrayList.add(roomDataModel);
                 }
@@ -184,6 +199,44 @@ public class BusinessProfileTouristSpots extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+    private void deleteBusinessCofirmation(){
+        final Dialog dialog = new Dialog(BusinessProfileTouristSpots.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dilog_delete_business);
+        dialog.findViewById(R.id.deleteCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.findViewById(R.id.deleteConfirmed).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBusiness(dialog);
+            }
+        });
+
+
+
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+    private void deleteBusiness(final Dialog dialog){
+        FirebaseDatabase.getInstance().getReference()
+                .child("businessProfiles").child(businessKey)
+                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                dialog.dismiss();
+                finish();
             }
         });
     }

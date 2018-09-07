@@ -3,6 +3,7 @@ package com.wandera.wanderaowner.views;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -91,6 +92,7 @@ public class UserChatListRecyclerViewAdapter
 
             }
         });
+
         FirebaseDatabase.getInstance().getReference().child("chats")
                 .child(userListDataModel.getBusinessKey())
                 .child(userListDataModel.getUserId())
@@ -110,7 +112,10 @@ public class UserChatListRecyclerViewAdapter
 
             }
         });
-
+        if (!userListDataModel.isSeen_owner()){
+            holder.preview.setTypeface(null, Typeface.BOLD);
+//            holder.preview.setTextColor(context.getResources().getColor(R.color.green));
+        }
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

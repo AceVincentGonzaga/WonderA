@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.activity.InboxActivity;
 import com.wandera.wanderaowner.activity.OwernerRegistration;
 import com.wandera.wanderaowner.activity.OwernerRegistrationUpdate;
+import com.wandera.wanderaowner.activity.touristHotSpot.BusinessProfileTouristSpots;
 import com.wandera.wanderaowner.datamodel.CategoryDataModel;
 import com.wandera.wanderaowner.mapModel.BusinessProfileMapModel;
 import com.wandera.wanderaowner.mapModel.CategoryMapModel;
@@ -115,6 +117,13 @@ public class BusinessProfileGiftingCenter extends AppCompatActivity {
                 i.putExtra("key", businessKey);
                 startActivity(i);
                 finish();
+            }
+        });
+
+        findViewById(R.id.deleteBusiness).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBusinessCofirmation();
             }
         });
 
@@ -222,6 +231,45 @@ public class BusinessProfileGiftingCenter extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    private void deleteBusinessCofirmation(){
+        final Dialog dialog = new Dialog(BusinessProfileGiftingCenter.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dilog_delete_business);
+        dialog.findViewById(R.id.deleteCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.findViewById(R.id.deleteConfirmed).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBusiness(dialog);
+            }
+        });
+
+
+
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+    private void deleteBusiness(final Dialog dialog){
+        FirebaseDatabase.getInstance().getReference()
+                .child("businessProfiles").child(businessKey)
+                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                dialog.dismiss();
+                finish();
             }
         });
     }

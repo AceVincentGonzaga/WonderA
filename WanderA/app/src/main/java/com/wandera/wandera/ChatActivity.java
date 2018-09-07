@@ -111,6 +111,7 @@ public class ChatActivity extends AppCompatActivity {
         mDatabase.child(Utils.chats).child(businessKey).child(userID).updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+
                 Utils.callToast(ChatActivity.this,"Message Sent");
                 inputMessage.setText("");
                 ChatListMapModel chatListMapModel = new ChatListMapModel(userID, key, businessKey);

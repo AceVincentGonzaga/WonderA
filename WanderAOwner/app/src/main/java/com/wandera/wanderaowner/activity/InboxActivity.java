@@ -56,6 +56,8 @@ TextView noMessagesYet;
                     userListDataModel.setBusinessKey(userListMapModel.businessKey);
                     userListDataModel.setKey(userListMapModel.key);
                     userListDataModel.setUserId(userListMapModel.userId);
+                    userListDataModel.setSeen_owner(userListMapModel.seen_owner);
+
                     userListDataModelArrayList.add(userListDataModel);
                     noMessagesYet.setVisibility(View.GONE);
                     inboxlist.setVisibility(View.VISIBLE);
@@ -78,6 +80,7 @@ TextView noMessagesYet;
                 Intent chatActivityIntent= new Intent(InboxActivity.this, ChatActivity.class);
                 chatActivityIntent.putExtra("BusinessKey", businessKey);
                 chatActivityIntent.putExtra("UserID",userListDataModel.getUserId());
+
                 startActivity(chatActivityIntent);
 
             }

@@ -16,8 +16,11 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.activity.giftingcenter.AddMenuGiftingActivity;
 import com.wandera.wanderaowner.activity.restaurant.AddMenuActivity;
 import com.wandera.wanderaowner.datamodel.MenuDataModel;
@@ -109,10 +112,27 @@ public class GiftingMenusItemRecyclerViewAdapter
                     menuTitle.setText(menuDataModel.getMenuName());
                     CircleImageView menuIcon = (CircleImageView) dialog.findViewById(R.id.menuIcon);
                     GlideApp.with(context).load(menuDataModel.getMenuIconPath()).centerCrop().into(menuIcon);
+
                     manageBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
+                        }
+                    });
+                    dialog.findViewById(R.id.btnDelete).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child(Utils.MENUS_DIR).child(businessKey)
+                                    .child(categoryKey)
+                                    .child(menuDataModel.getKey())
+                                    .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    notifyDataSetChanged();
+                                    dialog.dismiss();
+                                }
+                            });
                         }
                     });
                     close.setOnClickListener(new View.OnClickListener() {

@@ -82,6 +82,7 @@ public class GiftingCategoryRecyclerViewAdapter
                     menuDataModel.setMenuName(menuMapModel.menuName);
                     menuDataModel.setMenuIconPath(menuMapModel.menuIconPath);
                     menuDataModel.setMenuPrice(menuMapModel.menuPrice);
+                    menuDataModel.setKey(menuMapModel.key);
 
                     menuDataModelArrayList.add(menuDataModel);
                 }

@@ -8,15 +8,14 @@
     android:layout_height="wrap_content">
 
 
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:paddingBottom="8dp"
-
         android:background="@drawable/add_menu_background_white"
+
+        android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +48,8 @@
 
         <RatingBar
             android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
             style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:numStars="5"
@@ -75,7 +74,6 @@
             android:id="@+id/btnManage"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -84,10 +82,28 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menuPrice" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_background"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+            app:layout_constraintTop_toBottomOf="@+id/btnManage" />
+
     </android.support.constraint.ConstraintLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView

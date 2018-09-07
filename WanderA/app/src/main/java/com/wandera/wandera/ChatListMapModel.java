@@ -13,7 +13,8 @@ public class ChatListMapModel {
     public String key;
     public String userId;
     public String businessId;
-
+    public boolean seen_owner;
+    public boolean seen_user;
 
 
     public ChatListMapModel(){
@@ -32,8 +33,10 @@ public class ChatListMapModel {
     public Map<String,Object> toMap(){
         HashMap<String,Object> result = new HashMap<>();
         result.put("userId",userId);
-       result.put("key", key);
+        result.put("key", key);
         result.put("businessKey", businessId);
+        result.put("seen_owner", false);
+        result.put("seen_user",true);
 
         return result;
     }

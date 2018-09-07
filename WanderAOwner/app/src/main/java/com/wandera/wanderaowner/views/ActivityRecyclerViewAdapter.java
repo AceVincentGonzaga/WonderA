@@ -2,11 +2,8 @@ package com.wandera.wanderaowner.views;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,30 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
-import com.wandera.wanderaowner.Utils;
-import com.wandera.wanderaowner.datamodel.CategoryDataModel;
-import com.wandera.wanderaowner.datamodel.MenuDataModel;
 import com.wandera.wanderaowner.datamodel.RoomDataModel;
 import com.wandera.wanderaowner.datamodel.UserListDataModel;
-import com.wandera.wanderaowner.mapModel.CategoryMapModel;
-import com.wandera.wanderaowner.mapModel.MenuMapModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Keji's Lab on 19/01/2018.
  */
 
-public class RoomsRecyclerViewAdapter
-        extends RecyclerView.Adapter<RoomsRecyclerViewAdapter.MyViewHolder> {
+public class ActivityRecyclerViewAdapter
+        extends RecyclerView.Adapter<ActivityRecyclerViewAdapter.MyViewHolder> {
     private ArrayList<RoomDataModel> roomDataModelArrayList = new ArrayList<>();
     private Context context;
     private ArrayList<String> vis = new ArrayList<>();
@@ -66,7 +53,7 @@ public class RoomsRecyclerViewAdapter
         }
     }
 
-    public RoomsRecyclerViewAdapter(Context c, ArrayList<RoomDataModel> roomDataModels){
+    public ActivityRecyclerViewAdapter(Context c, ArrayList<RoomDataModel> roomDataModels){
         this.roomDataModelArrayList = roomDataModels;
         this.context =c;
 
@@ -89,15 +76,23 @@ public class RoomsRecyclerViewAdapter
         holder.roomName.setText(roomDataModel.getRoomName());
         holder.roomPrice.setText("₱ "+roomDataModel.getRoomPrice());
         holder.roomDes.setText(roomDataModel.getRoomDescription());
+//        holder.constraintLayout3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog(position);
+//            }
+//        });
+        
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference().child("accomodations/rooms")
+                FirebaseDatabase.getInstance().getReference().child("touristspots/activity")
                         .child(roomDataModelArrayList.get(position).getBusinessKey())
                         .child(roomDataModelArrayList.get(position).getRoomId()).removeValue()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
+
                             }
                         });
             }
@@ -131,7 +126,15 @@ public class RoomsRecyclerViewAdapter
         dialog.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FirebaseDatabase.getInstance().getReference().child("touristspots/activity")
+                        .child(roomDataModelArrayList.get(pos).getBusinessKey())
+                        .child(roomDataModelArrayList.get(pos).getRoomId()).removeValue()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                dialog.dismiss();
+                            }
+                        });
             }
         });
         final Window window = dialog.getWindow();

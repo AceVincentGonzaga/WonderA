@@ -1,5 +1,6 @@
 package com.wandera.wanderaowner.activity.accomodations;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,11 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +35,7 @@ import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.activity.InboxActivity;
 import com.wandera.wanderaowner.activity.OwernerRegistration;
 import com.wandera.wanderaowner.activity.OwernerRegistrationUpdate;
+import com.wandera.wanderaowner.activity.touristHotSpot.BusinessProfileTouristSpots;
 import com.wandera.wanderaowner.datamodel.GalleryDataModel;
 import com.wandera.wanderaowner.datamodel.MenuDataModel;
 import com.wandera.wanderaowner.datamodel.RoomDataModel;
@@ -131,6 +136,13 @@ public class BusinessProfileAccomodations extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.deleteBusiness).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBusinessCofirmation();
+            }
+        });
+
 
         try {
             mDatabase.child(Utils.businessProfiles).child(businessKey).addValueEventListener(new ValueEventListener() {
@@ -181,7 +193,8 @@ public class BusinessProfileAccomodations extends AppCompatActivity {
     }
 
     private void getRooms(){
-        FirebaseDatabase.getInstance().getReference().child("accomodations").child("rooms").child(businessKey).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("accomodations").child("rooms")
+                .child(businessKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 roomDataModelArrayList.clear();
@@ -189,6 +202,8 @@ public class BusinessProfileAccomodations extends AppCompatActivity {
                     RoomMapModel roomMapModel = dataSnapshot1.getValue(RoomMapModel.class);
                     RoomDataModel roomDataModel = new RoomDataModel();
                     roomDataModel.setRoomName(roomMapModel.roomName);
+                    roomDataModel.setBusinessKey(roomMapModel.businessKey);
+                    roomDataModel.setRoomId(roomMapModel.roomId);
                     roomDataModel.setRoomImage(roomMapModel.roomImage);
                     roomDataModel.setRoomPrice(roomMapModel.roomPrice);
                     roomDataModel.setRoomDescription(roomMapModel.roomDescription);
@@ -204,6 +219,44 @@ public class BusinessProfileAccomodations extends AppCompatActivity {
         });
     }
 
+    private void deleteBusinessCofirmation(){
+        final Dialog dialog = new Dialog(BusinessProfileAccomodations.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dilog_delete_business);
+        dialog.findViewById(R.id.deleteCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.findViewById(R.id.deleteConfirmed).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBusiness(dialog);
+            }
+        });
+
+
+
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.show();
+    }
+
+    private void deleteBusiness(final Dialog dialog){
+        FirebaseDatabase.getInstance().getReference()
+                .child("businessProfiles").child(businessKey)
+                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+    }
 
 
 

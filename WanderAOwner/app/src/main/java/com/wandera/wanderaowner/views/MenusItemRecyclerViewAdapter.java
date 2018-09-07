@@ -16,8 +16,11 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
+import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.activity.restaurant.AddMenuActivity;
 import com.wandera.wanderaowner.datamodel.MenuDataModel;
 import com.wandera.wanderaowner.datamodel.UserListDataModel;
@@ -80,6 +83,7 @@ public class MenusItemRecyclerViewAdapter
             holder.addImage.setVisibility(View.VISIBLE);
             holder.menuTitle.setVisibility(View.GONE);
             holder.menuPrice.setVisibility(View.GONE);
+            holder.menuBackGroundImage.setVisibility(View.GONE);
             holder.menuRating.setVisibility(View.GONE);
             holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,8 +98,10 @@ public class MenusItemRecyclerViewAdapter
             holder.menuTitle.setVisibility(View.VISIBLE);
             holder.menuPrice.setVisibility(View.VISIBLE);
             holder.menuRating.setVisibility(View.VISIBLE);
+            holder.menuBackGroundImage.setVisibility(View.VISIBLE);
             holder.addImage.setVisibility(View.GONE);
             holder.menuTitle.setText(menuDataModel.getMenuName());
+
             GlideApp.with(context).load(menuDataModel.getMenuIconPath()).centerCrop().into(holder.menuBackGroundImage);
             holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -110,10 +116,20 @@ public class MenusItemRecyclerViewAdapter
                     menuTitle.setText(menuDataModel.getMenuName());
                     CircleImageView menuIcon = (CircleImageView) dialog.findViewById(R.id.menuIcon);
                     GlideApp.with(context).load(menuDataModel.getMenuIconPath()).centerCrop().into(menuIcon);
+                    manageBtn.setText("Temp Delete Button");
                     manageBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child(Utils.MENUS_DIR).child(businessKey)
+                                    .child(categoryKey)
+                                    .child(menuDataModel.getKey())
+                                    .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    dialog.dismiss();
+                                }
+                            });
                         }
                     });
                     close.setOnClickListener(new View.OnClickListener() {
