@@ -250,18 +250,6 @@ public class AddRoom extends AppCompatActivity {
 
 
     private void saveRoom(String roomImage){
-       /* String key = mDatabase.child("restaurant").child("menus").child(businesskey).push().getKey();
-        MenuMapModel menuMapModel = new MenuMapModel(menuName,menuPrice,key,categoryKey,menuImagePath,businesskey);
-        Map<String,Object> value = menuMapModel.toMap();
-        Map<String,Object> childUpdates = new HashMap<>();
-        childUpdates.put(key,value);
-
-        mDatabase.child(Utils.MENUS_DIR).child(businesskey).child(categoryKey).updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                finish();
-            }
-        });*/
 
        String key = mdataBaseRef.child("accomodations").child("rooms").child(businessKey).push().getKey();
        RoomMapModel roomMapModel = new RoomMapModel(key,roomName.getText().toString(),Integer.parseInt(roomPrice.getText().toString()),roomDes.getText().toString(),businessKey,roomImage);

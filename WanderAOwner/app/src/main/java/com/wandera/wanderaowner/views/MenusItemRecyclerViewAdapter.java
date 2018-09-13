@@ -109,15 +109,14 @@ public class MenusItemRecyclerViewAdapter
                     final Dialog dialog = new Dialog(context);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(true);
-                    dialog.setContentView(R.layout.dialog_add_menu);
+                    dialog.setContentView(R.layout.dialog_manage_menu);
                     TextView menuTitle = (TextView) dialog.findViewById(R.id.menuTitle);
                     Button manageBtn = (Button) dialog.findViewById(R.id.btnManage);
                     ImageView close = (ImageView) dialog.findViewById(R.id.close);
                     menuTitle.setText(menuDataModel.getMenuName());
                     CircleImageView menuIcon = (CircleImageView) dialog.findViewById(R.id.menuIcon);
                     GlideApp.with(context).load(menuDataModel.getMenuIconPath()).centerCrop().into(menuIcon);
-                    manageBtn.setText("Temp Delete Button");
-                    manageBtn.setOnClickListener(new View.OnClickListener() {
+                    dialog.findViewById(R.id.btnDelete).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             FirebaseDatabase.getInstance().getReference()
@@ -132,6 +131,7 @@ public class MenusItemRecyclerViewAdapter
                             });
                         }
                     });
+
                     close.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

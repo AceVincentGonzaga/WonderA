@@ -22,7 +22,6 @@ import com.wandera.wanderaowner.GlideApp;
 import com.wandera.wanderaowner.R;
 import com.wandera.wanderaowner.Utils;
 import com.wandera.wanderaowner.activity.giftingcenter.AddMenuGiftingActivity;
-import com.wandera.wanderaowner.activity.restaurant.AddMenuActivity;
 import com.wandera.wanderaowner.datamodel.MenuDataModel;
 import com.wandera.wanderaowner.datamodel.UserListDataModel;
 
@@ -105,7 +104,7 @@ public class GiftingMenusItemRecyclerViewAdapter
                     final Dialog dialog = new Dialog(context);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(true);
-                    dialog.setContentView(R.layout.dialog_add_menu);
+                    dialog.setContentView(R.layout.dialog_manage_menu);
                     TextView menuTitle = (TextView) dialog.findViewById(R.id.menuTitle);
                     Button manageBtn = (Button) dialog.findViewById(R.id.btnManage);
                     ImageView close = (ImageView) dialog.findViewById(R.id.close);

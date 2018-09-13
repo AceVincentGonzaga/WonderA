@@ -50,8 +50,6 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser!=null){
             Intent i = new Intent(LoginActivity.this,ManageBusiness.class);
-
-
             startActivity(i);
             finish();
         }
