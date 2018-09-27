@@ -93,5 +93,7 @@ public class Utils {
 
     public static String GAL_DIR ="gallery";
     public static String WIFISIGNAL_DIR = "signalWifiStrength";
+    public static String PERMIT_CAT_DIR = "permitCategory";
+    public static String PERMIT_DIR = "permits";
 }
 

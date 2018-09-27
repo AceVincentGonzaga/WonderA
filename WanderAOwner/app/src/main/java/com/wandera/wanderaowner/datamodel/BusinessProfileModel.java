@@ -9,6 +9,15 @@ public class BusinessProfileModel {
     private String businessType;
     private String restoProfileImagePath;
     private String key;
+    private String howToGetThere;
+
+    public void setHowToGetThere(String howToGetThere) {
+        this.howToGetThere = howToGetThere;
+    }
+
+    public String getHowToGetThere() {
+        return howToGetThere;
+    }
 
     public String getKey() {
         return key;

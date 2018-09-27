@@ -58,7 +58,9 @@
         android:text="Delete Business"
         android:theme="@style/sideNavMenus"
         app:layout_constraintStart_toStartOf="@+id/messages"
-        app:layout_constraintTop_toBottomOf="@+id/manageProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/managePermits" />
+
+
 
     <TextView
         android:id="@+id/logout"

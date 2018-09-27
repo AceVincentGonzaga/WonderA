@@ -218,7 +218,6 @@ public class BusinessProfileAccomodations extends AppCompatActivity {
             }
         });
     }
-
     private void deleteBusinessCofirmation(){
         final Dialog dialog = new Dialog(BusinessProfileAccomodations.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -257,7 +256,4 @@ public class BusinessProfileAccomodations extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

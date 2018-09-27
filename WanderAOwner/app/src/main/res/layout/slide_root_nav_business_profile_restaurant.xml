@@ -65,6 +65,19 @@
         app:layout_constraintTop_toBottomOf="@+id/messages" />
 
     <TextView
+        android:id="@+id/managePermits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_account_balance_wallet_black_24dp"
+        android:gravity="center"
+        android:text="Manage Permits"
+        android:theme="@style/sideNavMenus"
+        app:layout_constraintStart_toStartOf="@+id/manageProfile"
+        app:layout_constraintTop_toBottomOf="@+id/manageProfile" />
+
+    <TextView
         android:id="@+id/deleteBusiness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +89,7 @@
         android:text="Delete Business"
         android:theme="@style/sideNavMenus"
         app:layout_constraintStart_toStartOf="@+id/messages"
-        app:layout_constraintTop_toBottomOf="@+id/manageProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/managePermits" />
 
     <TextView
         android:id="@+id/logout"

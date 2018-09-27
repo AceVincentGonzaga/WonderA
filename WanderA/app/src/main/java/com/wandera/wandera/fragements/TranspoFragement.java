@@ -57,16 +57,22 @@ public class TranspoFragement extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 transpoDataModelArrayList.clear();
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    TranspoDataModel transpoDataModel = new TranspoDataModel();
-                    TranspoMapModel transpoMapModel = dataSnapshot1.getValue(TranspoMapModel.class);
-                    transpoDataModel.setDriverName(transpoMapModel.name);
-                    transpoDataModel.setCapacity(transpoMapModel.seats);
-                    transpoDataModel.setContactNumber(transpoMapModel.number);
-                    transpoDataModel.setKey(transpoMapModel.key);
-                    transpoDataModel.setPrice(transpoMapModel.price);
-                    transpoDataModel.setVanImg(transpoMapModel.vanImg);
-                    transpoDataModelArrayList.add(transpoDataModel);
+                   try {
+                       TranspoDataModel transpoDataModel = new TranspoDataModel();
+                       TranspoMapModel transpoMapModel = dataSnapshot1.getValue(TranspoMapModel.class);
+                       transpoDataModel.setDriverName(transpoMapModel.name);
+                       transpoDataModel.setCapacity(transpoMapModel.seats);
+                       transpoDataModel.setContactNumber(transpoMapModel.number);
+                       transpoDataModel.setKey(transpoMapModel.key);
+                       transpoDataModel.setPrice(transpoMapModel.price);
+                       transpoDataModel.setVanImg(transpoMapModel.vanImg);
+                       transpoDataModel.setModeOfTranspo(transpoMapModel.modeoftranspo);
+                       transpoDataModel.setOperator(transpoMapModel.operator);
+                       transpoDataModelArrayList.add(transpoDataModel);
 
+                   }catch (NullPointerException e){
+
+                   }
                 }
                 transportaionRecyclerViewAdapter.notifyDataSetChanged();
             }

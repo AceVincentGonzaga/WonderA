@@ -43,7 +43,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/addBusiness"
+        app:layout_constraintBottom_toTopOf="@+id/managePermits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
     </android.support.v7.widget.RecyclerView>
 
     <Button
-        android:id="@+id/addBusiness"
+        android:id="@+id/managePermits"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
@@ -81,7 +81,7 @@
         android:layout_marginTop="8dp"
         app:indicatorColor="@color/background"
         app:indicatorName="LineSpinFadeLoaderIndicator"
-        app:layout_constraintBottom_toTopOf="@+id/addBusiness"
+        app:layout_constraintBottom_toTopOf="@+id/managePermits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/businesItemsRV" />

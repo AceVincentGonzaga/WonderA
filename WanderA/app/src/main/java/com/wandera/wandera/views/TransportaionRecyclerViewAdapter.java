@@ -44,6 +44,8 @@ public class TransportaionRecyclerViewAdapter
         TextView contactNumber;
         ImageView vamImage;
         ImageView callIcon;
+        TextView operator;
+        TextView modeOfTranspo;
 
 
 
@@ -54,6 +56,8 @@ public class TransportaionRecyclerViewAdapter
             price = (TextView) view.findViewById(R.id.price);
             contactNumber = (TextView) view.findViewById(R.id.contactNumber);
             vamImage = (ImageView) view.findViewById(R.id.vanImage);
+            modeOfTranspo = (TextView) view.findViewById(R.id.modeOfTransaction);
+            operator = (TextView) view.findViewById(R.id.operator);
             callIcon = (ImageView) view.findViewById(R.id.callIcon);
 
 
@@ -87,6 +91,8 @@ public class TransportaionRecyclerViewAdapter
                 mOnItemClickLitener.onItemClick(v,position,transpoDataModel);
             }
         });
+        holder.operator.setText(transpoDataModel.getOperator());
+        holder.modeOfTranspo.setText(transpoDataModel.getModeOfTranspo());
 
     }
 

@@ -6,233 +6,284 @@
     android:layout_height="match_parent"
     tools:context=".activity.OwernerRegistration">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/businessProfile"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_add_black_24dp"
-        app:civ_border_color="@color/lightGrey"
-        app:civ_border_width="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/selectBType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/lato"
-        android:text="Select Business Type"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/businessProfile" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/field_store_name"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:hint="Company Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectBType">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/input_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@color/colorAccent"
-            android:drawablePadding="10dp"
-            android:padding="8dp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <TextView
-        android:id="@+id/selectMunicipality"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/address_background_round"
-        android:paddingBottom="8dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="8dp"
-        android:text="Municipality"
-        app:layout_constraintEnd_toStartOf="@+id/selectBarangay"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/field_store_name" />
-
-    <TextView
-        android:id="@+id/selectBarangay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/address_background_round"
-        android:paddingBottom="8dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="8dp"
-        android:text="Barangay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/field_store_name" />
-
-    <TextView
-        android:id="@+id/setLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/address_background_round"
-        android:paddingBottom="8dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="8dp"
-        android:text="Set Location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/selectBarangay"
-        app:layout_constraintTop_toBottomOf="@+id/field_store_name" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/field_contact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:hint="Contact"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectMunicipality">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/input_contact"
-            android:inputType="number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@color/colorAccent"
-            android:drawablePadding="10dp"
-            android:padding="8dp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/field_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:hint="Email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/field_contact">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/inpt_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@color/colorAccent"
-            android:drawablePadding="10dp"
-            android:padding="8dp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <ImageView
-        android:id="@+id/signalImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_signal_cellular_0_bar_black_24dp"
-        app:layout_constraintStart_toStartOf="@+id/field_email"
-        app:layout_constraintTop_toBottomOf="@+id/field_email" />
-
-    <TextView
-        android:id="@+id/signalStreng"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="No Signal"
-        app:layout_constraintBottom_toBottomOf="@+id/signalImage"
-        app:layout_constraintStart_toEndOf="@+id/signalImage"
-        app:layout_constraintTop_toTopOf="@+id/signalImage" />
-
-    <ImageView
-        android:id="@+id/wifiIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_signal_wifi_0_bar_black_24dp"
-        android:tint="#66bb6a"
-        app:layout_constraintStart_toStartOf="@+id/signalImage"
-        app:layout_constraintTop_toBottomOf="@+id/signalImage" />
-
-    <TextView
-        android:id="@+id/textWifi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Wifi Available"
-        app:layout_constraintBottom_toBottomOf="@+id/wifiIcon"
-        app:layout_constraintStart_toEndOf="@+id/wifiIcon"
-        app:layout_constraintTop_toTopOf="@+id/wifiIcon" />
-
-    <TextView
-        android:id="@+id/saveProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/lato"
-        android:text="Save Profile"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textWifi" />
-
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:id="@+id/loadingContainer"
-        android:background="@color/lightGrey"
         android:layout_height="match_parent">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/businessProfile"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_add_black_24dp"
+                app:civ_border_color="@color/lightGrey"
+                app:civ_border_width="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            app:indicatorColor="@color/colorPrimaryDark"
-            android:layout_marginTop="8dp"
-            app:indicatorName="LineSpinFadeLoaderIndicator"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/selectBType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/lato"
+                android:text="Select Business Type"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/businessProfile" />
 
-    </android.support.constraint.ConstraintLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/field_store_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:hint="Company Name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectBType">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/input_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:drawablePadding="10dp"
+                    android:padding="8dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/selectMunicipality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/address_background_round"
+                android:paddingBottom="8dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="8dp"
+                android:text="Municipality"
+                app:layout_constraintEnd_toStartOf="@+id/selectBarangay"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/field_store_name" />
+
+            <TextView
+                android:id="@+id/selectBarangay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/address_background_round"
+                android:paddingBottom="8dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="8dp"
+                android:text="Barangay"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/field_store_name" />
+
+            <TextView
+                android:id="@+id/setLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/address_background_round"
+                android:paddingBottom="8dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="8dp"
+                android:text="Set Location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/selectBarangay"
+                app:layout_constraintTop_toBottomOf="@+id/field_store_name" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/field_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:hint="Contact"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectMunicipality">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/input_contact"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:drawablePadding="10dp"
+                    android:padding="8dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/field_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:hint="Email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/field_contact">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/inpt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:drawablePadding="10dp"
+                    android:padding="8dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/signalImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_signal_cellular_0_bar_black_24dp"
+                app:layout_constraintStart_toStartOf="@+id/field_email"
+                app:layout_constraintTop_toBottomOf="@+id/field_email" />
+
+            <TextView
+                android:id="@+id/signalStreng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="No Signal"
+                app:layout_constraintBottom_toBottomOf="@+id/signalImage"
+                app:layout_constraintStart_toEndOf="@+id/signalImage"
+                app:layout_constraintTop_toTopOf="@+id/signalImage" />
+
+            <ImageView
+                android:id="@+id/wifiIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_signal_wifi_0_bar_black_24dp"
+                android:tint="#66bb6a"
+                app:layout_constraintStart_toStartOf="@+id/signalImage"
+                app:layout_constraintTop_toBottomOf="@+id/signalImage" />
+
+            <Button
+                android:id="@+id/managePermits"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_background"
+                android:drawableTint="@color/white"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:text="Manage Permits"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textWifi" />
+
+            <TextView
+                android:id="@+id/textWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Wifi Available"
+                app:layout_constraintBottom_toBottomOf="@+id/wifiIcon"
+                app:layout_constraintStart_toEndOf="@+id/wifiIcon"
+                app:layout_constraintTop_toTopOf="@+id/wifiIcon" />
+
+            <EditText
+
+                android:id="@+id/howToGetThere"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_text_area"
+                android:gravity="start"
+                android:hint="How to get here"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/managePermits" />
+
+            <TextView
+                android:id="@+id/saveProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/lato"
+                android:text="Save Profile"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/howToGetThere" />
+
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/loadingContainer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/lightGrey"
+                android:visibility="gone"
+                android:translationZ="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:indicatorColor="@color/colorPrimaryDark"
+                    app:indicatorName="LineSpinFadeLoaderIndicator"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+
 
 
 

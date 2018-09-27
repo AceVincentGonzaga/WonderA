@@ -72,4 +72,22 @@
         app:layout_constraintStart_toStartOf="@+id/price"
         app:layout_constraintTop_toBottomOf="@+id/price" />
 
+    <TextView
+        android:id="@+id/modeOfTransaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mode of Transaction"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/contactNumber"
+        app:layout_constraintTop_toBottomOf="@+id/contactNumber" />
+
+    <TextView
+        android:id="@+id/operator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Operator"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/modeOfTransaction"
+        app:layout_constraintTop_toBottomOf="@+id/modeOfTransaction" />
+
 </android.support.constraint.ConstraintLayout>

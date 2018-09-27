@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -122,6 +124,8 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         boolean wifiAvail = true;
         ImageView signalImage;
         String signalLabel = "No Signal";
+        EditText howToGetThere;
+        Button managePermits;
 
     @Override
     protected void onStart() {
@@ -146,6 +150,8 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             selectBType = (TextView) findViewById(R.id.selectBType);
             selectMunicipality = (TextView) findViewById(R.id.selectMunicipality);
             businessProfile = (CircleImageView) findViewById(R.id.businessProfile);
+            howToGetThere = (EditText) findViewById(R.id.howToGetThere);
+            managePermits = (Button) findViewById(R.id.managePermits);
             setSignalColor();
             mStorageRef = FirebaseStorage.getInstance().getReference();
             c = OwernerRegistrationUpdate.this;
@@ -204,6 +210,13 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                 }
             });
 
+            managePermits.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    managePermits();
+                }
+            });
+
             databaseReference.child("businessProfiles")
                     .child(businessKey).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -218,6 +231,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                     lastImagePath = businessProfileMapModel.restoProfileImagePath;
                     businessType = businessProfileMapModel.businessType;
                     selectBarangay.setText(businessProfileMapModel.barangay);
+                    howToGetThere.setText(businessProfileMapModel.howToGetThere);
                     try {
                         Glide.with(c).load(businessProfileMapModel.restoProfileImagePath).into(businessProfile);
 
@@ -317,6 +331,11 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
             }
         });
         }
+        void managePermits(){
+            Intent i = new Intent(context,ManagePermits.class);
+            i.putExtra("key",businessKey);
+            startActivity(i);
+        }
         private void selectBusinessTypeDialog(){
             final Dialog dialog = new Dialog(OwernerRegistrationUpdate.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -384,6 +403,9 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
                 val = false;
 
             }
+            if (howToGetThere.getText().toString().trim().length()==0){
+                val = false;
+            }
 
             return val;
         }
@@ -395,7 +417,7 @@ public class OwernerRegistrationUpdate extends AppCompatActivity implements OnLo
         private void saveProfile(String name,String address,String contact,String emaill,String imageUrl,String barangay){
             String uid = mAuth.getUid();
             String key = businessKey;
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,key,address,barangay);
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,address,contact,emaill,businessType,imageUrl,key,address,barangay,howToGetThere.getText().toString());
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
             childupdates.put(key,profileValue);

@@ -66,6 +66,8 @@ import com.wandera.wanderaowner.views.GalleryRecyclerViewAdapter;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -81,7 +83,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
     SlidingRootNav slidingRootNav;
     Toolbar toolbar;
     DatabaseReference mDatabase;
-    TextView messages,businessProfile;
+    TextView messages,businessProfile,managePermits;
     ImageView profileIcon;
     Button addCategory;
     Context c;
@@ -136,6 +138,7 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
         businessProfile = (TextView) findViewById(R.id.manageProfile);
         profileIcon = (CircleImageView) findViewById(R.id.profileIcon);
         deleteBusiness = (TextView) findViewById(R.id.deleteBusiness);
+        managePermits = (TextView) findViewById(R.id.managePermits);
 
         businessProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +164,15 @@ public class BusinessProfileRestaurant extends AppCompatActivity {
                 i.putExtra("key", businessKey);
                 startActivity(i);
                 finish();
+            }
+        });
+
+        managePermits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =  new Intent(c,ManagePermits.class);
+                i.putExtra("key",businessKey);
+                startActivity(i);
             }
         });
         deleteBusiness.setOnClickListener(new View.OnClickListener() {

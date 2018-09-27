@@ -24,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -100,6 +102,8 @@ public class OwnerRegistrationNew extends AppCompatActivity {
         boolean wifiAvail = true;
         ImageView signalImage;
         String signalLabel = "No Signal";
+        EditText howToGetThere;
+        Button managePermits;
 
     @Override
     protected void onStart() {
@@ -127,6 +131,8 @@ public class OwnerRegistrationNew extends AppCompatActivity {
             selectMunicipality = (TextView) findViewById(R.id.selectMunicipality);
             mStorageRef = FirebaseStorage.getInstance().getReference();
             setLocation = (TextView) findViewById(R.id.setLocation);
+            howToGetThere = (EditText) findViewById(R.id.howToGetThere);
+            managePermits = (Button) findViewById(R.id.managePermits);
             selectBType(getIntent().getExtras().getString("businessType"));
             categories.add("Restaurant");
             categories.add("Accomodation");
@@ -200,6 +206,12 @@ public class OwnerRegistrationNew extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setSignalStreng();
+            }
+        });
+        managePermits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                managePermits();
             }
         });
         }
@@ -305,6 +317,10 @@ public class OwnerRegistrationNew extends AppCompatActivity {
                     val = false;
                     Utils.callToast(context,"Select Location");
                 }
+                else if (howToGetThere.getText().toString().trim().length()==0){
+                    val = false;
+                }
+
             }catch (NullPointerException e){
                 val = false;
             }
@@ -555,6 +571,12 @@ public class OwnerRegistrationNew extends AppCompatActivity {
         startActivity(i);
 
     }
+    void managePermits(){
+        Intent i = new Intent(context,ManagePermits.class);
+        i.putExtra("key",key);
+        startActivity(i);
+    }
+
 
     private void fetchBarangays(){
         barangayDataModelArrayList.clear();
@@ -645,7 +667,8 @@ public class OwnerRegistrationNew extends AppCompatActivity {
     private void saveProfile(String name,String contact,String emaill,String url,String barangay){
         String uid = mAuth.getUid();
 
-        BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,barangay);
+        BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,barangay,
+                howToGetThere.getText().toString().equals(null)? "Null":howToGetThere.getText().toString());
         Map<String,Object> profileValue = businessProfileMapModel.toMap();
         Map<String,Object> childupdates = new HashMap<>();
         childupdates.put(key,profileValue);
@@ -653,6 +676,7 @@ public class OwnerRegistrationNew extends AppCompatActivity {
         databaseReference.child("businessProfiles").updateChildren(childupdates).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+
                 Intent i = new Intent(context,ManageBusiness.class);
                 startActivity(i);
                 finish();

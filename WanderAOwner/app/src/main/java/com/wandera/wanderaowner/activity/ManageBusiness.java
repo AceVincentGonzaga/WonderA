@@ -72,7 +72,7 @@ public class ManageBusiness extends AppCompatActivity {
         context = ManageBusiness.this;
         container= (ConstraintLayout)findViewById(R.id.container);
         databaseReference.child("businessProfiles").keepSynced(true);
-        addBusinessBtn = (TextView) findViewById(R.id.addBusiness);
+        addBusinessBtn = (TextView) findViewById(R.id.managePermits);
 
 
 

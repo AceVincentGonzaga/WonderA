@@ -30,6 +30,10 @@
          <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="defaultButton"
+
+        />
+
     <style name="transparentBackgroud">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>

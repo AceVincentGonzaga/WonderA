@@ -253,7 +253,7 @@ public class GiftingCenterRegistration extends AppCompatActivity {
         private void saveProfile(String name,String contact,String emaill,String url,String barangay){
             String uid = mAuth.getUid();
 
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,barangay);
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,barangay,null);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
             childupdates.put(key,profileValue);

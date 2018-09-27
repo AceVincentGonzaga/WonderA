@@ -8,6 +8,24 @@ public class TranspoDataModel {
    private String price;
    private String capacity;
    private String vanImg;
+   private String modeOfTranspo;
+   private String operator;
+
+    public void setModeOfTranspo(String modeOfTranspo) {
+        this.modeOfTranspo = modeOfTranspo;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getModeOfTranspo() {
+        return modeOfTranspo;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
 
     public void setVanImg(String vanImg) {
         this.vanImg = vanImg;

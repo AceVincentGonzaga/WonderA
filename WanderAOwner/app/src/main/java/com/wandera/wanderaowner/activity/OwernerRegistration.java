@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -104,6 +106,7 @@ public class OwernerRegistration extends AppCompatActivity {
         TextView selectBarangay;
         ArrayList<BarangayDataModel> barangayDataModelArrayList = new ArrayList<>();
         String municipalityId;
+        Button managePermits;
 
     @Override
     protected void onStart() {
@@ -128,6 +131,7 @@ public class OwernerRegistration extends AppCompatActivity {
             selectMunicipality = (TextView) findViewById(R.id.selectMunicipality);
             mStorageRef = FirebaseStorage.getInstance().getReference();
             setLocation = (TextView) findViewById(R.id.setLocation);
+            managePermits = (Button) findViewById(R.id.managePermits);
             selectBType("Restaurants");
             categories.add("Restaurant");
             categories.add("Accomodation");
@@ -189,6 +193,14 @@ public class OwernerRegistration extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     fetchBarangays();
+                }
+            });
+            managePermits.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i  = new Intent(context,ManagePermits.class);
+                    i.putExtra("key",key);
+                    startActivity(i);
                 }
             });
         }
@@ -262,7 +274,7 @@ public class OwernerRegistration extends AppCompatActivity {
         private void saveProfile(String name,String contact,String emaill,String url){
             String uid = mAuth.getUid();
 
-            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,null);
+            BusinessProfileMapModel businessProfileMapModel = new BusinessProfileMapModel(uid,name,"null for now",contact,emaill,businessType,url,key,municipality,null,null);
             Map<String,Object> profileValue = businessProfileMapModel.toMap();
             Map<String,Object> childupdates = new HashMap<>();
             childupdates.put(key,profileValue);
