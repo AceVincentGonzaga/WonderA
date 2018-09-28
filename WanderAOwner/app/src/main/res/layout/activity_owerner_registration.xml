@@ -251,7 +251,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/howToGetThere" />
 
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/loadingContainer"
                 android:layout_width="0dp"

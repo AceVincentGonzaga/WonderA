@@ -78,7 +78,7 @@ public class RestaurantLandingPageFragement extends Fragment implements OnMapRea
     ArrayList<GalleryDataModel> galleryDataModelArrayList = new ArrayList<>();
     GalleryRecyclerViewAdapter galleryRecyclerViewAdapter;
     ImageView wifiImage;
-    TextView network;
+    TextView network,howToGetHere;
     ImageView networkImage;
     TextView wifi;
     public RestaurantLandingPageFragement(){
@@ -141,6 +141,7 @@ public class RestaurantLandingPageFragement extends Fragment implements OnMapRea
         textTitle = (TextView) view.findViewById(R.id.textTitle);
         app_bar_image = (ImageView) view.findViewById(R.id.app_bar_image);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+        howToGetHere = (TextView) view.findViewById(R.id.hotToGetHere);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         getSignalWifiStats();
         databaseReference.child("businessProfiles").child(businessKey).addValueEventListener(new ValueEventListener() {
@@ -150,13 +151,13 @@ public class RestaurantLandingPageFragement extends Fragment implements OnMapRea
                 final BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
                 textTitle.setText(businessProfileMapModel.name);
                 contactNumber.setText(businessProfileMapModel.contact);
+                howToGetHere.setText(businessProfileMapModel.howToGetThere);
                 databaseReference.child("municipality").child(businessProfileMapModel.municipality).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         MunicipalityMapModel municipalityMapModel = dataSnapshot.getValue(MunicipalityMapModel.class);
                         location.setText(businessProfileMapModel.barangay+", "+municipalityMapModel.municipality);
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 

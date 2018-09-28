@@ -57,7 +57,6 @@ public class AccomodationRoomsFragement extends Fragment {
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     RoomDataModel roomDataModel = new RoomDataModel();
                     RoomMapModel roomMapModel = dataSnapshot1.getValue(RoomMapModel.class);
-
                     roomDataModel.setBusinessKey(roomMapModel.businessKey);
                     roomDataModel.setRoomDescription(roomMapModel.roomDescription);
                     roomDataModel.setRoomId(roomMapModel.roomId);
