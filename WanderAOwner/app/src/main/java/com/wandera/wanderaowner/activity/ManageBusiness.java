@@ -217,7 +217,7 @@ public class ManageBusiness extends AppCompatActivity {
     private void selectBusinessTypeDialog(){
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.setContentView(R.layout.select_business_type_dialog);
         final ConstraintLayout selectResto = (ConstraintLayout) dialog.findViewById(R.id.selectResto);
         final ConstraintLayout selectAccomodation = (ConstraintLayout) dialog.findViewById(R.id.selectAccomodation);

@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+
 import com.wandera.wandera.GlideApp;
 import com.wandera.wandera.MainActivity;
 import com.wandera.wandera.R;
@@ -85,11 +87,18 @@ public class HomeSlider extends AppCompatActivity
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         setSupportActionBar(toolbar);
         firebaseAuth = FirebaseAuth.getInstance();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        findViewById(R.id.toggleMenu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(Gravity.LEFT);
+            }
+        });
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -115,6 +124,8 @@ public class HomeSlider extends AppCompatActivity
                 return true;
             }
         });
+
+
 
         View hView = navigationView.inflateHeaderView(R.layout.nav_header_home_slider);
         TextView userName = (TextView) hView.findViewById(R.id.userName);
