@@ -50,7 +50,7 @@ public class GiftingLandingPageFragement extends Fragment {
     String businessKey;
     DatabaseReference databaseReference;
     ImageView app_bar_image;
-    TextView textTitle,rating;
+    TextView textTitle,rating,howToGetHere;
     RecyclerView ratingAndCommentList;
     RatingsRecyclerViewAdapter ratingsRecyclerViewAdapter;
     ArrayList<RatingCommentDataModel> ratingCommentDataModelArrayList = new ArrayList<>();
@@ -72,6 +72,7 @@ public class GiftingLandingPageFragement extends Fragment {
         businessKey = act.getBusinessKey();
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
         colapsToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.colapsToolbar);
+        howToGetHere = (TextView) view.findViewById(R.id.hotToGetHere);
         textTitle = (TextView) view.findViewById(R.id.textTitle);
         app_bar_image = (ImageView) view.findViewById(R.id.app_bar_image);
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -81,6 +82,11 @@ public class GiftingLandingPageFragement extends Fragment {
                 BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                 BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
                 textTitle.setText(businessProfileMapModel.name);
+                try {
+                    howToGetHere.setText(businessProfileMapModel.howToGetThere);
+                }catch (NullPointerException e){
+
+                }
                 GlideApp.with(getActivity()).load(businessProfileMapModel.restoProfileImagePath).centerCrop().into(app_bar_image);
             }
 

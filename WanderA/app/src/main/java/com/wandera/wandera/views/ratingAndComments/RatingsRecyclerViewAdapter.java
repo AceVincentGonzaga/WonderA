@@ -80,7 +80,11 @@ public class RatingsRecyclerViewAdapter
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserProfileMapModel userProfileMapModel = dataSnapshot.getValue(UserProfileMapModel.class);
                 holder.accountName.setText(userProfileMapModel.userName);
-                GlideApp.with(context).load(userProfileMapModel.userImage).into(holder.userAccountImage);
+                try {
+                    GlideApp.with(context).load(userProfileMapModel.userImage).into(holder.userAccountImage);
+                }catch (IllegalArgumentException e){
+
+                }
             }
 
             @Override
@@ -89,7 +93,6 @@ public class RatingsRecyclerViewAdapter
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return ratingCommentDataModelArrayList.size();

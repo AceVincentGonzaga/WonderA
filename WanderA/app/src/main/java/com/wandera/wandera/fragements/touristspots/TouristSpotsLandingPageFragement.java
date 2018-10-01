@@ -56,7 +56,7 @@ public class TouristSpotsLandingPageFragement extends Fragment {
     RatingsRecyclerViewAdapter ratingsRecyclerViewAdapter;
     ArrayList<RatingCommentDataModel> ratingCommentDataModelArrayList = new ArrayList<>();
     RatingBar ratingBar;
-    TextView rating;
+    TextView rating,howToGetHere;
     Dialog dialog;
     float finalRating;
     TextView location;
@@ -75,6 +75,8 @@ public class TouristSpotsLandingPageFragement extends Fragment {
         appbar = (AppBarLayout) view.findViewById(R.id.appbar);
         colapsToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.colapsToolbar);
         textTitle = (TextView) view.findViewById(R.id.textTitle);
+        howToGetHere = (TextView) view.findViewById(R.id.hotToGetHere);
+
         app_bar_image = (ImageView) view.findViewById(R.id.app_bar_image);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("businessProfiles").child(businessKey).addValueEventListener(new ValueEventListener() {
@@ -83,6 +85,12 @@ public class TouristSpotsLandingPageFragement extends Fragment {
                 BusinessProfileModel businessProfileModel = new BusinessProfileModel();
                final BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
                 textTitle.setText(businessProfileMapModel.name);
+                try {
+                    howToGetHere.setText(businessProfileMapModel.howToGetThere);
+                }catch (NullPointerException e){
+
+                }
+
                 databaseReference.child("municipality").child(businessProfileMapModel.municipality).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

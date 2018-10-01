@@ -151,7 +151,11 @@ public class RestaurantLandingPageFragement extends Fragment implements OnMapRea
                 final BusinessProfileMapModel businessProfileMapModel = dataSnapshot.getValue(BusinessProfileMapModel.class);
                 textTitle.setText(businessProfileMapModel.name);
                 contactNumber.setText(businessProfileMapModel.contact);
-                howToGetHere.setText(businessProfileMapModel.howToGetThere);
+                try {
+                    howToGetHere.setText(businessProfileMapModel.howToGetThere);
+                }catch (NullPointerException e){
+
+                }
                 databaseReference.child("municipality").child(businessProfileMapModel.municipality).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

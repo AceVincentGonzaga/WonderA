@@ -96,8 +96,6 @@ public class ManageBusiness extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
-
                 new java.util.Timer().schedule(
                         new java.util.TimerTask() {
                             @Override
