@@ -15,7 +15,7 @@ public class Utils {
     public static String businessProfiel = "businessProfiles";
     public static String chats = "chats";
     public static String bTypeResto = "Restaurants";
-    public static String bTypeAccomodations = "Accomodations";
+    public static String bTypeAccomodations = "Accommodations";
     public static String bTypeGiftingCenter = "Gifting Center";
     public static String bTypeHotSpots = "Tourist Hot Spots";
     public static String PHRASE_CATEGORY_DIR = "phrasebook/category";

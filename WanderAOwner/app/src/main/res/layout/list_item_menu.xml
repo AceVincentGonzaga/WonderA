@@ -70,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Menu Price"
+                android:visibility="invisible"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toTopOf="@+id/menuRating"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -78,6 +79,7 @@
                 android:id="@+id/menuRating"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="0dp"
+                android:visibility="invisible"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginStart="16dp"

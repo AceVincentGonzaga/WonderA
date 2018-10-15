@@ -74,7 +74,6 @@ public class PermitsItemRecyclerViewAdapter
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_menu,parent,false);
-
         return new MyViewHolder(itemView);
     }
 
@@ -100,6 +99,9 @@ public class PermitsItemRecyclerViewAdapter
 
             holder.menuBackGroundImage.setVisibility(View.VISIBLE);
             holder.addImage.setVisibility(View.GONE);
+            holder.menuTitle.setVisibility(View.GONE);
+            holder.menuPrice.setVisibility(View.GONE);
+            holder.menuRating.setVisibility(View.GONE);
             GlideApp.with(context).load(permitImageDataModel.getImageUrl()).centerCrop().into(holder.menuBackGroundImage);
 
         }

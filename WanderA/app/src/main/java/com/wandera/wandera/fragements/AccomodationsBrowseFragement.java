@@ -43,7 +43,7 @@ public class AccomodationsBrowseFragement extends Fragment {
         restaurantList = (RecyclerView) view.findViewById(R.id.restaurantList);
         businessType = (TextView) view.findViewById(R.id.businessType);
         act = (BrowseBusinesses) getActivity();
-        businessType.setText(Utils.bTypeAccomodations);
+        businessType.setText("Accommodations");
         businessBrowseRecyclerViewAdapter = new BusinessBrowseRecyclerViewAdapter(getActivity(),businessProfileModelArrayList);
         restaurantList.setLayoutManager(new LinearLayoutManager(getActivity()));
         restaurantList.setAdapter(businessBrowseRecyclerViewAdapter);
@@ -73,7 +73,6 @@ public class AccomodationsBrowseFragement extends Fragment {
 
             }
         });
-
         return view;
     }
 }

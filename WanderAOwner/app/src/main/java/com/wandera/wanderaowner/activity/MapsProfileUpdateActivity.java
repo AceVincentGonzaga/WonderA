@@ -81,8 +81,6 @@ public class MapsProfileUpdateActivity extends FragmentActivity implements OnMap
     String businessKey;
     private ArrayList<RestaurantLocationModel> restaurantLocationModels = new ArrayList<>();
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

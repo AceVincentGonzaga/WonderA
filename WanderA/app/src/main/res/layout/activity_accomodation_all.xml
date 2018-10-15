@@ -36,7 +36,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/lato_light"
-            android:text="Accomodation"
+            android:text="Accommodation"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="18sp"
